@@ -11,12 +11,13 @@
     z-index: 3;
     svg {
         &:hover {
-/*          width: 120%;
-            height: 120%; */
             transform: rotate(90deg);
             transition: 1.5s all;
             box-shadow: 3px 3px 20px $main-color;
             border: none;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     }
     &__divider {
