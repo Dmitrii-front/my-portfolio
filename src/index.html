@@ -204,7 +204,22 @@
             <div class="about__wrapper">
 
                 <div class="about__photo">
-                    <img src="img/main_photo.JPG" alt="me">
+<!--                     <img srcset="img/main_photo_mini.jpg 300w,
+                         img/main_photo.jpg 400w"
+                         sizes="(max-width: 576px) 280px,
+                         (min-width: 577px) 400px"
+                         src="img/main_photo.JPG" alt="me"> -->
+
+<!--                          <picture>
+                            <source type="image/webp" srcset="img/main_photo.webp">
+                            <img src="img/main_photo.JPG" alt="me">
+                        </picture> -->
+                        
+                    <picture>
+                        <source media="(max-width: 576px)" srcset="img/main_photo_mini.jpg">
+                        <source media="(min-width: 577px)" srcset="img/main_photo.jpg">
+                        <img src="img/main_photo.JPG" alt="me">
+                    </picture>
                 </div>
                 
                 <div class="about__descr">
@@ -420,7 +435,7 @@
 
     
 
-    
+<!--      -->
 
     <script src="js/script.js"></script>
 </body>
