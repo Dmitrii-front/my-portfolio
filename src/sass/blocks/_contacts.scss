@@ -21,8 +21,21 @@
             object-fit: cover;
         }
     }
-    &__text, &__social {
+    &__social {
         margin-top: 20px;
+    }
+    &__text {
+        margin-top: 40px;
+        &-add {
+            display: block;
+            color: black;
+            text-decoration: underline;
+            margin-top: 10px;
+            &:hover {
+                text-decoration: none;
+                color: $main-color;
+            }
+        }
     }
     &__link {
         margin-right: 25px;

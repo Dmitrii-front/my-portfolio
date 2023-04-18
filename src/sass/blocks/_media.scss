@@ -48,6 +48,12 @@
             }
         }
     }
+    .contacts {
+        &__wrapper {
+            padding: 0;
+            grid-template-columns: 360px 560px;
+        }
+    }
 }
 
 @media (max-width: 992px) {
@@ -84,6 +90,17 @@
             grid-template-columns: repeat(auto-fit, 350px);
             padding: 0;
             margin: 40px 0 0 0;
+        }
+    }
+    .contacts {
+        &__wrapper {
+            grid-template-columns: 580px;
+            justify-content: center
+        }
+        &__photo {
+            img {
+                display: none;
+            }
         }
     }
 }
@@ -137,6 +154,7 @@
         }
         &__wrapper {
             margin-top: 40px;
+            grid-template: repeat(3,minmax(auto,250px))/repeat(2,minmax(auto,250px));
         }
     }
     .price {
@@ -144,6 +162,16 @@
         &__wrapper {
             justify-content: center;
             row-gap: 25px;
+        }
+    }
+    .contacts {
+        padding: 40px 0 90px 0;
+        &__wrapper {
+            grid-template-columns: minmax(540px, 580px);
+            justify-content: center;
+        }
+        &__form {
+            grid-template: 45px 190px 45px/repeat(2,250px);
         }
     }
 }
@@ -242,10 +270,66 @@
             grid-auto-rows: 1fr;
         }
     }
+    .portfolio {
+        &__wrapper {
+            grid-template: repeat(6,300px)/repeat(1,300px);
+        }
+    }
     .price {
         &__wrapper {
             grid-template-columns: repeat(auto-fit, 295px);
             
+        }
+    }
+    /* .contacts {
+        &__wrapper {
+            
+        }
+        &__form {
+            grid-template: 45px 45px 190px 45px / 280px;
+            grid-auto-columns: 0;
+            grid-auto-rows: auto;
+        }
+        &__triggers {
+            grid-template: repeat(2, minmax(45px, auto)) / 280px;
+        }
+        &__title {
+            padding: 0 auto;
+        }
+        &__input {
+            &-under {
+                grid-row: 2 / 3;
+                grid-column: 1;
+            }
+        }
+    } */
+    .contacts {
+        padding-bottom: 50px;
+        &__wrapper {
+            grid-template: none / none;
+        }
+        &__form {
+            grid-template: 45px 45px 190px minmax(45px, auto) / 1fr;
+        }
+        &__textarea {
+            grid-column: unset;
+            width: 100%;
+        }
+        &__triggers {
+            grid-column: unset;
+            grid-template-columns: 1fr;
+            column-gap: unset;
+            row-gap: 20px;
+        }
+        &__btn {
+            order: 2;
+            max-width: 220px;
+            margin: 0 auto;
+        }
+        &__policy {
+            width: 180px;
+            margin: 0 auto;
+            line-height: 18px;
         }
     }
 }
