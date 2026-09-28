@@ -1,14 +1,14 @@
 {
-  "name": "pulse",
+  "name": "portfolio-2023",
   "version": "1.0.0",
-  "description": "",
+  "description": "Historical 2023 personal portfolio built with HTML, SCSS, JavaScript, and Gulp.",
+  "private": true,
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "gulp": "gulp"
+    "dev": "gulp",
+    "build": "gulp build"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "devDependencies": {
     "browser-sync": "^2.26.12",
     "gulp": "^4.0.2",

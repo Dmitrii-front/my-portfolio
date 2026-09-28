@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const fs = require('fs');
 const browserSync = require('browser-sync');
 const sass = require('gulp-sass')(require('sass'));
 const cleanCSS = require('gulp-clean-css');
@@ -68,4 +69,11 @@ gulp.task('images', function () {
         .pipe(browserSync.stream());
 });
 
-gulp.task('default', gulp.parallel('watch', 'server', 'styles', 'scripts', 'fonts', 'icons', 'html', 'images'));
+gulp.task('clean', function (done) {
+    fs.rmSync('dist', { recursive: true, force: true });
+    done();
+});
+
+gulp.task('build', gulp.series('clean', gulp.parallel('styles', 'scripts', 'fonts', 'icons', 'html', 'images')));
+
+gulp.task('default', gulp.series('build', gulp.parallel('watch', 'server')));
