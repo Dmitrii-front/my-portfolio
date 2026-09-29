@@ -60,7 +60,7 @@ npm run build
 
 The deterministic build task removes the existing `dist` directory, then compiles styles, minimizes HTML, and copies scripts, fonts, icons, and images.
 
-Dependencies were intentionally not upgraded during publication cleanup. A fresh build should be verified in an isolated environment before publishing generated output.
+Dependencies were intentionally not upgraded during publication cleanup. The tracked output was regenerated and verified from the existing lockfile in an isolated environment.
 
 ## `dist` policy
 
