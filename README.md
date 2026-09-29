@@ -78,11 +78,6 @@ The current page exposes only the professional name and the verified GitHub user
 - The former portfolio gallery was incomplete and is not presented as working functionality.
 - This project does not represent the current breadth of Dmitrii's professional work.
 
-## Screenshots
-
-- TODO: desktop landing page
-- TODO: mobile navigation and content layout
-
 ## Archive status
 
 This repository is suitable as an unpinned historical frontend project. Current work should be evaluated through newer repositories on the [Dmitrii-front GitHub profile](https://github.com/Dmitrii-front).
