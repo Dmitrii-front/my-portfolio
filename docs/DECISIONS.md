@@ -46,3 +46,11 @@ Durable decisions are recorded here. Proposed changes that materially affect UX,
 - **Persistence:** A first-party locale-preference cookie stores an explicit switcher selection for one year. Switching preserves the current public path; unknown locale values are rejected.
 - **SEO:** Localized pages have self-canonical URLs and reciprocal EN/RU hreflang alternatives; `x-default` points to the EN content URL. A deployment-provided site origin supplies absolute URLs. Unpublished skeletons and previews remain noindex.
 - **Reason:** Predictable shareable URLs, stable SEO, respect for explicit preferences, and an extensible locale architecture.
+
+## D-007 — Validate the complete Home interaction model in Phase 2
+
+- **Date:** 2026-10-06
+- **Status:** Accepted by owner in the Phase 2 request
+- **Decision:** Phase 2 includes desktop/eligible-tablet sticky Selected Work as well as the mobile interaction prototype, bringing this validation forward from the baseline Phase 3. One persistent device surface serves all projects; narrow/short viewports use an active-project touch showcase instead of sticky narrative.
+- **Implementation boundary:** Use native scrolling, CSS/SVG and small React client boundaries. Final R3F models, persistence, analytics and provider selection remain deferred. No new runtime dependency is required.
+- **Content:** Screens are explicitly labelled placeholders, Lab records are temporary concepts, and unconfirmed contact destinations must not be invented.

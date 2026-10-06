@@ -26,6 +26,6 @@ jobs:
         with:
           name: browser-qa
           path: |
-            artifacts/phase1/
+            artifacts/phase2/
             test-results/
           retention-days: 7

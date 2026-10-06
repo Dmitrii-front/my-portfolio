@@ -53,7 +53,11 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-Playwright starts the production server, checks representative mobile/tablet/desktop compositions, and saves EN/RU screenshots under `artifacts/phase1/` (ignored by Git). CI also checks breakpoints at 320, 375, 767, 768, 1199, 1200, and 1920px. It tests locale preference precedence, route metadata, 404s, native navigation without JS, keyboard/skip link, and reduced motion. Automated axe checks cover Home in both locales; they supplement visual/keyboard checks rather than guarantee a complete accessibility audit.
+Playwright starts the production server and saves fresh screenshots under `artifacts/phase2/` (ignored by Git). `foundation.spec.ts` retains locale preference precedence, route metadata, 404s, no-JS navigation, keyboard/skip-link and EN/RU axe checks. `home.spec.ts` covers Hub selection (including repeated hashes), project/device state, real Chromium touch swipe, sticky release, Lab browsing, Contact keyboard/Escape/outside dismissal and axe with the fan open after reveal settles.
+
+QA includes 320, 375, 430, 768, 1024, 1200, 1440 and 1920px, plus Phase 1 boundary checks at 767/1199px. Both 500px and 900px viewport heights exercise sticky eligibility/degradation. Artifact captures include EN/RU 375px, 768/1024/1440px, Pnlwise/Healthy active, and Contact open on desktop/mobile. Automated checks supplement, not replace, visual, cross-browser and assistive-technology review.
+
+The initial-Home test records compressed resource bytes, external requests and hydration layout shift at 375/768/1440px. Local baseline is approximately 147KB JS and 6.7KB CSS, no external resources, and zero measured initial layout shift. Regression guards are 400KB JS, 60KB CSS and layout shift <0.1; these are development checks, not field Core Web Vitals claims. Resource measurements are attached to test results.
 
 For a running local server and installed Chrome:
 

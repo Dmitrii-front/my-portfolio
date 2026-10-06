@@ -1,9 +1,7 @@
-import Link from "next/link";
 import type { Dictionary } from "@/lib/dictionaries";
-import { localizedPath } from "@/lib/i18n";
 import type { SiteLocale } from "@/lib/site-config";
 import { Container } from "@/components/ui/container";
-import { Arrow } from "@/components/ui/arrow";
+import { ContactRadialMenu } from "./contact-radial-menu";
 
 export function Contact({
 	locale,
@@ -15,18 +13,16 @@ export function Contact({
 	return (
 		<section
 			className="section contact-section"
+			id="home-contact"
 			aria-labelledby="contact-title"
 		>
 			<Container>
 				<p className="eyebrow">{dictionary.home.contactLabel}</p>
 				<h2 id="contact-title">{dictionary.home.contactTitle}</h2>
-				<Link
-					href={localizedPath(locale, "/contact")}
-					className="button button-primary"
-				>
-					{dictionary.home.contactLink}
-					<Arrow diagonal />
-				</Link>
+				<ContactRadialMenu
+					locale={locale}
+					label={dictionary.home.contactLink}
+				/>
 			</Container>
 		</section>
 	);

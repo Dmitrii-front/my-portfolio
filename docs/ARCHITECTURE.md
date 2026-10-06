@@ -2,7 +2,7 @@
 
 ## Status
 
-Phase 1 implements public route/layout foundations, EN/RU dictionaries, navigation, shared tokens, and static Home compositions. Product features, CMS, and optional 3D remain deferred.
+Phase 2 preserves the accepted public foundation and implements the complete lightweight Home interaction prototype. The owner brought desktop/eligible-tablet sticky validation into Phase 2 (D-007). CMS, analytics, backend and optional 3D remain deferred.
 
 ## Runtime foundation
 
@@ -29,24 +29,28 @@ Phase 1 implements public route/layout foundations, EN/RU dictionaries, navigati
 
 ## Design system
 
-`app/globals.css` owns typography, spacing, responsive containers, colors, surfaces, borders, local glow, radius, durations/easing, layers, and focus states. Tailwind `@theme` exposes the same values for future utility styling.
+`app/globals.css` owns typography, spacing, responsive containers, colors, surfaces, borders, local glow, radius, durations/easing, layers, and focus states. Tailwind `@theme` exposes the same values for future utility styling. `styles/home.css`, loaded after the foundation, owns Home composition and interaction geometry.
 
 - Canvas: `#08090b`; text: `#f4f4f6`; muted text: `#a4a5ad`.
 - Light: violet `#a78bfa`, blue `#7aa7ff`; emerald `#67d9b0` is reserved for justified contexts.
 - Typography: local system sans, fluid display/heading sizes, constrained line lengths. No external font requests.
 - Spacing: quarter-rem scale with 24/32/48/64/96/128px composition steps.
 - Breakpoints: mobile default; compact/tablet at 768px; desktop at 1200px. Container limit: 84rem.
-- Durations: 150/240/500ms with one easing token; reduced motion sets durations to zero.
+- Durations: 150/240/500ms with one easing token; reveal/Contact stagger is 65ms. Reduced motion disables animations, staggering and smooth scrolling. Keyboard focus bypasses Contact reveal delay.
 - Layers: content 0, navigation 20, overlays 40, skip link 60.
 - Shared primitives: `Container`, `PageHeading`, arrow, button/text-link styles, responsive layout classes.
 
 ## Home component boundaries
 
-- `Hero` composes copy/CTA/focus and a static `ProductHub` CSS/SVG diagram.
-- `SelectedWork` uses the shared `ProjectList` and one static `DeviceShowcase` media placeholder.
-- `Lab` and `Contact` own their current structural sections.
-- Phase 2 adds `ContactRadialMenu` within Contact and `NeonPath` as Home-level composition. No empty runtime abstractions are created in advance.
-- These components render on the server. Header disclosure enhancements are the small client boundary; its native menu and links still work without JS.
+- `Hero`, `Lab` and `Contact` remain server compositions. `ProductHub`, `SelectedWork`, `LabTrack`, `ContactRadialMenu` and `NeonPath` are targeted client boundaries; their initial HTML is still prerendered.
+- `ProductHub` uses native buttons, central-first CSS reveal, external-node context and highlighted SVG connections. Featured product anchors retain native hash navigation; a small validated `portfolio:select-project` DOM event also supports reselecting an unchanged hash. Selected Work owns the destination state and focus.
+- `SelectedWork` owns active project and device separately. A single `DeviceShowcase` receives those props; future R3F can replace only this presentation boundary. Project screens show names/categories and an explicit imagery-placeholder notice, not fabricated product UI.
+- At width ≥1024px and height ≥700px, native scroll chooses the nearest narrative step and the single device column is sticky inside the section. It releases at the section end. Smaller/shorter viewports show one active narrative plus device; touch swipe, previous/next and project buttons share selection logic.
+- Defaults: iPhone below 768px, iPad at 768–1199px, MacBook at 1200px+. Explicit device selection remains independent of project switching. CSS reserves presentation height and mirrors initial responsive narrative geometry before hydration.
+- `LabTrack` renders ordered temporary concept records from `lib/home-content.ts`. Native horizontal scrolling supports swipe/trackpad/Shift-wheel, keyboard arrows and buttons. Fine-pointer vertical wheel is translated only while the track can scroll in that direction; document scrolling resumes at either end. No drag library or scroll-jacking.
+- `ContactRadialMenu` is a non-modal disclosure, not an application menu. Trigger → channels follow normal Tab order; Escape restores trigger focus, outside pointer/focus departure closes, and closed links are inert. Desktop/tablet use an upward fan; narrow screens use a compact two-column floating fan. Closing reverses the reveal sequence. Only GitHub is confirmed; other channel buttons explicitly indicate unavailable destinations.
+- `NeonPath` measures Hub/section anchors with ResizeObserver and draws one absolute, decorative SVG path in the outer lane. Scroll illumination is requestAnimationFrame-throttled; reduced motion draws the complete static path. No continuous animation loop, pointer tracking or layout contribution.
+- No-JS fallback keeps all project narratives/case links, one device visual, native Lab browsing, GitHub contact and the existing locale/menu foundation. Interactive-only selectors are hidden; full Hub/contact interactions require JS.
 
 ## Intended boundaries
 

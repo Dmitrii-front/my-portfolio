@@ -4,6 +4,7 @@ import { localizedPath } from "@/lib/i18n";
 import type { SiteLocale } from "@/lib/site-config";
 import { Container } from "@/components/ui/container";
 import { Arrow } from "@/components/ui/arrow";
+import { LabTrack } from "./lab-track";
 
 export function Lab({
 	locale,
@@ -14,7 +15,11 @@ export function Lab({
 }) {
 	const copy = dictionary.home;
 	return (
-		<section className="section lab-section" aria-labelledby="lab-title">
+		<section
+			className="section lab-section"
+			id="home-lab"
+			aria-labelledby="lab-title"
+		>
 			<Container>
 				<div className="section-heading">
 					<div>
@@ -27,9 +32,7 @@ export function Lab({
 						<Arrow />
 					</Link>
 				</div>
-				<p className="quiet-placeholder">
-					{dictionary.content.experimentsPending}
-				</p>
+				<LabTrack locale={locale} />
 			</Container>
 		</section>
 	);

@@ -2,59 +2,59 @@
 
 **Updated:** 2026-10-06
 
-**Phase:** 1 — application and design foundation
+**Phase:** 2 — Home composition and interaction prototype
 
-**Status:** Implemented; ready for visual review and an explicitly requested Phase 2 task.
+**Status:** Implemented; awaiting owner review. Stop before later phases and final 3D.
 
 ## Completed
 
-- Preserved Portfolio 2023 at published tag `portfolio-2023` (`0ff4ec1`); continued the original Git history.
-- Recorded D-006: all public pages require `/en` or `/ru`; EN is primary and the locale registry supports later extension.
-- Implemented locale root redirect, browser preference resolution, persistent explicit switcher selection, and equivalent-path switching without geolocation.
-- Added correct SSR HTML language, localized titles/descriptions, canonical/hreflang/Open Graph foundation, and safe preview indexing policy.
-- Implemented global public shell, desktop/native mobile navigation, footer, skip link, focus states, reduced-motion tokens, and responsive containers.
-- Added the continuous near-black Home composition with Hero, static Product Hub, Selected Work/shared media placeholder, Lab, and Contact.
-- Added all seven route families for EN/RU, including baseline Pnlwise/Healthy/Portfolio case-study skeletons and unknown-route 404 handling.
-- Centralized design tokens for typography, spacing, breakpoints, colors, surfaces, borders, glows, radii, motion, and layers.
-- Added browser QA infrastructure and CI artifact upload for screenshots and failure traces.
+- Phase 1 accepted by owner. Mandatory EN/RU routing, saved explicit language preference, metadata, public shell, accessibility and mobile-first tokens are preserved.
+- D-007 records the owner-requested complete Home prototype, including desktop/eligible-tablet sticky validation brought forward from baseline Phase 3.
+- Hero keeps copy/actions left and a roughly 30% more prominent desktop Hub right; mobile remains vertical.
+- Hub has central-first CSS reveal, hover/focus/tap node context, highlighted connections, PRODUCTS disclosure, and links selecting/focusing the matching work narrative. Repeated same-hash selection works.
+- Selected Work uses one persistent CSS device boundary with independent project/device state, native scroll narrative/sticky release, and MacBook/iPad/iPhone selectors. Narrow/short layouts use touch swipe and controls with one active narrative plus visual.
+- Lab has four ordered, explicitly temporary exploration records, native horizontal browsing, keyboard/wheel support and arrows.
+- Contact has one primary trigger, sequential desktop fan/mobile compact geometry, reverse close, Escape/outside/focus handling, inert closed channels and immediate visibility on keyboard focus.
+- A single lightweight SVG Neon Path runs from the Hub through Work/Lab/Contact, with measured responsive geometry, scroll illumination, contextual emerald and static reduced-motion fallback.
+- Added explicit SVG favicon; no new runtime/development dependencies, video backgrounds or fabricated project metrics/UI.
+- Portfolio 2023 history remains at published tag `portfolio-2023` (`0ff4ec1`); Phase 1 commit `391fe68` is preserved.
 
 ## Validation
 
-- Lint, strict typecheck, 7 unit tests, and production Webpack build pass locally.
-- 18 browser smoke checks pass across mobile/tablet/desktop; 3 intentional project-specific skips avoid duplicated boundary tests and a nonexistent desktop menu.
-- Responsive boundaries checked from 320px through 1920px; no horizontal overflow detected.
-- Home EN/RU axe WCAG checks report zero violations. Keyboard navigation, skip link, reduced motion, and no-JS content/menu/language switching checked.
-- EN/RU mobile/tablet/desktop screenshots saved in ignored `artifacts/phase1/` and reviewed visually.
-- Final lockfile audit reports zero known vulnerabilities.
+- Lint, strict typecheck, 10 unit tests, production Webpack build and diff review.
+- 35 browser checks pass; 13 intentional profile-specific skips avoid duplicating boundary/artifact tests or testing nonexistent desktop/mobile controls. Coverage: preserved foundation plus Hub, same-hash project selection, project/device changes, real touch swipe, sticky release, Lab, Contact and initial-resource checks.
+- Responsive widths: 320/375/430/768/1024/1200/1440/1920, plus 767/1199 boundaries; 500/900px heights. No document overflow detected.
+- EN/RU Home and open Contact axe WCAG checks, keyboard/focus, reduced motion and no-JS content/menu/language fallback.
+- Fresh reviewed artifacts: ignored `artifacts/phase2/`, including EN/RU mobile, tablet, desktop, Pnlwise/Healthy and open Contact.
+- Local initial resource baseline: ~147KB compressed JS, ~6.7KB CSS, no external resources and measured initial layout shift 0 at 375/768/1440px. Not a field performance guarantee.
 
 ## Next action
 
-Review the Phase 1 visual shell. When requested, implement Phase 2 mobile Home interactions: accessible Product Hub, selected-project/device state with static screenshots, Lab swipe, Contact menu, and NeonPath fallback. Heavy 3D remains Phase 4.
+Owner visual/interaction review of Phase 2 in the browser. Recommended next task: focused Phase 3 responsive/interaction polish and approved project imagery/contact content, without starting final Three.js/R3F automatically.
 
 ## Not implemented
 
-- Final Home interactions, sticky device scene, 3D rendering, and production assets.
-- Real case-study content, professional timeline, Lab entries, and unverified direct contact details.
-- Supabase, Drizzle, Admin CMS, product AI-agent API, Audit Log, or analytics.
-- External preview hosting and production cutover.
+- Final 3D models, cursor parallax, production screenshots/assets and final motion tuning.
+- Full case studies, professional timeline, published Lab experiments and unconfirmed contact URLs.
+- Supabase/Drizzle, Admin CMS, product AI-agent API, Audit Log or analytics.
+- External hosting and production cutover.
 
 ## Decisions / blockers
 
-- Locale routing is approved and implemented; no locale decision is pending.
-- External preview requires selecting an account/provider; recommendation is in `docs/DEVELOPMENT.md`.
-- Production hosting and site origin remain owner decisions; local Phase 2 work is not blocked.
+- D-006 locale and D-007 Phase 2 scope are accepted; no routing decision is pending.
+- GitHub contact is verified. Telegram, LinkedIn and Email remain explicitly unavailable until the owner provides destinations; menu prototype is usable without them.
+- Production site origin and external hosting account/provider remain owner decisions. Local review is available and not blocked.
 
 ## Risks / handoff
 
-- Current copy and media are structural placeholders. Keep noindex/robots restrictions until real published content and deployment SEO are reviewed.
-- Only Chromium automation has run locally; cross-browser and assistive-technology QA belong to later release verification.
-- System typography is intentionally provider-independent; a brand font remains a later visual review choice.
-- The WorkHub repository has unrelated dirty files and 12 unpublished commits from before this task. Portfolio memory updates must be committed in isolation; do not publish that unrelated history automatically.
+- Screen imagery is an explicit placeholder, Lab cards describe concepts rather than shipped capabilities. Keep current noindex/robots policy until publication/SEO review.
+- Chromium automation is not Safari/Firefox or physical-device/assistive-technology verification; those remain release checks.
+- Sticky eligibility is a viewport-fit heuristic (≥1024×700); verify with approved screenshots and real content before final 3D.
+- No-JS keeps all work narratives/case links, a device visual, native Lab browsing and GitHub, not full interactive Hub/fan behavior.
+- WorkHub had unrelated dirty files and 13 unpublished commits before Phase 2. Commit Portfolio summary in isolation; do not publish unrelated history.
 
 ## Memory and preview
 
-- Detailed architecture, component boundaries, and tokens: `docs/ARCHITECTURE.md`.
-- Accepted decisions: `docs/DECISIONS.md`.
-- Setup, browser QA, and provider options: `docs/DEVELOPMENT.md`.
+- Architecture: `docs/ARCHITECTURE.md`; decisions: `docs/DECISIONS.md`; QA/hosting: `docs/DEVELOPMENT.md`.
 - WorkHub: `/Users/macos/Documents/WorkHub/Projects/Portfolio/`.
-- Local preview: `/en` and `/ru` on port 3000 after `npm run build && npm run start`.
+- Local preview: `http://127.0.0.1:3000/en` and `/ru` after `npm run build && npm run start`.

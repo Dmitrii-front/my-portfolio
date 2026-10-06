@@ -7,9 +7,11 @@ import { readLocale, type LocaleParams } from "@/lib/locale-params";
 import { siteOrigin } from "@/lib/metadata";
 import { siteConfig } from "@/lib/site-config";
 import "../globals.css";
+import "../../../styles/home.css";
 
 export const metadata: Metadata = {
 	metadataBase: siteOrigin(),
+	icons: { icon: "/icon.svg" },
 	title: { default: "Dmitry — Portfolio", template: "%s — Dmitry" },
 	robots: { index: false, follow: false },
 };

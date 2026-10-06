@@ -104,8 +104,9 @@ export const dictionaries = {
 			rights: "Dmitry",
 		},
 		projects: {
-			pnlwise: "A product in the FinTech space.",
-			healthy: "A product in the healthcare space.",
+			pnlwise: "Financial reporting and AI-assisted P&L from bank statements.",
+			healthy:
+				"A healthcare product connecting patients, doctors, and clinics.",
 			portfolio: "A platform for products, ideas, and experiments.",
 		},
 		experiments: {
@@ -219,8 +220,10 @@ export const dictionaries = {
 			rights: "Дмитрий",
 		},
 		projects: {
-			pnlwise: "Продукт в сфере FinTech.",
-			healthy: "Продукт в сфере здравоохранения.",
+			pnlwise:
+				"Финансовая отчётность и P&L с помощью AI на основе банковских выписок.",
+			healthy:
+				"Продукт в сфере здравоохранения, объединяющий пациентов, врачей и клиники.",
 			portfolio: "Платформа для продуктов, идей и экспериментов.",
 		},
 		experiments: {

@@ -2,7 +2,7 @@
 
 Production portfolio platform for Dmitry: a premium public site, structured case studies, CMS, scoped AI-agent workflows, analytics, and selective 3D interactions.
 
-The repository is currently at **Phase 1: application and design foundation**. EN/RU routes, navigation, design tokens, and a responsive Home shell are implemented. Content pages remain unpublished skeletons.
+The repository is currently at **Phase 2: Home composition and interaction prototype**. The accepted EN/RU foundation is preserved. Home includes an interactive Product Hub, one persistent device showcase, native scroll/touch project navigation, Lab browsing, Contact fan, and SVG Neon Path. Content pages and project screens remain unpublished placeholders.
 
 ## Requirements
 

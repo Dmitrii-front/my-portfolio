@@ -22,10 +22,7 @@ export function Hero({
 					<h1 id="hero-title">{copy.title}</h1>
 					<p className="lede">{copy.description}</p>
 					<div className="hero-actions">
-						<Link
-							className="button button-primary"
-							href={localizedPath(locale, "/projects")}
-						>
+						<Link className="button button-primary" href="#selected-work">
 							{copy.work}
 							<Arrow />
 						</Link>
@@ -41,7 +38,7 @@ export function Hero({
 						</p>
 					</div>
 				</div>
-				<ProductHub labels={copy} />
+				<ProductHub labels={copy} locale={locale} />
 			</Container>
 		</section>
 	);

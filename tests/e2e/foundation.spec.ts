@@ -84,11 +84,11 @@ test("Home has no horizontal overflow and passes automated accessibility", async
 			.analyze();
 		expect(audit.violations).toEqual([]);
 		await page.screenshot({
-			path: `artifacts/phase1/home-${locale}-${info.project.name}.png`,
+			path: `artifacts/phase2/home-${locale}-${info.project.name}.png`,
 			fullPage: true,
 		});
 		await page.screenshot({
-			path: `artifacts/phase1/home-${locale}-${info.project.name}-viewport.png`,
+			path: `artifacts/phase2/home-${locale}-${info.project.name}-viewport.png`,
 		});
 	}
 });
@@ -97,7 +97,7 @@ test("base breakpoint boundaries stay within the viewport", async ({
 	page,
 }, info) => {
 	test.skip(info.project.name !== "desktop");
-	for (const width of [320, 375, 767, 768, 1199, 1200, 1920]) {
+	for (const width of [320, 375, 430, 767, 768, 1024, 1199, 1200, 1440, 1920]) {
 		await page.setViewportSize({ width, height: 900 });
 		await page.goto("/ru");
 		expect(
@@ -174,6 +174,15 @@ test("content, native menu and language choice work without JavaScript", async (
 	await expect(page.getByRole("heading", { level: 1 })).toContainText(
 		"digital products",
 	);
+	for (const name of ["Pnlwise", "Healthy", "Portfolio"])
+		await expect(
+			page.getByRole("heading", { name, exact: true }),
+		).toBeVisible();
+	await expect(page.locator(".device-showcase")).toBeVisible();
+	await expect(page.locator(".lab-card")).toHaveCount(4);
+	await expect(
+		page.locator(".contact-noscript").getByRole("link", { name: "GitHub" }),
+	).toBeVisible();
 	await page.locator("summary").click();
 	await page
 		.locator(".mobile-panel")

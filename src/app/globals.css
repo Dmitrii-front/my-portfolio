@@ -467,10 +467,6 @@ svg {
 	margin-top: var(--space-4);
 	max-width: 35rem;
 }
-.work-grid {
-	display: grid;
-	gap: var(--space-8);
-}
 .project-list {
 	list-style: none;
 	padding: 0;
@@ -506,48 +502,6 @@ svg {
 }
 .project-link:hover .project-title {
 	color: var(--color-violet);
-}
-.device-showcase {
-	min-width: 0;
-	overflow: hidden;
-	border: 1px solid var(--border-subtle);
-	border-radius: var(--radius-md);
-	background: #0e0f12;
-}
-.preview-toolbar {
-	display: flex;
-	align-items: center;
-	gap: 6px;
-	height: 36px;
-	padding-inline: 14px;
-	border-bottom: 1px solid #1e1f25;
-}
-.preview-toolbar span {
-	width: 4px;
-	height: 4px;
-	border-radius: 50%;
-	background: #53535d;
-}
-.preview-canvas {
-	display: grid;
-	min-height: 240px;
-	place-content: center;
-	gap: var(--space-4);
-	padding: var(--space-8);
-	text-align: center;
-}
-.preview-mark {
-	font-size: clamp(5rem, 16vw, 9rem);
-	font-weight: 500;
-	letter-spacing: -0.07em;
-	line-height: 1;
-}
-.preview-mark > span {
-	color: var(--color-violet);
-}
-.preview-canvas p {
-	font-size: 0.75rem;
-	color: var(--color-muted);
 }
 .quiet-placeholder {
 	max-width: 45rem;
@@ -658,16 +612,8 @@ svg {
 	.section-heading > .text-link {
 		flex-shrink: 0;
 	}
-	.work-grid {
-		grid-template-columns: 1fr 1fr;
-		align-items: center;
-		gap: var(--space-12);
-	}
 	.project-link {
 		gap: var(--space-6);
-	}
-	.preview-canvas {
-		min-height: 330px;
 	}
 	.footer-content {
 		justify-content: space-between;
@@ -725,9 +671,6 @@ svg {
 	}
 	.hub-products {
 		min-height: 96px;
-	}
-	.work-grid {
-		gap: var(--space-24);
 	}
 	.contact-section {
 		padding-block: var(--space-32);
