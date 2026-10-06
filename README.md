@@ -1,83 +1,61 @@
-# Portfolio 2023 — Historical Frontend Project
+# Portfolio 2026
 
-This repository preserves a personal portfolio site created in 2023 while learning frontend development. It is published as an early-work sample, not as Dmitrii Nadtochii's current canonical portfolio or an up-to-date statement of services and skills.
+Production portfolio platform for Dmitry: a premium public site, structured case studies, CMS, scoped AI-agent workflows, analytics, and selective 3D interactions.
 
-## Historical context
+The repository is currently at **Phase 0: foundation**. It contains a minimal application shell and engineering infrastructure, not the final Home experience.
 
-The project began as a static personal landing page. Its current content has been reduced to factual project context, the technologies demonstrably used in the repository, and the current GitHub profile. Outdated biography, contact, pricing, employment, and proficiency claims were removed from the current page.
+## Requirements
 
-## Stack
+- Node.js 22.14 or newer
+- npm (bundled with Node.js)
 
-- HTML5
-- SCSS / CSS
-- Vanilla JavaScript
-- Gulp 4
-- BrowserSync
-- Autoprefixer and CSS minification
-
-## Features
-
-- Responsive single-page layout
-- Off-canvas navigation
-- Reusable SCSS blocks and responsive breakpoints
-- Small JavaScript interactions for navigation
-- Gulp development server, asset copying, SCSS compilation, and HTML/CSS minification
-- Favicon and device-icon set
-
-## Structure
-
-```text
-src/
-  fonts/       Local font files
-  icons/       Interface, technology, and favicon assets
-  img/         Page images
-  js/          Browser JavaScript
-  sass/        SCSS source
-  index.html   Page source
-dist/          Generated static site retained for the historical workflow
-gulpfile.js    Build and development tasks
-```
-
-## Development workflow
-
-Requirements:
-
-- Node.js compatible with the legacy dependency set
-- npm
+## Setup
 
 ```bash
 npm ci
 npm run dev
 ```
 
-The default Gulp task builds the site, starts BrowserSync from `dist`, and watches source files.
+Open `http://localhost:3000`.
 
-## Build
+## Scripts
 
-```bash
-npm run build
-```
+- `npm run dev` — local Next.js development server.
+- `npm run lint` — ESLint.
+- `npm run typecheck` — strict TypeScript check.
+- `npm test` — unit tests with Vitest.
+- `npm run build` — production build.
+- `npm run check` — all Phase 0 checks in CI order.
 
-The deterministic build task removes the existing `dist` directory, then compiles styles, minimizes HTML, and copies scripts, fonts, icons, and images.
+## Current stack
 
-Dependencies were intentionally not upgraded during publication cleanup. The tracked output was regenerated and verified from the existing lockfile in an isolated environment.
+- Next.js 16 App Router
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Vitest
 
-## `dist` policy
+Motion, Three.js, React Three Fiber, Drei, Supabase, Drizzle, and PostHog are baseline technologies but intentionally deferred until a phase uses them.
 
-`dist` remains tracked because it was part of the original static deployment workflow. Source files remain authoritative. Future maintenance should regenerate and review `dist` after every source change; it can be removed from version control only after a replacement deployment workflow is confirmed.
+## Project memory
 
-## Privacy
+- [Baseline specification](docs/PORTFOLIO_2026_SPEC.md)
+- [Current state and next action](docs/CURRENT_STATE.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Decisions](docs/DECISIONS.md)
+- [Development workflow](docs/DEVELOPMENT.md)
+- [Codex instructions](AGENTS.md)
 
-The current page exposes only the professional name and the verified GitHub username `Dmitrii-front`. Personal family details, obsolete accounts, old direct contact details, and outdated biography were removed from the current site.
+WorkHub contains the cross-project Portfolio status. Detailed technical memory stays in this repository.
 
-## Limitations
+## Environment
 
-- Historical visual design and tooling are intentionally retained.
-- There is no automated test suite.
-- Dependencies are old and have not been upgraded as part of this cleanup.
-- The former portfolio gallery was incomplete and is not presented as working functionality.
-- This project does not represent the current breadth of Dmitrii's professional work.
+Phase 0 has no environment variables. When an integration is introduced, its variable names and safe placeholders must be added to `.env.example`; secrets stay outside Git.
 
-## Archive status
+## Deployment
 
-This repository is suitable as an unpinned historical frontend project. Current work should be evaluated through newer repositories on the [Dmitrii-front GitHub profile](https://github.com/Dmitrii-front).
+CI runs on pushes to `main` and pull requests. Preview and production hosting will be GitHub-driven. The production provider remains an explicit pre-cutover decision; the application must remain portable where practical.
+
+## Historical Portfolio 2023
+
+The previous static portfolio and its complete Git history are preserved at tag `portfolio-2023`.
