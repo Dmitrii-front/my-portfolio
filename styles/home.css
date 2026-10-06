@@ -1,4 +1,29 @@
 /* Mobile composition first. Light belongs to objects, never the canvas. */
+.scene-enhancement {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	opacity: 0;
+	z-index: 1;
+}
+.scene-enhancement[data-state="ready"] {
+	opacity: 1;
+}
+.product-hub:has(.scene-enhancement[data-state="ready"]) :where(.hub-node) {
+	background: transparent;
+	border-color: transparent;
+	box-shadow: none;
+	z-index: 2;
+}
+.product-hub:has(.scene-enhancement[data-state="ready"]) :where(.hub-node:hover) {
+	transform: none;
+}
+.device-showcase:has(.scene-enhancement[data-state="ready"]) > :where(.device-body) {
+	opacity: 0;
+}
+.device-showcase[data-device="fallback"] > .scene-enhancement {
+	display: none;
+}
 .hub-composition,
 .contact-fan,
 .device-selector,

@@ -54,7 +54,7 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-Playwright starts the production server and saves fresh screenshots under `artifacts/phase3-1/` (ignored by Git and uploaded by CI). `foundation.spec.ts` retains locale preference precedence, route metadata, 404s, no-JS navigation, keyboard/skip-link and EN/RU axe checks. `home.spec.ts` covers Hub selection (including repeated hashes), active/expanded Hub contrast, verified-only devices and neutral project fallback, image aspect ratios, real Chromium touch swipe, sticky release, independently composed Neon profiles, desktop spacing, SVG Lab glyphs/browsing and Contact keyboard/Escape/outside dismissal/axe. Unit tests also check cubic continuity and asset-driven device resolution.
+Playwright starts the production server and saves fresh screenshots under `artifacts/phase4/` (ignored by Git and uploaded by CI). `foundation.spec.ts` retains locale preference precedence, route metadata, 404s, no-JS navigation, keyboard/skip-link and EN/RU axe checks. `home.spec.ts` covers Hub selection (including repeated hashes), active/expanded Hub contrast, verified-only devices and neutral project fallback, image aspect ratios, real Chromium touch swipe, sticky release, independently composed Neon profiles, desktop spacing, SVG Lab glyphs/browsing and Contact keyboard/Escape/outside dismissal/axe. Unit tests also check cubic continuity and asset-driven device resolution.
 
 QA includes 320, 375, 430, 768, 1024, 1200, 1440 and 1920px, plus Phase 1 boundary checks at 767/1199px. Both 500px and 900px heights exercise sticky eligibility/degradation, verified availability, fan clipping and reduced motion. Captures include Home 375/1024/1440, Pnlwise/Healthy/Portfolio states, Lab and Contact open. Phase 3.1 passes 41 browser checks with 19 intentional profile-specific skips. Automated checks supplement, not replace, visual, cross-browser and assistive-technology review.
 
@@ -66,7 +66,24 @@ For a running local server and installed Chrome:
 PLAYWRIGHT_CHANNEL=chrome PLAYWRIGHT_DISABLE_WEBSERVER=1 npm run test:e2e
 ```
 
-## Project assets
+## Phase 4 QA additions
+
+Detailed quality/provenance/fallback/performance policy: [`THREE_ENHANCEMENT.md`](THREE_ENHANCEMENT.md). Fresh captures now go to `artifacts/phase4/` (ignored, CI artifact); Phase 3.1 values above are the comparison baseline. `three.spec.ts` adds capability constraints, DOM semantics, persistent texture switching, initialization/draw/chunk/context failure, offscreen pause and DPR/resize checks. Capable-path tests explicitly report eight cores even on low-core CI; constrained visits have separate tests. Chromium test launches permit SwiftShader when hardware WebGL is unavailable in CI; this is testing configuration, not production capability bypass.
+
+```bash
+npx playwright install webkit firefox
+PLAYWRIGHT_ENGINE=webkit PLAYWRIGHT_DISABLE_WEBSERVER=1 npm run test:e2e -- --project=desktop --workers=1
+PLAYWRIGHT_ENGINE=firefox PLAYWRIGHT_DISABLE_WEBSERVER=1 npm run test:e2e -- --project=desktop --workers=1
+node scripts/phase4-review.mjs
+REVIEW_ENGINE=webkit REVIEW_SMOKE=1 node scripts/phase4-review.mjs
+REVIEW_ENGINE=firefox REVIEW_SMOKE=1 node scripts/phase4-review.mjs
+```
+
+Run engines sequentially on macOS; native keyboard behavior/preferences differ. Review script uses unmodified capability signals; it reports initial essential JS separately from deferred scene requests, and includes fallback image bytes. Safari proper and physical mobile remain release checks.
+
+Phase 4 final QA: lint, strict typecheck, 18 unit tests, production build (23 prerendered routes), Chromium 54 pass / 33 profile skips, WebKit desktop 27 pass / 2 skips and Firefox desktop 27 pass / 2 skips. Cross-engine cases include 320–1920/short-height 3D, fallback/error injection, texture swaps, offscreen pause, reduced-motion resume and axe. Original image manifest, SelectedWork state/sticky logic, Neon geometry, Lab and Contact have no diff.
+
+## Audited image preparation
 
 `npm run assets:prepare` reads only the two audited originals from `~/Desktop/screenshots` (or a directory supplied as its argument), verifies SHA-256 hashes and writes six optimized WebP derivatives to `public/projects`. It reuses Next's installed Sharp offline; no dependency or image hosting provider is added. A changed source must be re-audited before updating the hashes. See `docs/PROJECT_ASSETS.md` for exact mapping, privacy review and missing device variants. Do not commit the full archive, private OCR inventory or contact sheets.
 

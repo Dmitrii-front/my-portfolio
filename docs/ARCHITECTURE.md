@@ -2,7 +2,7 @@
 
 ## Status
 
-Phase 3 is architecturally accepted. Phase 3.1 preserves its interactions while refining responsive Neon geometry, desktop spacing, verified-only device availability and Lab glyphs (D-009). Desktop/eligible-tablet sticky validation was brought into Phase 2 (D-007). CMS, analytics, backend and optional 3D remain deferred.
+Phase 3.1 is visually accepted. Phase 4 enhances only Hub/device surfaces with lazy Three.js/R3F/Drei (D-010); approved composition, DOM interactions and Neon geometry remain unchanged. Desktop/eligible-tablet sticky validation was brought into Phase 2 (D-007). CMS, analytics and backend remain deferred.
 
 ## Runtime foundation
 
@@ -42,6 +42,8 @@ Phase 3 is architecturally accepted. Phase 3.1 preserves its interactions while 
 
 ## Home component boundaries
 
+Phase 4: `components/three/enhancement.tsx` owns capability, loading and local React error fallback. Lazy `hub-scene.tsx` / `device-scene.tsx` use project-owned procedural geometry; `scene-runtime.tsx` guards initialization/draw/context failures, visible-only idle and demand rendering. CSS/HTML stays until first successful draw; one persistent device canvas swaps verified textures and hides for Portfolio. No WebGL semantics or new selection/layout ownership. Quality, provenance, budgets and measurements: [`THREE_ENHANCEMENT.md`](THREE_ENHANCEMENT.md). The following interaction descriptions also describe the retained 2D fallback.
+
 - `Hero`, `Lab` and `Contact` remain server compositions. `ProductHub`, `SelectedWork`, `LabTrack`, `ContactRadialMenu` and `NeonPath` are targeted client boundaries; their initial HTML is still prerendered.
 - `ProductHub` uses native buttons, central-first CSS reveal, rectangular locally lit nodes, external-node context and highlighted SVG connections. Fine-pointer hover adds subtle elevation/tilt; the active connection pulse runs only while the Hub is visible and motion is permitted. Featured product anchors retain native hash navigation; a small validated `portfolio:select-project` DOM event also supports reselecting an unchanged hash. Selected Work owns the destination state and focus.
 - `SelectedWork` owns active project and preferred device separately. Availability and effective device derive from `lib/project-screens.ts`; unsupported preferences resolve to the first verified variant, without erasing the preference. Pnlwise/Healthy expose only MacBook on all viewports. Portfolio resolves to null: neutral project fallback, no hardware frame or device controls. A reserved 44px selector slot keeps the single presentation station stable when choices disappear. Future R3F replaces only `DeviceShowcase`. Static WebP srcsets (640/1280/1920), explicit dimensions, lazy loading and contain-fit preserve original aspect ratios without a runtime image service. Source hashes and audit rationale: `docs/PROJECT_ASSETS.md`; originals stay outside Git.
@@ -72,7 +74,7 @@ Directories are created only when real implementation requires them.
 
 - Public HTML/CSS content must render before optional 3D code loads.
 - Motion and WebGL are progressive enhancements with reduced-motion and static fallbacks.
-- Only the necessary 3D scene is active at one time.
+- Only necessary visible 3D renders: Hub has one capped, visible-only idle; device is demand-driven with short transition bursts. Offscreen scenes pause while canvases can remain mounted.
 - Administrative mutations require server-side authorization and an audit trail.
 - Product AI-agent permissions are scoped; publish, delete, auth, and secret changes are denied by default.
 - Analytics calls go through a project-owned adapter and contain no secrets or private payloads.

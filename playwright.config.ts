@@ -1,6 +1,9 @@
 import { defineConfig, devices } from "@playwright/test";
+type BrowserName = "chromium" | "webkit" | "firefox";
 
 const baseURL = process.env.PLAYWRIGHT_BASE_URL || "http://127.0.0.1:3000";
+const browserName = (process.env.PLAYWRIGHT_ENGINE ||
+	"chromium") as BrowserName;
 
 export default defineConfig({
 	testDir: "./tests/e2e",
@@ -12,14 +15,21 @@ export default defineConfig({
 	use: {
 		baseURL,
 		trace: "retain-on-failure",
-		channel: process.env.PLAYWRIGHT_CHANNEL,
+		browserName,
+		channel:
+			browserName === "chromium" ? process.env.PLAYWRIGHT_CHANNEL : undefined,
+		launchOptions:
+			browserName === "chromium"
+				? { args: ["--enable-unsafe-swiftshader"] }
+				: undefined,
 	},
 	projects: [
 		{
 			name: "mobile",
 			use: {
 				...devices["iPhone 13"],
-				defaultBrowserType: "chromium",
+				defaultBrowserType: browserName,
+				isMobile: browserName !== "firefox",
 				deviceScaleFactor: 1,
 			},
 		},

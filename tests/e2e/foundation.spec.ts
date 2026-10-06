@@ -84,11 +84,11 @@ test("Home has no horizontal overflow and passes automated accessibility", async
 			.analyze();
 		expect(audit.violations).toEqual([]);
 		await page.screenshot({
-			path: `artifacts/phase3-1/home-${locale}-${info.project.name}.png`,
+			path: `artifacts/phase4/home-${locale}-${info.project.name}.png`,
 			fullPage: true,
 		});
 		await page.screenshot({
-			path: `artifacts/phase3-1/home-${locale}-${info.project.name}-viewport.png`,
+			path: `artifacts/phase4/home-${locale}-${info.project.name}-viewport.png`,
 		});
 	}
 });
@@ -145,10 +145,18 @@ test("mobile navigation opens by keyboard and closes with Escape and navigation"
 	await expect(trigger).toBeFocused();
 });
 
-test("skip navigation and reduced-motion preference work", async ({ page }) => {
+test("skip navigation and reduced-motion preference work", async ({
+	page,
+	browserName,
+}) => {
 	await page.emulateMedia({ reducedMotion: "reduce" });
 	await page.goto("/en");
-	await page.keyboard.press("Tab");
+	// macOS WebKit honors the OS keyboard preference; Option-Tab reverses it.
+	await page.keyboard.press(
+		browserName === "webkit" && process.platform === "darwin"
+			? "Alt+Tab"
+			: "Tab",
+	);
 	await expect(page.locator(".skip-link")).toBeFocused();
 	await page.keyboard.press("Enter");
 	await expect(page.locator("main")).toBeFocused();

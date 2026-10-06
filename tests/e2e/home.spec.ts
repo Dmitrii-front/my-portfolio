@@ -35,9 +35,21 @@ test("initial Home stays lightweight and has no hydration layout shift", async (
 			const entries = performance.getEntriesByType(
 				"resource",
 			) as PerformanceResourceTiming[];
+			const first3d =
+				performance
+					.getEntriesByType("mark")
+					.filter((entry) => entry.name.endsWith("3d-request"))[0]?.startTime ??
+				Infinity;
 			return {
 				jsBytes: entries
-					.filter((entry) => entry.name.includes(".js"))
+					.filter(
+						(entry) => entry.name.includes(".js") && entry.startTime < first3d,
+					)
+					.reduce((sum, entry) => sum + entry.encodedBodySize, 0),
+				deferredJsBytes: entries
+					.filter(
+						(entry) => entry.name.includes(".js") && entry.startTime >= first3d,
+					)
 					.reduce((sum, entry) => sum + entry.encodedBodySize, 0),
 				cssBytes: entries
 					.filter((entry) => entry.name.includes(".css"))
@@ -246,13 +258,18 @@ test("desktop native scroll changes project and releases sticky presentation", a
 
 test("Contact fan supports sequential disclosure, keyboard, Escape and outside tap", async ({
 	page,
+	browserName,
 }) => {
 	await page.goto("/en");
 	const trigger = page.locator(".contact-trigger");
 	await trigger.focus();
 	await page.keyboard.press("Enter");
 	await expect(trigger).toHaveAttribute("aria-expanded", "true");
-	await page.keyboard.press("Tab");
+	await page.keyboard.press(
+		browserName === "webkit" && process.platform === "darwin"
+			? "Alt+Tab"
+			: "Tab",
+	);
 	await expect(
 		page.locator(".contact-channel").first().getByRole("link"),
 	).toBeFocused();
@@ -356,10 +373,12 @@ test("short/tall viewports degrade cleanly and motion preference disables reveal
 					.evaluate((element) => getComputedStyle(element).transitionDuration),
 			).toBe("0s");
 			expect(
-				await page
-					.locator(".neon-progress")
-					.evaluate((element) => element.style.strokeDashoffset),
-			).toBe("0");
+				Number.parseFloat(
+					await page
+						.locator(".neon-progress")
+						.evaluate((element) => element.style.strokeDashoffset),
+				),
+			).toBe(0);
 		}
 	}
 });
@@ -503,7 +522,7 @@ test("Hub active and expanded states retain accessible contrast", async ({
 	}
 });
 
-test("fresh Phase 3.1 review artifacts", async ({ page }, info) => {
+test("fresh Phase 4 review artifacts", async ({ page }, info) => {
 	test.skip(info.project.name !== "desktop");
 	await page.emulateMedia({ reducedMotion: "reduce" });
 	for (const locale of ["en", "ru"]) {
@@ -514,7 +533,7 @@ test("fresh Phase 3.1 review artifacts", async ({ page }, info) => {
 			"compact",
 		);
 		await page.screenshot({
-			path: `artifacts/phase3-1/home-${locale}-375.png`,
+			path: `artifacts/phase4/home-${locale}-375.png`,
 			fullPage: true,
 		});
 	}
@@ -526,7 +545,7 @@ test("fresh Phase 3.1 review artifacts", async ({ page }, info) => {
 			"static",
 		);
 		await page.screenshot({
-			path: `artifacts/phase3-1/home-en-${width}.png`,
+			path: `artifacts/phase4/home-en-${width}.png`,
 			fullPage: true,
 		});
 	}
@@ -549,28 +568,28 @@ test("fresh Phase 3.1 review artifacts", async ({ page }, info) => {
 						),
 				)
 				.toBe(true);
-		await page.screenshot({ path: `artifacts/phase3-1/work-${slug}-1440.png` });
+		await page.screenshot({ path: `artifacts/phase4/work-${slug}-1440.png` });
 	}
 	await page
 		.locator("#home-lab")
 		.evaluate((element) => element.scrollIntoView({ block: "start" }));
-	await page.screenshot({ path: "artifacts/phase3-1/lab-1440.png" });
+	await page.screenshot({ path: "artifacts/phase4/lab-1440.png" });
 	await page
 		.locator("#home-contact")
 		.evaluate((element) => element.scrollIntoView({ block: "start" }));
 	await expect(page.locator(".contact-trigger")).toBeInViewport();
-	await page.screenshot({ path: "artifacts/phase3-1/contact-closed-1440.png" });
+	await page.screenshot({ path: "artifacts/phase4/contact-closed-1440.png" });
 	await page.locator(".contact-trigger").click();
-	await page.screenshot({ path: "artifacts/phase3-1/contact-open-1440.png" });
+	await page.screenshot({ path: "artifacts/phase4/contact-open-1440.png" });
 	await page.setViewportSize({ width: 375, height: 812 });
 	await page.goto("/ru");
 	await page.locator(".contact-trigger").click();
-	await page.screenshot({ path: "artifacts/phase3-1/contact-open-375-ru.png" });
+	await page.screenshot({ path: "artifacts/phase4/contact-open-375-ru.png" });
 	await page.setViewportSize({ width: 1440, height: 1000 });
 	await page.goto("/en");
-	await page.screenshot({ path: "artifacts/phase3-1/hub-default-1440.png" });
+	await page.screenshot({ path: "artifacts/phase4/hub-default-1440.png" });
 	await page.getByRole("button", { name: "IDEA", exact: true }).focus();
-	await page.screenshot({ path: "artifacts/phase3-1/hub-active-1440.png" });
+	await page.screenshot({ path: "artifacts/phase4/hub-active-1440.png" });
 	await page.locator(".hub-products").click();
-	await page.screenshot({ path: "artifacts/phase3-1/hub-expanded-1440.png" });
+	await page.screenshot({ path: "artifacts/phase4/hub-expanded-1440.png" });
 });

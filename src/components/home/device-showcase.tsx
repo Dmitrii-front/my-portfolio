@@ -1,3 +1,6 @@
+"use client";
+import { useRef } from "react";
+import { Enhancement } from "@/components/three/enhancement";
 import type { ShowcaseDevice } from "@/lib/home-content";
 import type { projects } from "@/lib/projects";
 import { projectScreen } from "@/lib/project-screens";
@@ -15,13 +18,25 @@ export function DeviceShowcase({
 	locale: SiteLocale;
 }) {
 	const screen = device ? projectScreen(project.slug, device) : undefined;
+	const host = useRef<HTMLElement>(null);
 	return (
 		<figure
+			ref={host}
 			className="device-showcase"
 			data-device={screen ? device : "fallback"}
 			data-project={project.slug}
 			aria-label={screen ? `${project.title} / ${device}` : project.title}
 		>
+			<Enhancement
+				hostRef={host}
+				scene="device"
+				device={device}
+				screen={
+					screen && device === "MacBook"
+						? { base: screen.base, aspect: screen.width / screen.height }
+						: undefined
+				}
+			/>
 			<div className={screen ? "device-body" : "project-fallback"}>
 				{screen && <div className="device-camera" aria-hidden="true" />}
 				<div

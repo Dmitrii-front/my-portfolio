@@ -4,6 +4,7 @@ import type { Dictionary } from "@/lib/dictionaries";
 import { interactionCopy, projectSelectionEvent } from "@/lib/home-content";
 import { projects } from "@/lib/projects";
 import type { SiteLocale } from "@/lib/site-config";
+import { Enhancement } from "@/components/three/enhancement";
 const nodes = ["idea", "development", "ai", "users"] as const;
 const paths = [
 	"M220 200 Q160 125 105 80",
@@ -22,6 +23,7 @@ export function ProductHub({
 	const [expanded, setExpanded] = useState(false);
 	const trigger = useRef<HTMLButtonElement>(null);
 	const root = useRef<HTMLFieldSetElement>(null);
+	const stage = useRef<HTMLDivElement>(null);
 	const [visible, setVisible] = useState(false);
 	useEffect(() => {
 		const observer = new IntersectionObserver(([entry]) =>
@@ -47,9 +49,16 @@ export function ProductHub({
 		>
 			<div
 				className="product-hub"
+				ref={stage}
 				data-active={active ?? ""}
 				data-expanded={expanded}
 			>
+				<Enhancement
+					hostRef={stage}
+					scene="hub"
+					active={active}
+					expanded={expanded}
+				/>
 				<svg
 					className="hub-connections"
 					viewBox="0 0 440 400"

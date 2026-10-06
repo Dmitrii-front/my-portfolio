@@ -2,7 +2,7 @@
 
 Production portfolio platform for Dmitry: a premium public site, structured case studies, CMS, scoped AI-agent workflows, analytics, and selective 3D interactions.
 
-The repository is currently at **Phase 3.1: focused polish**, awaiting visual review; Phase 3 is architecturally accepted. EN/RU foundation and Home interactions are preserved. Home uses separately composed responsive Neon curves, verified-only device choices, two real desktop product screens, a neutral Portfolio fallback, coherent small Lab SVG glyphs and the approved circular Contact fan. Content pages remain unpublished skeletons. Final 3D is not started.
+The repository is at **Phase 4: progressive 3D enhancement**. Phase 3.1 is visually accepted and remains the composition/interaction baseline. Lazy Three.js/R3F/Drei enhance only Product Hub and the persistent MacBook showcase; CSS/HTML fallbacks, EN/RU, verified-only screens, SVG Neon, Lab and circular Contact remain intact. Models are project-owned procedural geometry; content pages remain unpublished skeletons. Quality, licensing, measurements and QA: [`docs/THREE_ENHANCEMENT.md`](docs/THREE_ENHANCEMENT.md).
 
 ## Requirements
 
