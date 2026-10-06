@@ -7,6 +7,9 @@
 
 # Tests and tooling
 /coverage/
+/playwright-report/
+/test-results/
+/artifacts/
 *.tsbuildinfo
 
 # Environment and secrets

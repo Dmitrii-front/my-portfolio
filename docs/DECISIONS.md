@@ -20,7 +20,7 @@ Durable decisions are recorded here. Proposed changes that materially affect UX,
 
 - **Date:** 2026-10-06
 - **Status:** Accepted
-- **Decision:** Install Next.js, React, TypeScript, Tailwind CSS, ESLint, and Vitest only. Add Motion, Three.js, React Three Fiber, Drei, Supabase, Drizzle, and PostHog when their implementing phases begin.
+- **Decision:** Install Next.js, React, TypeScript, Tailwind CSS, Biome, and Vitest only. Add Motion, Three.js, React Three Fiber, Drei, Supabase, Drizzle, and PostHog when their implementing phases begin. Biome replaced ESLint during bootstrap to avoid the vulnerable dev-only glob dependency chain.
 - **Reason:** Reduce initial dependency surface and avoid unused heavy runtime packages.
 
 ## D-004 — Separate repository memory from WorkHub control-plane memory
@@ -36,3 +36,13 @@ Durable decisions are recorded here. Proposed changes that materially affect UX,
 - **Status:** Accepted
 - **Decision:** Keep analytics and infrastructure integrations behind project-owned modules and avoid host-specific application design where practical.
 - **Reason:** The production host is intentionally undecided until cutover analysis.
+
+## D-006 — Require locale prefixes on every public page
+
+- **Date:** 2026-10-06
+- **Status:** Accepted by owner
+- **Decision:** All public pages use `/{locale}/...`, including `/en` and `/ru` Home. EN is the primary content locale; EN and RU ship in v1. Adding KG requires locale configuration and translations, without a routing redesign.
+- **Resolution:** `/` uses a saved explicit selection first, then browser language preferences, then EN. A directly visited prefixed URL always renders that locale. Geolocation is never used for language selection.
+- **Persistence:** A first-party locale-preference cookie stores an explicit switcher selection for one year. Switching preserves the current public path; unknown locale values are rejected.
+- **SEO:** Localized pages have self-canonical URLs and reciprocal EN/RU hreflang alternatives; `x-default` points to the EN content URL. A deployment-provided site origin supplies absolute URLs. Unpublished skeletons and previews remain noindex.
+- **Reason:** Predictable shareable URLs, stable SEO, respect for explicit preferences, and an extensible locale architecture.

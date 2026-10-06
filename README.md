@@ -2,7 +2,7 @@
 
 Production portfolio platform for Dmitry: a premium public site, structured case studies, CMS, scoped AI-agent workflows, analytics, and selective 3D interactions.
 
-The repository is currently at **Phase 0: foundation**. It contains a minimal application shell and engineering infrastructure, not the final Home experience.
+The repository is currently at **Phase 1: application and design foundation**. EN/RU routes, navigation, design tokens, and a responsive Home shell are implemented. Content pages remain unpublished skeletons.
 
 ## Requirements
 
@@ -16,16 +16,17 @@ npm ci
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Open `http://localhost:3000/en` or `/ru`. `/` resolves the saved language choice, browser preferences, then EN.
 
 ## Scripts
 
 - `npm run dev` — local Next.js development server.
 - `npm run lint` — Biome linting.
-- `npm run typecheck` — strict TypeScript check.
+- `npm run typecheck` — regenerate Next.js route types and run strict TypeScript checks.
 - `npm test` — unit tests with Vitest.
-- `npm run build` — production build.
-- `npm run check` — all Phase 0 checks in CI order.
+- `npm run build` — production build using Webpack.
+- `npm run check` — lint, typecheck, unit tests, and production build.
+- `npm run test:e2e` — browser smoke checks against the production build.
 
 ## Current stack
 
@@ -35,6 +36,7 @@ Open `http://localhost:3000`.
 - Tailwind CSS 4
 - Biome
 - Vitest
+- Playwright and axe (development/CI only)
 
 Motion, Three.js, React Three Fiber, Drei, Supabase, Drizzle, and PostHog are baseline technologies but intentionally deferred until a phase uses them.
 
@@ -51,11 +53,11 @@ WorkHub contains the cross-project Portfolio status. Detailed technical memory s
 
 ## Environment
 
-Phase 0 has no environment variables. When an integration is introduced, its variable names and safe placeholders must be added to `.env.example`; secrets stay outside Git.
+[`SITE_URL`](.env.example) is the deployment origin used by canonical, hreflang, and Open Graph URLs. It defaults to `http://localhost:3000` locally. Set it to the actual preview origin before building a hosted preview. Secrets stay outside Git.
 
 ## Deployment
 
-CI runs on pushes to `main` and pull requests. Preview and production hosting will be GitHub-driven. The production provider remains an explicit pre-cutover decision; the application must remain portable where practical.
+CI runs all checks and Chromium smoke tests on pushes to `main` and pull requests. Screenshots and failure traces are uploaded as the `browser-qa` artifact. Local production preview: `npm run build && npm run start`. No external hosting is configured; see [preview options](docs/DEVELOPMENT.md#preview-and-hosting). Skeletons and previews remain noindex.
 
 ## Historical Portfolio 2023
 
