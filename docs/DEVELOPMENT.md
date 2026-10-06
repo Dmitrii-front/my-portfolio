@@ -29,6 +29,7 @@ npm test
 npm run build
 npm run check
 npm run test:e2e
+npm run assets:prepare
 ```
 
 ## Code conventions
@@ -53,17 +54,21 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-Playwright starts the production server and saves fresh screenshots under `artifacts/phase2/` (ignored by Git). `foundation.spec.ts` retains locale preference precedence, route metadata, 404s, no-JS navigation, keyboard/skip-link and EN/RU axe checks. `home.spec.ts` covers Hub selection (including repeated hashes), project/device state, real Chromium touch swipe, sticky release, Lab browsing, Contact keyboard/Escape/outside dismissal and axe with the fan open after reveal settles.
+Playwright starts the production server and saves fresh screenshots under `artifacts/phase3/` (ignored by Git and uploaded by CI). `foundation.spec.ts` retains locale preference precedence, route metadata, 404s, no-JS navigation, keyboard/skip-link and EN/RU axe checks. `home.spec.ts` covers Hub selection (including repeated hashes), active/expanded Hub contrast, all project/device image-or-placeholder states, real Chromium touch swipe, sticky release, interior Neon geometry, Lab browsing, Contact keyboard/Escape/outside dismissal and axe with the fan open after reveal settles.
 
-QA includes 320, 375, 430, 768, 1024, 1200, 1440 and 1920px, plus Phase 1 boundary checks at 767/1199px. Both 500px and 900px viewport heights exercise sticky eligibility/degradation. Artifact captures include EN/RU 375px, 768/1024/1440px, Pnlwise/Healthy active, and Contact open on desktop/mobile. Automated checks supplement, not replace, visual, cross-browser and assistive-technology review.
+QA includes 320, 375, 430, 768, 1024, 1200, 1440 and 1920px, plus Phase 1 boundary checks at 767/1199px. Both 500px and 900px viewport heights exercise sticky eligibility/degradation, fan clipping and reduced motion. Artifact captures include EN/RU Home, 375/768/1024/1440px, all three desktop project states, closed/open desktop and open mobile Contact, and default/active/expanded Hub. Phase 3 passes 40 browser checks with 17 intentional profile-specific skips. Automated checks supplement, not replace, visual, cross-browser and assistive-technology review.
 
-The initial-Home test records compressed resource bytes, external requests and hydration layout shift at 375/768/1440px. Local baseline is approximately 147KB JS and 6.7KB CSS, no external resources, and zero measured initial layout shift. Regression guards are 400KB JS, 60KB CSS and layout shift <0.1; these are development checks, not field Core Web Vitals claims. Resource measurements are attached to test results.
+The initial-Home test records compressed resource bytes, image bytes, external requests and hydration layout shift at 375/768/1440px. Phase 3 baseline is approximately 148KB JS, 7.3KB CSS, 0–12.9KB initial images, no external resources, and zero measured initial layout shift. Regression guards are 400KB JS, 60KB CSS, 150KB images and layout shift <0.1; these are development checks, not field Core Web Vitals claims. Resource measurements are attached to test results.
 
 For a running local server and installed Chrome:
 
 ```bash
 PLAYWRIGHT_CHANNEL=chrome PLAYWRIGHT_DISABLE_WEBSERVER=1 npm run test:e2e
 ```
+
+## Project assets
+
+`npm run assets:prepare` reads only the two audited originals from `~/Desktop/screenshots` (or a directory supplied as its argument), verifies SHA-256 hashes and writes six optimized WebP derivatives to `public/projects`. It reuses Next's installed Sharp offline; no dependency or image hosting provider is added. A changed source must be re-audited before updating the hashes. See `docs/PROJECT_ASSETS.md` for exact mapping, privacy review and missing device variants. Do not commit the full archive, private OCR inventory or contact sheets.
 
 ## Preview and hosting
 

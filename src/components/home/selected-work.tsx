@@ -194,6 +194,7 @@ export function SelectedWork({
 							))}
 						</fieldset>
 						<DeviceShowcase
+							locale={locale}
 							project={projects[active]}
 							device={device}
 							screenLabel={interaction.screen}

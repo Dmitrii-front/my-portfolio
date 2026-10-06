@@ -89,7 +89,7 @@ export const dictionaries = {
 			approachBody:
 				"Understand the problem. Make the important decisions visible. Build, test, and refine.",
 			experiencePending: "A detailed professional timeline is in preparation.",
-			contactPending: "Direct contact channels will be added here.",
+			contactPending: "Choose the channel that works best for you.",
 			github: "Find me on GitHub",
 			experimentsPending: "Experiments in preparation",
 			casePending: "Full case study in preparation",
@@ -205,7 +205,7 @@ export const dictionaries = {
 			approachBody:
 				"Понять задачу. Сделать важные решения прозрачными. Создать, проверить и улучшить.",
 			experiencePending: "Подробная профессиональная история готовится.",
-			contactPending: "Здесь появятся прямые каналы связи.",
+			contactPending: "Выберите удобный канал связи.",
 			github: "Мой GitHub",
 			experimentsPending: "Эксперименты готовятся",
 			casePending: "Полный кейс готовится",

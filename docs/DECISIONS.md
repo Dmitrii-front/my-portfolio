@@ -54,3 +54,13 @@ Durable decisions are recorded here. Proposed changes that materially affect UX,
 - **Decision:** Phase 2 includes desktop/eligible-tablet sticky Selected Work as well as the mobile interaction prototype, bringing this validation forward from the baseline Phase 3. One persistent device surface serves all projects; narrow/short viewports use an active-project touch showcase instead of sticky narrative.
 - **Implementation boundary:** Use native scrolling, CSS/SVG and small React client boundaries. Final R3F models, persistence, analytics and provider selection remain deferred. No new runtime dependency is required.
 - **Content:** Screens are explicitly labelled placeholders, Lab records are temporary concepts, and unconfirmed contact destinations must not be invented.
+
+## D-008 — Polish the accepted interaction architecture with audited assets
+
+- **Date:** 2026-10-06
+- **Status:** Accepted by owner in the Phase 3 request
+- **Decision:** Preserve Phase 2 interactions and one persistent project/device scene. Add only verified device imagery; missing variants remain labelled placeholders. Selected source paths, hashes, privacy exclusions and replacements are in `PROJECT_ASSETS.md`.
+- **Visual language:** Near-black continuous canvas; object-local violet/blue light. Hub stays rounded rectangular with restrained depth/perspective and a visible-active connection pulse. Contact is a distinct circular 180° upward fan (scaled radius on mobile), sequential open/reverse close. Lab remains a quieter horizontal exploration strip.
+- **Journey:** Neon Path runs through interior composition: Hub → behind device → under Lab → Contact. Text masks and opaque foreground objects/controls occlude it; it is never a viewport-edge border. Native scrolling and reduced-motion fallback remain intact.
+- **Confirmed channels:** Telegram `https://t.me/to4ka_gr`, LinkedIn `https://www.linkedin.com/in/dmitrii-nadtochii`, GitHub `https://github.com/Dmitrii-front`, Email `mailto:d.nadtochii.dev@gmail.com`. No public phone/WhatsApp.
+- **Delivery boundary:** Preoptimized static WebP/srcset, no runtime image provider. No Three.js/R3F, Motion, CMS, analytics or paid hosting commitment in Phase 3. Phase 4 requires a separate owner task and 3D/performance budget.

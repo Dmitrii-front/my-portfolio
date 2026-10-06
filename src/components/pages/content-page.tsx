@@ -2,7 +2,7 @@ import { Container } from "@/components/ui/container";
 import { PageHeading } from "@/components/ui/page-heading";
 import { Arrow } from "@/components/ui/arrow";
 import { getDictionary } from "@/lib/dictionaries";
-import { siteConfig, type SiteLocale } from "@/lib/site-config";
+import { publicContacts, type SiteLocale } from "@/lib/site-config";
 
 export type ContentPageName = "lab" | "about" | "experience" | "contact";
 
@@ -36,10 +36,12 @@ export function ContentPage({
 			{page === "contact" && (
 				<section className="content-section">
 					<p>{dictionary.content.contactPending}</p>
-					<a className="button button-primary" href={siteConfig.github}>
-						{dictionary.content.github}
-						<Arrow diagonal />
-					</a>
+					{publicContacts.map((channel) => (
+						<a key={channel.name} className="text-link" href={channel.href}>
+							{channel.name}
+							<Arrow diagonal />
+						</a>
+					))}
 				</section>
 			)}
 		</Container>

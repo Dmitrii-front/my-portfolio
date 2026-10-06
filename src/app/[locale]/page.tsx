@@ -19,7 +19,7 @@ export default async function HomePage({ params }: LocaleParams) {
 	return (
 		<div id="home-composition" className="home-composition">
 			<noscript>
-				<style>{`.work-layout[data-mode="static"] .work-step[data-active="false"] { display: block; } .device-selector, .project-controls, .contact-trigger, .lab-controls { display: none; } .contact-fan { padding-top: 1rem; }`}</style>
+				<style>{`.work-layout[data-mode="static"] .work-step[data-active="false"] { display: block; } .device-selector, .project-controls, .contact-trigger, .lab-controls { display: none; } .contact-fan { height: auto; }`}</style>
 			</noscript>
 			<NeonPath />
 			<Hero locale={locale} dictionary={dictionary} />

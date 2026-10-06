@@ -2,7 +2,7 @@
 
 Production portfolio platform for Dmitry: a premium public site, structured case studies, CMS, scoped AI-agent workflows, analytics, and selective 3D interactions.
 
-The repository is currently at **Phase 2: Home composition and interaction prototype**. The accepted EN/RU foundation is preserved. Home includes an interactive Product Hub, one persistent device showcase, native scroll/touch project navigation, Lab browsing, Contact fan, and SVG Neon Path. Content pages and project screens remain unpublished placeholders.
+The repository is currently at **Phase 3: visual polish and audited project assets**, awaiting owner review. The accepted EN/RU foundation and Home interactions are preserved. Home has a locally lit rectangular Hub, one persistent device showcase, two verified desktop product screens, quieter Lab, circular Contact fan and interior SVG Neon Path. Missing device imagery and content pages remain explicit unpublished placeholders. Final 3D is not started.
 
 ## Requirements
 
@@ -27,6 +27,7 @@ Open `http://localhost:3000/en` or `/ru`. `/` resolves the saved language choice
 - `npm run build` — production build using Webpack.
 - `npm run check` — lint, typecheck, unit tests, and production build.
 - `npm run test:e2e` — browser smoke checks against the production build.
+- `npm run assets:prepare` — reproduce selected WebP derivatives from the external screenshot archive after verifying source hashes.
 
 ## Current stack
 
@@ -47,6 +48,7 @@ Motion, Three.js, React Three Fiber, Drei, Supabase, Drizzle, and PostHog are ba
 - [Architecture](docs/ARCHITECTURE.md)
 - [Decisions](docs/DECISIONS.md)
 - [Development workflow](docs/DEVELOPMENT.md)
+- [Audited project asset sources and missing variants](docs/PROJECT_ASSETS.md)
 - [Codex instructions](AGENTS.md)
 
 WorkHub contains the cross-project Portfolio status. Detailed technical memory stays in this repository.

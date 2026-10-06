@@ -84,11 +84,11 @@ test("Home has no horizontal overflow and passes automated accessibility", async
 			.analyze();
 		expect(audit.violations).toEqual([]);
 		await page.screenshot({
-			path: `artifacts/phase2/home-${locale}-${info.project.name}.png`,
+			path: `artifacts/phase3/home-${locale}-${info.project.name}.png`,
 			fullPage: true,
 		});
 		await page.screenshot({
-			path: `artifacts/phase2/home-${locale}-${info.project.name}-viewport.png`,
+			path: `artifacts/phase3/home-${locale}-${info.project.name}-viewport.png`,
 		});
 	}
 });
@@ -184,6 +184,7 @@ test("content, native menu and language choice work without JavaScript", async (
 		page.locator(".contact-noscript").getByRole("link", { name: "GitHub" }),
 	).toBeVisible();
 	await page.locator("summary").click();
+	await expect(page.locator(".contact-noscript a")).toHaveCount(4);
 	await page
 		.locator(".mobile-panel")
 		.getByRole("link", { name: "Work" })

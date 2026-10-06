@@ -1,4 +1,4 @@
-/* Phase 2: mobile composition first; effects never hide initial content. */
+/* Mobile composition first. Light belongs to objects, never the canvas. */
 .hub-composition,
 .contact-fan,
 .device-selector,
@@ -53,6 +53,11 @@
 }
 .hub-node {
 	cursor: pointer;
+	background: linear-gradient(150deg, #22212c, #13131a 65%);
+	box-shadow:
+		inset 0 1px #ffffff0d,
+		0 5px 0 #0b0b10,
+		0 14px 24px #0006;
 	transition:
 		background var(--duration-normal) var(--ease-out),
 		border-color var(--duration-normal) var(--ease-out),
@@ -63,19 +68,46 @@
 .hub-node:hover,
 .hub-node[aria-pressed="true"] {
 	border-color: var(--color-violet);
-	background: #231d34;
+	background: linear-gradient(145deg, #302440, #181522 75%);
+	box-shadow:
+		inset 0 1px #c3b3ff33,
+		0 5px 0 #100c19,
+		0 0 28px #9071dd24;
 	color: var(--color-ink);
+}
+.product-hub {
+	perspective: 900px;
+}
+.hub-products {
+	background: linear-gradient(145deg, #332644, #1a1527 70%);
+	box-shadow:
+		inset 0 1px #bca5ff26,
+		0 6px 0 #100c19,
+		0 14px 42px #8462cc26;
+}
+.hub-ai {
+	box-shadow:
+		inset 0 1px #7aa7ff1a,
+		0 5px 0 #0b0b10,
+		0 12px 28px #416ba51a;
+}
+@media (hover: hover) and (pointer: fine) and (
+		prefers-reduced-motion: no-preference
+	) {
+	.hub-node:hover {
+		transform: translateY(-4px) rotateX(5deg) rotateY(-4deg);
+	}
 }
 .product-hub[data-active="idea"] .hub-node:not(.hub-idea):not(.hub-products),
 .product-hub[data-active="development"]
 	.hub-node:not(.hub-development):not(.hub-products),
 .product-hub[data-active="ai"] .hub-node:not(.hub-ai):not(.hub-products),
 .product-hub[data-active="users"] .hub-node:not(.hub-users):not(.hub-products) {
-	opacity: 0.55;
+	opacity: 0.75;
 }
 .product-hub[data-expanded="true"] .hub-node:not(.hub-products) {
 	transform: translateY(-10px);
-	opacity: 0.55;
+	opacity: 0.75;
 }
 .hub-connections path {
 	animation: connection-reveal var(--duration-slow) var(--ease-out) backwards;
@@ -87,6 +119,20 @@
 	stroke: var(--color-violet);
 	stroke-opacity: 1;
 	filter: drop-shadow(0 0 3px #a78bfa);
+}
+.hub-connections .hub-pulse {
+	stroke: #bfadff;
+	stroke-opacity: 0;
+	stroke-dasharray: 12 320;
+}
+.hub-connections .hub-pulse[data-active="true"] {
+	stroke-opacity: 0.8;
+	animation: connection-pulse 3s linear infinite;
+}
+@keyframes connection-pulse {
+	to {
+		stroke-dashoffset: -332;
+	}
 }
 .hub-featured {
 	position: absolute;
@@ -141,7 +187,7 @@
 
 .work-layout {
 	display: grid;
-	gap: 2rem;
+	gap: 1.5rem;
 }
 .work-step {
 	padding-block: 0.5rem 1rem;
@@ -182,6 +228,7 @@
 	align-items: center;
 	justify-content: center;
 	gap: 0.5rem;
+	background: var(--color-canvas);
 }
 .device-selector button,
 .project-controls button,
@@ -219,7 +266,7 @@
 	position: relative;
 	display: grid;
 	place-items: center;
-	height: 340px;
+	height: 380px;
 	min-width: 0;
 	overflow: visible;
 	margin-block: 1rem;
@@ -227,10 +274,25 @@
 	border-radius: 0;
 	background: none;
 }
+.device-showcase::before {
+	content: "";
+	position: absolute;
+	width: 78%;
+	height: 55%;
+	bottom: 4%;
+	border-radius: 50%;
+	background: radial-gradient(
+		ellipse,
+		#7661b53d,
+		#4b72ad1c 45%,
+		transparent 70%
+	);
+	pointer-events: none;
+}
 .device-body {
 	position: relative;
-	width: 170px;
-	height: 322px;
+	width: 190px;
+	height: 360px;
 	padding: 7px;
 	border: 1px solid #696973;
 	border-radius: 26px;
@@ -240,6 +302,16 @@
 		width var(--duration-slow) var(--ease-out),
 		height var(--duration-slow) var(--ease-out),
 		border-radius var(--duration-slow) var(--ease-out);
+}
+.device-screen[data-real="true"] {
+	padding: 0;
+	background: #090a0c;
+}
+.device-screen img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
 }
 .device-screen {
 	position: relative;
@@ -298,8 +370,8 @@
 	display: none;
 }
 .device-showcase[data-device="iPad"] .device-body {
-	width: min(82%, 320px);
-	height: 300px;
+	width: min(92%, 370px);
+	height: 340px;
 	border-radius: 19px;
 	padding: 9px;
 }
@@ -307,8 +379,10 @@
 	border-radius: 11px;
 }
 .device-showcase[data-device="MacBook"] .device-body {
-	width: 90%;
-	height: 220px;
+	width: 98%;
+	max-width: 640px;
+	height: auto;
+	aspect-ratio: 1.72;
 	border-radius: 12px 12px 5px 5px;
 	padding: 7px;
 }
@@ -331,17 +405,29 @@
 .device-showcase[data-device="MacBook"] .device-base {
 	display: block;
 	position: absolute;
-	width: 99%;
+	width: 102%;
 	height: 8px;
-	top: calc(50% + 110px);
+	left: -1%;
+	top: 100%;
 	border-radius: 1px 1px 50% 50%;
 	background: linear-gradient(#77777f, #28282e);
+}
+.device-showcase {
+	container-type: inline-size;
+}
+.device-showcase[data-device="MacBook"] .device-screen:not([data-real="true"]) {
+	padding: 0.5rem;
+}
+.device-showcase[data-device="MacBook"] .device-monogram {
+	font-size: clamp(1.5rem, 8cqw, 5rem);
+	margin-block: 0.5rem;
 }
 .work-active-label {
 	text-align: center;
 	margin-top: 0.5rem;
 	color: var(--color-muted);
 	font-size: 0.75rem;
+	background: var(--color-canvas);
 }
 @keyframes screen-reveal {
 	from {
@@ -369,9 +455,17 @@
 	flex: 0 0 min(82%, 19rem);
 	scroll-snap-align: start;
 	padding: 1.5rem 1.25rem;
-	border-top: 1px solid #373340;
-	background: #101115;
-	border-radius: 0 0 0.5rem 0.5rem;
+	border-top: 1px solid #2a2832;
+	background: #08090b;
+	transition:
+		border-color var(--duration-normal),
+		background var(--duration-normal);
+}
+.lab-card:hover,
+.lab-track:focus-visible .lab-card:first-child {
+	border-color: #6c5c96;
+	background:
+		radial-gradient(ellipse at 18% 10%, #5673ae16, transparent 60%), #08090b;
 }
 .lab-mark {
 	display: block;
@@ -399,30 +493,64 @@
 .contact-fan {
 	position: relative;
 	width: min(100%, 34rem);
-	margin-top: 1rem;
-	padding-top: 190px;
+	margin: 1rem auto 0;
+	height: 250px;
+	--fan-radius: 100px;
+	--fan-origin: 174px;
 }
 .contact-section .contact-trigger {
-	position: relative;
+	position: absolute;
+	left: 50%;
+	top: var(--fan-origin);
+	transform: translate(-50%, -50%);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.2rem;
+	width: 92px;
+	height: 92px;
+	padding: 0.7rem;
+	border-radius: 50%;
+	background: radial-gradient(circle at 32% 20%, #342741, #19141f 75%);
+	color: var(--color-ink);
+	font-size: 0.75rem;
+	line-height: 1.3;
+	box-shadow:
+		inset 0 1px #c4abfa26,
+		0 8px 26px #0008,
+		0 0 36px #9071dd1a;
 	margin-top: 0;
 	z-index: 2;
 	border: 0;
 	cursor: pointer;
+}
+.contact-trigger > span:first-child {
+	font-size: 1.5rem;
+	line-height: 1;
+}
+.contact-fan[data-open="true"] .contact-trigger {
+	box-shadow:
+		inset 0 1px #c4abfa33,
+		0 0 44px #9071dd2b;
 }
 .contact-channels {
 	position: absolute;
 	left: 0;
 	top: 0;
 	width: 100%;
-	height: 190px;
+	height: 100%;
 	pointer-events: none;
 }
 .contact-channel {
 	position: absolute;
-	width: 124px;
+	left: 50%;
+	top: var(--fan-origin);
+	width: 60px;
+	height: 60px;
 	opacity: 0;
 	visibility: hidden;
-	transform: translateY(22px) scale(0.94);
+	transform: translate(-50%, -50%) scale(0.5);
 	transition:
 		opacity var(--duration-normal) var(--ease-out),
 		transform var(--duration-normal) var(--ease-out),
@@ -432,67 +560,54 @@
 		calc((3 - var(--channel-index)) * var(--stagger)),
 		calc(var(--duration-normal) + (3 - var(--channel-index)) * var(--stagger));
 }
-.contact-channel:nth-child(1) {
-	left: 0;
-	top: 90px;
-}
-.contact-channel:nth-child(2) {
-	left: 0;
-	top: 16px;
-}
-.contact-channel:nth-child(3) {
-	right: 0;
-	top: 16px;
-}
-.contact-channel:nth-child(4) {
-	right: 0;
-	top: 90px;
-}
-.contact-channel a,
-.contact-channel button {
+.contact-channel a {
 	display: flex;
 	width: 100%;
-	min-height: 56px;
-	padding: 0.75rem;
+	height: 100%;
 	align-items: center;
-	justify-content: space-between;
-	gap: 0.25rem;
-	background: #18151f;
+	justify-content: center;
+	background: linear-gradient(145deg, #282332, #14121a 75%);
 	color: var(--color-ink);
-	border: 1px solid #393142;
-	border-radius: 0.75rem;
-	font-size: 0.8125rem;
+	border: 1px solid #494052;
+	border-radius: 50%;
+	box-shadow:
+		inset 0 1px #ffffff0d,
+		0 6px 18px #0006;
 	cursor: pointer;
 	pointer-events: auto;
 }
-.contact-channel button {
-	flex-direction: column;
-	align-items: flex-start;
-	cursor: default;
+.contact-channel a:hover,
+.contact-channel a:focus-visible {
+	border-color: var(--color-violet);
+	box-shadow: 0 0 24px #9071dd33;
 }
-.channel-unavailable {
-	font-size: 0.6rem;
-	color: var(--color-muted);
+.contact-channel-label {
+	position: absolute;
+	top: calc(100% + 0.5rem);
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: 0.6875rem;
+	color: #b3afc0;
 }
 .contact-fan[data-open="true"] .contact-channel {
 	opacity: 1;
 	visibility: visible;
-	transform: none;
+	transform: translate(
+		calc(-50% + var(--channel-x) * var(--fan-radius)),
+		calc(-50% + var(--channel-y) * var(--fan-radius))
+	);
 	transition-delay:
 		calc(var(--channel-index) * var(--stagger)),
 		calc(var(--channel-index) * var(--stagger)), 0ms;
 }
 .contact-fan[data-open="true"] .contact-channel:focus-within {
 	opacity: 1;
-	transform: none;
 	transition: none;
 }
-.contact-notice {
-	min-height: 3rem;
-	margin-top: 1rem;
-	max-width: 31rem;
-	color: var(--color-muted);
-	font-size: 0.75rem;
+.contact-noscript {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
 }
 :root {
 	--stagger: 65ms;
@@ -511,52 +626,29 @@
 		flex-basis: 19rem;
 	}
 	.contact-fan {
-		margin-inline: auto;
-		padding-top: 220px;
+		--fan-radius: 180px;
+		--fan-origin: 230px;
+		height: 310px;
 	}
-	.contact-channels {
-		height: 220px;
+	.contact-channel {
+		width: 68px;
+		height: 68px;
 	}
-	.contact-trigger {
-		display: flex;
-		margin-inline: auto;
-	}
-	.contact-channel:nth-child(1) {
-		left: 0;
-		top: 145px;
-	}
-	.contact-channel:nth-child(2) {
-		left: 85px;
-		top: 42px;
-	}
-	.contact-channel:nth-child(3) {
-		right: 85px;
-		top: 42px;
-	}
-	.contact-channel:nth-child(4) {
-		right: 0;
-		top: 145px;
-	}
-	.contact-notice {
-		text-align: center;
-		margin-inline: auto;
+	.contact-section .contact-trigger {
+		width: 104px;
+		height: 104px;
+		font-size: 0.8125rem;
 	}
 	.device-showcase {
-		height: 410px;
+		height: 470px;
 	}
 	.device-showcase[data-device="iPhone"] .device-body {
-		height: 370px;
-		width: 195px;
+		height: 430px;
+		width: 226px;
 	}
 	.device-showcase[data-device="iPad"] .device-body {
-		height: 360px;
-		width: min(90%, 380px);
-	}
-	.device-showcase[data-device="MacBook"] .device-body {
-		height: 260px;
-	}
-	.device-showcase[data-device="MacBook"] .device-base {
-		top: calc(50% + 130px);
+		height: 420px;
+		width: min(96%, 450px);
 	}
 }
 @media (min-width: 1024px) and (min-height: 700px) {
@@ -564,9 +656,9 @@
 		display: flex;
 	}
 	.work-layout:is([data-mode="sticky"], [data-mode="static"]) {
-		grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+		grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
 		align-items: start;
-		gap: 4rem;
+		gap: 1.5rem;
 	}
 	.work-layout:is([data-mode="sticky"], [data-mode="static"]) .work-step {
 		min-height: 72svh;
@@ -578,7 +670,7 @@
 	.work-layout:is([data-mode="sticky"], [data-mode="static"])
 		.work-presentation {
 		position: sticky;
-		top: max(2rem, calc((100svh - 540px) / 2));
+		top: max(2rem, calc((100svh - 610px) / 2));
 	}
 	.work-layout[data-mode="sticky"] .work-step[data-active="true"] .work-index {
 		color: var(--color-ink);
@@ -606,13 +698,7 @@
 		font-size: 0.875rem;
 	}
 	.device-showcase {
-		height: 440px;
-	}
-	.device-showcase[data-device="MacBook"] .device-body {
-		height: 310px;
-	}
-	.device-showcase[data-device="MacBook"] .device-base {
-		top: calc(50% + 155px);
+		height: 490px;
 	}
 	.device-showcase[data-device="MacBook"] .device-monogram {
 		font-size: 5rem;
@@ -635,6 +721,9 @@
 	.hub-node,
 	.hub-connections path,
 	.device-screen {
+		animation: none;
+	}
+	.hub-connections .hub-pulse[data-active="true"] {
 		animation: none;
 	}
 	.contact-channel {

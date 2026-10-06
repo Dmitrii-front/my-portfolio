@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Dictionary } from "@/lib/dictionaries";
 import { interactionCopy, projectSelectionEvent } from "@/lib/home-content";
 import { projects } from "@/lib/projects";
@@ -21,11 +21,21 @@ export function ProductHub({
 	const [active, setActive] = useState<(typeof nodes)[number] | null>(null);
 	const [expanded, setExpanded] = useState(false);
 	const trigger = useRef<HTMLButtonElement>(null);
+	const root = useRef<HTMLFieldSetElement>(null);
+	const [visible, setVisible] = useState(false);
+	useEffect(() => {
+		const observer = new IntersectionObserver(([entry]) =>
+			setVisible(entry.isIntersecting),
+		);
+		if (root.current) observer.observe(root.current);
+		return () => observer.disconnect();
+	}, []);
 	const copy = interactionCopy[locale];
 	return (
 		<fieldset
 			className="hub-composition"
 			id="product-hub"
+			ref={root}
 			aria-label={labels.hub}
 			onKeyDown={(event) => {
 				if (event.key === "Escape") {
@@ -56,6 +66,13 @@ export function ProductHub({
 							}}
 						/>
 					))}
+					{active && visible && (
+						<path
+							className="hub-pulse"
+							data-active="true"
+							d={paths[nodes.indexOf(active)]}
+						/>
+					)}
 				</svg>
 				<button
 					type="button"

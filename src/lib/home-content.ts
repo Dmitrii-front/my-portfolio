@@ -55,14 +55,11 @@ export const interactionCopy = {
 		device: "Device",
 		previous: "Previous project",
 		next: "Next project",
-		screen: "Screen placeholder — approved imagery to follow",
+		screen: "No verified screen for this device yet",
 		labConcept: "Exploration concept",
 		labPrevious: "Previous experiments",
 		labNext: "Next experiments",
 		contactChannels: "Contact channels",
-		unavailable: "Not configured",
-		contactNotice:
-			"Telegram, LinkedIn and Email await confirmed contact details.",
 	},
 	ru: {
 		hub: {
@@ -78,14 +75,11 @@ export const interactionCopy = {
 		device: "Устройство",
 		previous: "Предыдущий проект",
 		next: "Следующий проект",
-		screen: "Макет экрана — изображения будут добавлены позже",
+		screen: "Проверенного экрана для этого устройства пока нет",
 		labConcept: "Идея эксперимента",
 		labPrevious: "Предыдущие эксперименты",
 		labNext: "Следующие эксперименты",
 		contactChannels: "Каналы связи",
-		unavailable: "Не настроен",
-		contactNotice:
-			"Telegram, LinkedIn и Email ожидают подтверждённых контактов.",
 	},
 } satisfies Record<SiteLocale, unknown>;
 export const devices = ["MacBook", "iPad", "iPhone"] as const;

@@ -1,13 +1,15 @@
 "use client";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { interactionCopy } from "@/lib/home-content";
-import { siteConfig, type SiteLocale } from "@/lib/site-config";
-const channels = [
-	{ name: "Telegram", href: null },
-	{ name: "LinkedIn", href: null },
-	{ name: "GitHub", href: siteConfig.github },
-	{ name: "Email", href: null },
-] as const;
+import { publicContacts, type SiteLocale } from "@/lib/site-config";
+import { ContactIcon } from "@/components/ui/contact-icon";
+// A 180° upward fan. Mobile scales the radius, not the interaction model.
+const positions = [
+	[-1, 0],
+	[-0.5, -0.866],
+	[0.5, -0.866],
+	[1, 0],
+];
 export function ContactRadialMenu({
 	locale,
 	label,
@@ -57,13 +59,14 @@ export function ContactRadialMenu({
 			<button
 				type="button"
 				ref={trigger}
-				className="button button-primary contact-trigger"
+				className="contact-trigger"
+				aria-label={open ? copy.close : label}
 				aria-expanded={open}
 				aria-controls="contact-channels"
 				onClick={() => setOpen(!open)}
 			>
-				{open ? copy.close : label}
 				<span aria-hidden="true">{open ? "×" : "↗"}</span>
+				<span>{open ? copy.close : label}</span>
 			</button>
 			<div
 				className="contact-channels"
@@ -71,38 +74,37 @@ export function ContactRadialMenu({
 				inert={!open}
 				aria-hidden={!open}
 			>
-				{channels.map((channel, index) => (
+				{publicContacts.map((channel, index) => (
 					<div
 						className="contact-channel"
 						key={channel.name}
-						style={{ "--channel-index": index } as CSSProperties}
+						style={
+							{
+								"--channel-index": index,
+								"--channel-x": positions[index][0],
+								"--channel-y": positions[index][1],
+							} as CSSProperties
+						}
 					>
-						{channel.href ? (
-							<a href={channel.href} target="_blank" rel="noreferrer">
-								{channel.name}
-								<span aria-hidden="true">↗</span>
-							</a>
-						) : (
-							<button
-								type="button"
-								aria-disabled="true"
-								aria-describedby="contact-notice"
-							>
-								{channel.name}
-								<span className="channel-unavailable">{copy.unavailable}</span>
-							</button>
-						)}
+						<a
+							href={channel.href}
+							target={channel.name === "Email" ? undefined : "_blank"}
+							rel={channel.name === "Email" ? undefined : "noreferrer"}
+							aria-label={channel.name}
+						>
+							<ContactIcon name={channel.name} />
+							<span className="contact-channel-label">{channel.name}</span>
+						</a>
 					</div>
 				))}
 			</div>
-			<p id="contact-notice" className="contact-notice" aria-live="polite">
-				{open ? copy.contactNotice : ""}
-			</p>
 			<noscript>
 				<p className="contact-noscript">
-					<a className="text-link" href={siteConfig.github}>
-						GitHub ↗
-					</a>
+					{publicContacts.map((channel) => (
+						<a key={channel.name} className="text-link" href={channel.href}>
+							{channel.name} ↗
+						</a>
+					))}
 				</p>
 			</noscript>
 		</fieldset>

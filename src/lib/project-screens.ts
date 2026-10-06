@@ -1,0 +1,42 @@
+import type { ShowcaseDevice } from "./home-content";
+import type { projects } from "./projects";
+import type { SiteLocale } from "./site-config";
+
+type ProjectSlug = (typeof projects)[number]["slug"];
+type Screen = {
+	base: string;
+	width: number;
+	height: number;
+	alt: Record<SiteLocale, string>;
+};
+
+// Only audited device variants. Absence is deliberate, never a desktop fallback.
+const screens: Record<ProjectSlug, Partial<Record<ShowcaseDevice, Screen>>> = {
+	pnlwise: {
+		MacBook: {
+			base: "/projects/pnlwise-desktop",
+			width: 3454,
+			height: 1990,
+			alt: {
+				en: "Pnlwise home with bank statement upload and an explicitly labelled sample P&L report",
+				ru: "Главная Pnlwise: загрузка выписок и отчёт P&L с явной пометкой Sample report",
+			},
+		},
+	},
+	healthy: {
+		MacBook: {
+			base: "/projects/healthy-desktop",
+			width: 3454,
+			height: 1990,
+			alt: {
+				en: "Healthy public home with doctor search and booking introduction",
+				ru: "Публичная главная Healthy: поиск врача и введение в запись на приём",
+			},
+		},
+	},
+	portfolio: {},
+};
+
+export function projectScreen(slug: ProjectSlug, device: ShowcaseDevice) {
+	return screens[slug][device];
+}
