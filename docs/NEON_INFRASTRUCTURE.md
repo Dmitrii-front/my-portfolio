@@ -1,6 +1,10 @@
 # Neon infrastructure — Phase 4.1
 
-Phase 4 is technically accepted. D-011 fixes continuity, foreground occlusion and light only; no redesign or new dependencies. Approved `neonJourney` output is byte-identical to Phase 4 at 375/768/1024/1440/1920. Model files, Hub/SelectedWork state, track heights, Lab, Contact and locale routes have no implementation diff.
+Phase 4 is technically accepted. D-011 separates foreground occlusion from layout; D-012 authorizes the subsequent curve/thickness/internal-energy correction. No redesign or dependencies. Models, Hub/SelectedWork state, track heights, Lab, Contact and locale routes remain unchanged. The initial Phase 4.1 reference remains in `artifacts/phase4-1/`; refinement artifacts are separate.
+
+## Curve refinement
+
+Independent responsive control polygons use paired turning stations spanning almost half the neighboring vertical intervals. Uniform cubic B-spline conversion produces identical first and second derivatives at adjacent segment boundaries (C2), starts turning before the station and distributes curvature. No round-join workaround or single-point turnaround. Convex hulls prevent overshoot; Y remains monotonic. Hub/Contact endpoints are exact; interior measured stations guide rather than constrain interpolation. Compact Work (including short-height desktop) has one broad device → Lab departure, not waves compressed from a three-step scroll track.
 
 ## Three independent geometries
 
@@ -28,14 +32,13 @@ Scroll tracks were not shortened. Lighting/line can pass through empty track spa
 ## Light and motion
 
 - Base thin 1px core plus 1.2px scroll-illuminated core; violet → blue → restrained emerald → violet gradient remains smooth in document coordinates.
-- Close inner halo: 2px stroke, 1.6px Gaussian blur, opacity 0.32.
-- Soft ambient halo: 4px stroke, 6px blur, opacity 0.16. Black remains dominant; no bloom/environment/rainbow or full-page filter.
-- Exact de Casteljau subdivision in `lib/neon-glow.ts` divides existing cubics until each control-hull dimension is ≤320px. With 22px filter padding per edge, each nested SVG/filter surface is ≤364px per side. Clipped local regions permit independent rasterization/caching; core geometry is not approximated.
-- Scroll energy: a 48px local path fragment and tiny core point, two slightly stronger halos bounded within 96×96px. `requestAnimationFrame` throttles scroll updates; no perpetual animation loop, React render per scroll or new listeners on project tracks.
+- Blended inner halo: 2.7px stroke, 1.9px Gaussian blur, opacity 0.42; ambient: 6px stroke, 8px blur, opacity 0.20. Sharp core remains 1/1.2px. Combined stroke-weight × opacity rises approximately 45% (a tuning proxy, not a perceptual measurement); most added light is diffusion. Black remains dominant, no environment/rainbow or full-page filter.
+- Exact de Casteljau subdivision in `lib/neon-glow.ts` divides cubics until each control-hull dimension is ≤320px. With 28px padding per edge, each static nested SVG/filter is ≤376px per side. Local regions rasterize/cache independently; core geometry is not approximated.
+- Scroll energy: only two blurred layers, feathered radially to zero, colored from the existing journey gradient at that station. No circle, sharp pulse core, head or unfiltered fragment. A 320px sampled support (41 points) exceeds the visible envelope even around bends, so fragment ends are invisible. Radius 88px mobile / 112px otherwise gives approximately 86/110px half-peak length on a straight segment, with diffuse tails. Local filter surface: 256×256px. `requestAnimationFrame` throttles scroll updates; no perpetual loop, React render per scroll or new track listeners.
 - Reduced motion: complete static core/halos, energy hidden; live preference changes tested.
 - Existing violet/blue Hub highlights, laptop material reflections and the local CSS base halo retain the light relationship. No physical cross-renderer lighting or model/material redesign.
 
-## Validation and profiling
+## Initial Phase 4.1 baseline validation and profiling
 
 `npm run check`: clean lint/strict typecheck, 24 unit tests, production build (23 prerendered pages). Chromium 56 pass / 37 intentional profile skips; WebKit/Firefox desktop 29 pass / 2 skips each. Coverage includes prior interactions/axe plus wrapper transparency, filter bounds, responsive light, overflow and reduced-motion pulse removal. Initial-visit measurements now use fresh pages rather than resize/reload of an existing Home: this prevents cached zero byte counts and WebKit errors from aborting a previous Next prefetch, while preserving zero-error assertions for each measured visit.
 
@@ -57,3 +60,36 @@ Added Paint CPU is ~0.03–0.07ms per scroll frame in this sample. Later on-pass
 Essential compressed JS: 150,661B at 375 / 150,848B at larger widths, +683B (~0.45%) to Phase 4. CSS: 8,058B, +437B. Lazy 3D policy and separate <300KB guard remain unchanged. Initial Chrome hydration CLS is 0; no external resource requests, route errors or horizontal overflow in reviewed compositions. Both optional scenes reach ready with ordinary local capability signals; WebKit/Firefox 1440 captures also report ready and no errors/overflow.
 
 Raw values: ignored `artifacts/phase4-1/measurements.json`. Physical-device/Safari and cold/high-DPR validation remain release checks. No external deployment or later phase was started.
+
+## Reference correction — geometry measurements
+
+Analytical cubic curvature sampled at 0.005 parameter intervals, identical real document anchors at height 1000px. Minimum radius within device → Lab (including joins); initial reference `be29d01` versus D-012. Interior station interpolation is intentionally replaced by a convex-hull-guided curve.
+
+| Width | Minimum radius before → after, CSS px |
+| --- | --- |
+| 375 | 33.2 → 91.5 |
+| 768 | 11.6 → 98.5 |
+| 1024 | 63.8 → 135.3 |
+| 1440 | 57.6 → 124.0 |
+| 1920 | 48.4 → 106.3 |
+
+Raw anchors/radii: `artifacts/neon-refinement/radius-comparison.json`. These measurements verify geometry change; perceived thickness, broad flow and absence of a separate energy shape still require owner visual acceptance.
+
+## Reference correction — final QA and paint profile
+
+Lint/typecheck, 26 unit tests, production build (23 pages), Chrome 56 pass / 37 profile skips; WebKit and Firefox desktop 29 pass / 2 skips each. Browser guards cover the unchanged core, zero-end envelope, color matching, absence of any circle/unfiltered energy fragment, bounded filters, responsive alpha continuity and reduced motion. Existing locale, no-JS, sticky/touch, fallback/3D and axe suites pass.
+
+Fresh full/focused captures: `artifacts/neon-refinement/` at 375/768/1024/1440/1920; both scenes reach ready with ordinary capability signals. No overflow or page errors. Cross-engine 1440 captures and a static reduced-motion Home supplement Chrome. The earlier reference is not overwritten.
+
+Same isolated six-pass Chrome method as above, after browser suites finished:
+
+| Width | Tiles | Median Paint CPU / 90 frames, off → on | First on-pass Raster CPU |
+| --- | --- | --- | --- |
+| 375 | 17 | 5.49 → 10.52ms | 30.51ms |
+| 1024 | 25 | 12.31 → 20.03ms | 41.04ms |
+| 1440 | 25 | 11.29 → 17.82ms | 40.68ms |
+| 1920 | 29 | 11.67 → 18.95ms | 41.82ms |
+
+Added Paint CPU ~0.06–0.09ms per scroll frame; RAF median ~16.7ms, maximum p95 17.6ms, no gaps ≥50ms. Warm raster work is much lower than first-on work; raw samples are in `measurements.json`. Whole-page Script CPU totals are ~475–855ms per 90-frame pass; hiding halos does **not** disable energy sampling/other scroll callbacks, so this comparison isolates visual paint, not incremental JavaScript cost. Physical mobile, cold/high-DPR and Safari release QA remain necessary.
+
+Essential compressed JS: 150,991B mobile / 151,178B larger, +330B (~0.22%) versus initial Phase 4.1. CSS 8,034B. Optional 3D policy/budgets remain unchanged. No external requests or measured initial hydration layout shift. No external deployment or later phase.

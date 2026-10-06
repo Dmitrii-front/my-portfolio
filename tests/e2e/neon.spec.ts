@@ -40,8 +40,8 @@ test("Neon separates scroll tracks, foreground alpha and localized glow", async 
 		expect(geometry.masks).toBe(0);
 		expect(geometry.filters.length).toBeGreaterThan(2);
 		for (const filter of geometry.filters) {
-			expect(filter.width).toBeLessThanOrEqual(364);
-			expect(filter.height).toBeLessThanOrEqual(364);
+			expect(filter.width).toBeLessThanOrEqual(376);
+			expect(filter.height).toBeLessThanOrEqual(376);
 		}
 		expect(
 			geometry.backgrounds.every((color) => color === "rgba(0, 0, 0, 0)"),
@@ -52,6 +52,38 @@ test("Neon separates scroll tracks, foreground alpha and localized glow", async 
 		await expect
 			.poll(() => page.locator("#journey-energy-line").getAttribute("d"))
 			.toContain("L");
+		await expect(
+			page.locator(".neon-energy circle, .neon-energy-core"),
+		).toHaveCount(0);
+		await expect(page.locator(".neon-energy use")).toHaveCount(2);
+		await expect(page.locator(".neon-energy use:not([filter])")).toHaveCount(0);
+		const envelope = await page
+			.locator("#journey-energy-gain stop")
+			.evaluateAll((stops) =>
+				stops.map((stop) => Number(stop.getAttribute("stop-opacity"))),
+			);
+		expect(envelope).toEqual([0.65, 0.5, 0.18, 0]);
+		await expect(page.locator("#journey-energy-gain")).toHaveAttribute(
+			"r",
+			width < 768 ? "88" : "112",
+		);
+		expect(
+			await page
+				.locator(".neon-energy")
+				.evaluate((e) => e.style.getPropertyValue("--energy-color")),
+		).toMatch(/^rgb\(/);
+		await expect(
+			page.locator("#journey-energy-gain stop").last(),
+		).toHaveAttribute("stop-opacity", "0");
+		const bloomLength = await page
+			.locator("#journey-energy-line")
+			.evaluate((e: SVGPathElement) => e.getTotalLength());
+		expect(bloomLength).toBeGreaterThan(310);
+		expect(bloomLength).toBeLessThan(321);
+		await expect(page.locator(".neon-progress")).toHaveCSS(
+			"stroke-width",
+			"1.2px",
+		);
 		await expect(page.locator(".neon-path")).toHaveAttribute(
 			"aria-hidden",
 			"true",

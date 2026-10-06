@@ -2,8 +2,8 @@ import { chromium, webkit, firefox } from "@playwright/test";
 import { mkdir, writeFile } from "node:fs/promises";
 
 const engine = process.env.REVIEW_ENGINE ?? "chromium";
-const directory =
-	engine === "chromium" ? "artifacts/phase4-1" : `artifacts/phase4-1/${engine}`;
+const root = process.env.REVIEW_DIRECTORY ?? "artifacts/phase4-1";
+const directory = engine === "chromium" ? root : `${root}/${engine}`;
 await mkdir(directory, { recursive: true });
 const browser = await { chromium, webkit, firefox }[engine].launch({
 	headless: true,
@@ -36,6 +36,17 @@ try {
 		await ready(page, "device");
 		await page.waitForTimeout(400);
 		await page.screenshot({ path: `${directory}/device-path-${width}.png` });
+		await page
+			.locator(".project-controls")
+			.getByRole("button", { name: "Healthy", exact: true })
+			.click();
+		await page.waitForTimeout(700);
+		await page.screenshot({ path: `${directory}/device-healthy-${width}.png` });
+		await page
+			.locator(".project-controls")
+			.getByRole("button", { name: "Pnlwise", exact: true })
+			.click();
+		await page.waitForTimeout(700);
 		await page.evaluate(() => scrollTo(0, 0));
 		await page.waitForTimeout(200);
 		await page.screenshot({
@@ -44,9 +55,33 @@ try {
 		});
 		await page.locator(".product-hub").scrollIntoViewIfNeeded();
 		await page.screenshot({ path: `${directory}/hub-path-${width}.png` });
+		await page
+			.locator("#selected-work")
+			.evaluate((section) =>
+				scrollTo(
+					0,
+					section.getBoundingClientRect().bottom + scrollY - innerHeight * 0.75,
+				),
+			);
+		await page.waitForTimeout(200);
+		await page.screenshot({ path: `${directory}/work-to-lab-${width}.png` });
 		await page.locator("#home-lab").scrollIntoViewIfNeeded();
 		await page.screenshot({ path: `${directory}/lab-path-${width}.png` });
+		const bloom = await page.locator(".neon-energy").boundingBox();
+		if (
+			bloom &&
+			bloom.y > 0 &&
+			bloom.y + bloom.height < 1000 &&
+			bloom.x > 0 &&
+			bloom.x + bloom.width < width
+		)
+			await page.screenshot({
+				path: `${directory}/bloom-detail-${width}.png`,
+				clip: bloom,
+			});
 		await page.locator("#home-contact").scrollIntoViewIfNeeded();
+		await page.locator(".contact-trigger").click();
+		await page.waitForTimeout(500);
 		await page.screenshot({ path: `${directory}/contact-path-${width}.png` });
 		const geometry = await page.evaluate(() => ({
 			filters: [...document.querySelectorAll(".neon-path filter")].map((f) => ({
@@ -57,6 +92,7 @@ try {
 				...e.dataset,
 			})),
 			overflow: document.documentElement.scrollWidth > innerWidth,
+			path: document.querySelector(".neon-track").getAttribute("d"),
 			initialJs: performance
 				.getEntriesByType("resource")
 				.filter(

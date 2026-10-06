@@ -2,7 +2,7 @@
 
 Production portfolio platform for Dmitry: a premium public site, structured case studies, CMS, scoped AI-agent workflows, analytics, and selective 3D interactions.
 
-The repository is at **Phase 4.1: Neon visual infrastructure**; Phase 4 is technically accepted. Approved Home composition, interactions and 3D models remain unchanged. Neon separates scroll/layout geometry from actual foreground occlusion and uses localized layered light. Lazy Three.js/R3F/Drei still enhance only Hub/device with meaningful fallbacks; content pages remain unpublished skeletons. Policies/QA: [`docs/NEON_INFRASTRUCTURE.md`](docs/NEON_INFRASTRUCTURE.md), [`docs/THREE_ENHANCEMENT.md`](docs/THREE_ENHANCEMENT.md).
+The repository is at **Phase 4.1: Neon visual refinement**; Phase 4 is technically accepted. Approved Home composition, interactions and 3D models remain unchanged. Neon separates scroll/layout from foreground occlusion, with broad C2 curves, blended layered light and feathered internal energy without a travelling object. Lazy Three.js/R3F/Drei still enhance only Hub/device with meaningful fallbacks; content pages remain unpublished skeletons. Policies/QA: [`docs/NEON_INFRASTRUCTURE.md`](docs/NEON_INFRASTRUCTURE.md), [`docs/THREE_ENHANCEMENT.md`](docs/THREE_ENHANCEMENT.md).
 
 ## Requirements
 

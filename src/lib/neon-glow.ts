@@ -33,10 +33,10 @@ export function neonGlowTiles(curves: NeonCurve[]) {
 		const xs = [a.x, b.x, c.x, d.x],
 			ys = [a.y, b.y, c.y, d.y];
 		return {
-			x: Math.min(...xs) - 22,
-			y: Math.min(...ys) - 22,
-			width: Math.max(...xs) - Math.min(...xs) + 44,
-			height: Math.max(...ys) - Math.min(...ys) + 44,
+			x: Math.min(...xs) - 28,
+			y: Math.min(...ys) - 28,
+			width: Math.max(...xs) - Math.min(...xs) + 56,
+			height: Math.max(...ys) - Math.min(...ys) + 56,
 			path: `M${a.x} ${a.y} C${b.x} ${b.y} ${c.x} ${c.y} ${d.x} ${d.y}`,
 		};
 	});

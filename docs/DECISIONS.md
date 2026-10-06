@@ -89,3 +89,11 @@ Durable decisions are recorded here. Proposed changes that materially affect UX,
 - **Decision:** Scroll tracks, section/narrative wrappers, padding, interaction areas and transparent canvas bounds are not Neon occluders. Journey anchors continue using stable document layout; actual foreground surfaces provide visual occlusion independently through alpha compositing. Remove wrapper-sized SVG masks and opaque backgrounds from invisible control/label/fallback regions. Keep opaque device pixels, Hub surfaces, Lab foreground and circular Contact controls above the SVG; no per-pixel WebGL readback or duplicated model silhouette.
 - **Light:** Keep approved responsive curve geometry. Layer a thin core, close inner halo and low-opacity ambient halo; bound blur to small curve segments and the travelling scroll-energy pulse, never a page-sized filter. Reduced motion uses static light without a travelling pulse.
 - **Boundary:** No changes to selection/sticky behavior, scroll-track heights, Home composition, 3D models, locale or later-phase infrastructure. Future sections must distinguish layout/scroll bounds, visible content and intentional occlusion.
+
+## D-012 — Neon curvature and internal energy refinement
+
+- **Date:** 2026-10-06
+- **Status:** Owner-requested Phase 4.1 visual correction
+- **Decision:** Refine the recognizable responsive journey itself, not stroke joins: distribute reversals with larger radii and continuous tangent/curvature. Preserve independent mobile/tablet/desktop composition and document anchors. Supersedes D-011's frozen curve geometry only.
+- **Light:** Increase perceived thickness primarily through blended inner/ambient diffusion, not a thicker sharp core. Replace the travelling point/short stroke with a long feathered gain in the existing path's illumination; no separate head, dot or capsule. Reduced motion remains static.
+- **Boundary:** Preserve foreground-alpha occlusion, bounded local filters, section geometry, models and interactions. No deployment or later phase.

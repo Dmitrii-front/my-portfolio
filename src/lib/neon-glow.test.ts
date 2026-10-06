@@ -14,8 +14,8 @@ describe("localized Neon light", () => {
 		expect(tiles.length).toBeGreaterThan(1);
 		let previous = [20, 100];
 		for (const tile of tiles) {
-			expect(tile.width).toBeLessThanOrEqual(364);
-			expect(tile.height).toBeLessThanOrEqual(364);
+			expect(tile.width).toBeLessThanOrEqual(376);
+			expect(tile.height).toBeLessThanOrEqual(376);
 			const [x, y, ...values] =
 				tile.path.match(/-?\d+(?:\.\d+)?/g)?.map(Number) ?? [];
 			expect([x, y]).toEqual(previous);
@@ -37,8 +37,8 @@ describe("localized Neon light", () => {
 			const tiles = neonGlowTiles(curves);
 			expect(tiles.length).toBeLessThan(80);
 			for (const tile of tiles) {
-				expect(tile.width).toBeLessThanOrEqual(364);
-				expect(tile.height).toBeLessThanOrEqual(364);
+				expect(tile.width).toBeLessThanOrEqual(376);
+				expect(tile.height).toBeLessThanOrEqual(376);
 			}
 		},
 	);

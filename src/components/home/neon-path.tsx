@@ -3,6 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import { neonJourney } from "@/lib/neon-geometry";
 import { neonGlowTiles } from "@/lib/neon-glow";
 
+const lightStops = [
+	{ offset: 0, color: [167, 139, 250] },
+	{ offset: 0.45, color: [122, 167, 255] },
+	{ offset: 0.7, color: [103, 217, 176] },
+	{ offset: 1, color: [167, 139, 250] },
+];
+
 export function NeonPath() {
 	const [geometry, setGeometry] = useState({
 		width: 100,
@@ -64,13 +71,29 @@ export function NeonPath() {
 			if (reduced.matches) return;
 			const position = value * length;
 			const center = line.getPointAtLength(position);
-			energy.setAttribute("x", String(center.x - 48));
-			energy.setAttribute("y", String(center.y - 48));
+			const fraction = Math.max(0, Math.min(1, center.y / bounds.height));
+			const stopIndex = Math.max(
+				1,
+				lightStops.findIndex((stop) => stop.offset >= fraction),
+			);
+			const start = lightStops[stopIndex - 1],
+				end = lightStops[stopIndex];
+			const mix = (fraction - start.offset) / (end.offset - start.offset);
+			const color = start.color.map((channel, i) =>
+				Math.round(channel + (end.color[i] - channel) * mix),
+			);
+			energy.style.setProperty("--energy-color", `rgb(${color.join(" ")})`);
+			energy.setAttribute("x", String(center.x - 128));
+			energy.setAttribute("y", String(center.y - 128));
+			// Long support, fully feathered before its ends. Only blurred light is added;
+			// the existing core stays in place, with no separate travelling head.
+			const radius = innerWidth < 768 ? 88 : 112;
+			energy.querySelector("radialGradient")?.setAttribute("r", String(radius));
 			pulseLine.current?.setAttribute(
 				"d",
-				Array.from({ length: 9 }, (_, index) => {
+				Array.from({ length: 41 }, (_, index) => {
 					const p = line.getPointAtLength(
-						Math.max(0, Math.min(length, position + (index - 4) * 6)),
+						Math.max(0, Math.min(length, position + (index - 20) * 8)),
 					);
 					return `${index ? "L" : "M"}${p.x - center.x} ${p.y - center.y}`;
 				}).join(" "),
@@ -110,6 +133,7 @@ export function NeonPath() {
 				workExit: exit,
 				lab: { x: lx, y: ly },
 				contact: { x: cx, y: cy },
+				expandedWork: sticky,
 			});
 			setGeometry({
 				width: bounds.width,
@@ -165,10 +189,13 @@ export function NeonPath() {
 					x2="0"
 					y2={geometry.height}
 				>
-					<stop offset="0" stopColor="#a78bfa" />
-					<stop offset=".45" stopColor="#7aa7ff" />
-					<stop offset=".7" stopColor="#67d9b0" />
-					<stop offset="1" stopColor="#a78bfa" />
+					{lightStops.map((stop) => (
+						<stop
+							key={stop.offset}
+							offset={stop.offset}
+							stopColor={`rgb(${stop.color.join(" ")})`}
+						/>
+					))}
 				</linearGradient>
 			</defs>
 			{/* Only actual opaque foreground pixels occlude. Layout/scroll/canvas boxes do not. */}
@@ -194,7 +221,7 @@ export function NeonPath() {
 								height={tile.height}
 								colorInterpolationFilters="sRGB"
 							>
-								<feGaussianBlur stdDeviation="6" />
+								<feGaussianBlur stdDeviation="8" />
 							</filter>
 							<filter
 								id={`journey-inner-${index}`}
@@ -205,7 +232,7 @@ export function NeonPath() {
 								height={tile.height}
 								colorInterpolationFilters="sRGB"
 							>
-								<feGaussianBlur stdDeviation="1.6" />
+								<feGaussianBlur stdDeviation="1.9" />
 							</filter>
 						</defs>
 						<path
@@ -236,32 +263,56 @@ export function NeonPath() {
 				ref={pulse}
 				aria-hidden="true"
 				className="neon-energy"
-				width="96"
-				height="96"
-				viewBox="-48 -48 96 96"
+				width="256"
+				height="256"
+				viewBox="-128 -128 256 256"
 			>
 				<defs>
+					<radialGradient
+						id="journey-energy-gain"
+						gradientUnits="userSpaceOnUse"
+						cx="0"
+						cy="0"
+						r="112"
+					>
+						<stop
+							offset="0"
+							stopColor="var(--energy-color)"
+							stopOpacity=".65"
+						/>
+						<stop
+							offset=".3"
+							stopColor="var(--energy-color)"
+							stopOpacity=".5"
+						/>
+						<stop
+							offset=".65"
+							stopColor="var(--energy-color)"
+							stopOpacity=".18"
+						/>
+						<stop offset="1" stopColor="var(--energy-color)" stopOpacity="0" />
+					</radialGradient>
 					<filter
 						id="journey-energy-ambient"
 						filterUnits="userSpaceOnUse"
-						x="-48"
-						y="-48"
-						width="96"
-						height="96"
+						x="-128"
+						y="-128"
+						width="256"
+						height="256"
 						colorInterpolationFilters="sRGB"
 					>
-						<feGaussianBlur stdDeviation="7" />
+						<feGaussianBlur stdDeviation="10" />
 					</filter>
 					<filter
 						id="journey-energy-inner"
 						filterUnits="userSpaceOnUse"
-						x="-48"
-						y="-48"
-						width="96"
-						height="96"
+						x="-128"
+						y="-128"
+						width="256"
+						height="256"
 						colorInterpolationFilters="sRGB"
 					>
-						<feGaussianBlur stdDeviation="2" />
+						<feGaussianBlur stdDeviation="2.4" />
 					</filter>
 				</defs>
 				<path ref={pulseLine} id="journey-energy-line" />
@@ -275,8 +326,6 @@ export function NeonPath() {
 					className="neon-energy-inner"
 					filter="url(#journey-energy-inner)"
 				/>
-				<use href="#journey-energy-line" className="neon-energy-core" />
-				<circle r="1" fill="#ddd5fa" fillOpacity=".8" />
 			</svg>
 		</svg>
 	);

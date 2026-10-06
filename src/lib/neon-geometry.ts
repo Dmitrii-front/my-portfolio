@@ -7,6 +7,7 @@ type JourneyAnchors = {
 	workExit: number;
 	lab: Point;
 	contact: Point;
+	expandedWork?: boolean;
 };
 
 // Independently composed waypoints, not one desktop path scaled down.
@@ -17,6 +18,7 @@ export function neonJourney({
 	workExit,
 	lab,
 	contact,
+	expandedWork = width >= 1024,
 }: JourneyAnchors) {
 	const before = device.y - hub.y;
 	const work = workExit - device.y;
@@ -26,26 +28,29 @@ export function neonJourney({
 	if (profile === "mobile") {
 		points = [
 			hub,
-			{ x: width * 0.8, y: hub.y + before * 0.25 },
-			{ x: width * 0.18, y: hub.y + before * 0.58 },
+			{ x: width * 0.84, y: hub.y + before * 0.25 },
+			{ x: width * 0.13, y: hub.y + before * 0.58 },
 			device,
-			{ x: width * 0.79, y: device.y + work * 0.45 },
-			{ x: width * 0.28, y: workExit },
-			{ x: width * 0.76, y: workExit + (lab.y - workExit) * 0.5 },
+			{ x: width * 0.8, y: device.y + (lab.y - device.y) * 0.33 },
 			lab,
-			{ x: width * 0.8, y: lab.y + after * 0.38 },
-			{ x: width * 0.18, y: lab.y + after * 0.72 },
+			{ x: width * 0.74, y: lab.y + after * 0.35 },
+			{ x: width * 0.22, y: lab.y + after * 0.74 },
 			contact,
 		];
 	} else if (profile === "tablet") {
 		points = [
 			hub,
 			{ x: width * 0.4, y: hub.y + before * 0.32 },
-			{ x: width * 0.83, y: hub.y + before * 0.66 },
+			{ x: width * 0.87, y: hub.y + before * 0.66 },
 			device,
-			{ x: width * 0.83, y: device.y + work * 0.21 },
-			{ x: width * 0.42, y: device.y + work * 0.6 },
-			{ x: width * 0.78, y: workExit },
+			// Compact Work has one narrative, not the desktop three-step scroll track.
+			...(!expandedWork
+				? [{ x: width * 0.85, y: device.y + (lab.y - device.y) * 0.32 }]
+				: [
+						{ x: width * 0.87, y: device.y + work * 0.2 },
+						{ x: width * 0.4, y: device.y + work * 0.59 },
+						{ x: width * 0.74, y: device.y + work * 0.92 },
+					]),
 			lab,
 			{ x: width * 0.73, y: lab.y + after * 0.4 },
 			{ x: width * 0.29, y: lab.y + after * 0.74 },
@@ -56,35 +61,47 @@ export function neonJourney({
 			hub,
 			{ x: width * 0.38, y: hub.y + before * 0.38 },
 			device,
-			{ x: width * 0.85, y: device.y + work * 0.24 },
-			{ x: width * 0.48, y: device.y + work * 0.62 },
-			{ x: width * 0.75, y: workExit },
+			...(expandedWork
+				? [
+						{ x: width * 0.88, y: device.y + work * 0.22 },
+						{ x: width * 0.46, y: device.y + work * 0.59 },
+						{ x: width * 0.78, y: device.y + work * 0.93 },
+					]
+				: [{ x: width * 0.85, y: device.y + (lab.y - device.y) * 0.32 }]),
 			lab,
-			{ x: width * 0.76, y: lab.y + after * 0.42 },
-			{ x: width * 0.32, y: lab.y + after * 0.76 },
+			{ x: width * 0.7, y: lab.y + after * 0.4 },
+			{ x: width * 0.36, y: lab.y + after * 0.8 },
 			contact,
 		];
 	}
-	// Shared tangents keep joins smooth; bounded handles keep Y monotonic.
-	const tangents = points.map((point, index) => {
-		const previous = points[index - 1] ?? point;
-		const next = points[index + 1] ?? point;
-		const y =
-			Math.min(
-				index ? point.y - previous.y : next.y - point.y,
-				index < points.length - 1 ? next.y - point.y : point.y - previous.y,
-			) * 0.4;
-		return { x: ((next.x - previous.x) / (next.y - previous.y)) * y, y };
+	// Paired control stations start each turn early and keep it spread over a broad
+	// vertical interval. A uniform cubic B-spline has shared first AND second
+	// derivatives at every join; its convex hull prevents lateral overshoot.
+	const controls: Point[] = [hub, hub, hub];
+	points.slice(1, -1).forEach((point, i) => {
+		const index = i + 1;
+		const reach =
+			Math.min(point.y - points[index - 1].y, points[index + 1].y - point.y) *
+			0.48;
+		controls.push(
+			{ x: point.x, y: point.y - reach },
+			{ x: point.x, y: point.y + reach },
+		);
 	});
-	const curves: NeonCurve[] = points.slice(1).map((point, index) => {
-		const previous = points[index],
-			a = tangents[index],
-			b = tangents[index + 1];
+	controls.push(contact, contact, contact);
+	const blend = (a: Point, b: Point, c: Point) => ({
+		x: (a.x + 4 * b.x + c.x) / 6,
+		y: (a.y + 4 * b.y + c.y) / 6,
+	});
+	const curves: NeonCurve[] = controls.slice(0, -3).map((a, i) => {
+		const b = controls[i + 1],
+			c = controls[i + 2],
+			d = controls[i + 3];
 		return [
-			previous,
-			{ x: previous.x + a.x, y: previous.y + a.y },
-			{ x: point.x - b.x, y: point.y - b.y },
-			point,
+			blend(a, b, c),
+			{ x: (2 * b.x + c.x) / 3, y: (2 * b.y + c.y) / 3 },
+			{ x: (b.x + 2 * c.x) / 3, y: (b.y + 2 * c.y) / 3 },
+			blend(b, c, d),
 		];
 	});
 	const path = curves.reduce(

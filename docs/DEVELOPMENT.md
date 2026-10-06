@@ -95,6 +95,18 @@ Captures/measurements go to ignored `artifacts/phase4-1/`. The review compares s
 
 Final Phase 4.1 checks: 24 unit tests, production build (23 pages), Chromium 56 pass / 37 profile skips, WebKit and Firefox desktop 29 pass / 2 skips each. Full/focused compositions are reviewed separately from isolated filter profiling. Initial-byte tests use fresh pages at every width, keeping error assertions without cache/navigation-abort contamination.
 
+### Reference correction
+
+D-012 adds C2 curvature/compact-radius tests (26 unit tests total). Browser guards reject travelling circles/unfiltered sharp fragments, require a feathered color-matched envelope and preserve the original 1.2px sharp core. Local static filter bounds are now ≤376px; the energy surface is 256px, never document-sized. Section/model/state files remain unchanged.
+
+```bash
+REVIEW_DIRECTORY=artifacts/neon-refinement node scripts/phase4-1-review.mjs
+REVIEW_DIRECTORY=artifacts/neon-refinement REVIEW_ENGINE=webkit REVIEW_SMOKE=1 node scripts/phase4-1-review.mjs
+REVIEW_DIRECTORY=artifacts/neon-refinement REVIEW_ENGINE=firefox REVIEW_SMOKE=1 node scripts/phase4-1-review.mjs
+```
+
+This preserves the initial `artifacts/phase4-1/` reference. New captures add Healthy, Selected Work → Lab, visible bloom details and open Contact. Run browser engines and filter profiling sequentially. Analytical before/after minimum radii at identical measured anchors are recorded in `radius-comparison.json`; numbers supplement full-page visual inspection, not replace it.
+
 ## Audited image preparation
 
 `npm run assets:prepare` reads only the two audited originals from `~/Desktop/screenshots` (or a directory supplied as its argument), verifies SHA-256 hashes and writes six optimized WebP derivatives to `public/projects`. It reuses Next's installed Sharp offline; no dependency or image hosting provider is added. A changed source must be re-audited before updating the hashes. See `docs/PROJECT_ASSETS.md` for exact mapping, privacy review and missing device variants. Do not commit the full archive, private OCR inventory or contact sheets.
