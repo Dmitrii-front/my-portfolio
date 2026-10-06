@@ -2,29 +2,34 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 test("initial Home stays lightweight and has no hydration layout shift", async ({
-	page,
+	browser,
+	baseURL,
 }, info) => {
 	test.skip(info.project.name !== "desktop");
-	const errors: string[] = [];
-	page.on("pageerror", (error) => errors.push(error.message));
-	page.on("console", (message) => {
-		if (message.type() === "error") errors.push(message.text());
-	});
-	await page.addInitScript(() => {
-		const shifts: number[] = [];
-		Object.assign(window, { homeShifts: shifts });
-		new PerformanceObserver((list) => {
-			for (const entry of list.getEntries()) {
-				const shift = entry as PerformanceEntry & {
-					value: number;
-					hadRecentInput: boolean;
-				};
-				if (!shift.hadRecentInput) shifts.push(shift.value);
-			}
-		}).observe({ type: "layout-shift", buffered: true });
-	});
 	for (const width of [375, 768, 1440]) {
-		await page.setViewportSize({ width, height: 900 });
+		// Fresh visits avoid cached byte counts and aborting old Next prefetches on resize/navigation.
+		const page = await browser.newPage({
+			baseURL,
+			viewport: { width, height: 900 },
+		});
+		const errors: string[] = [];
+		page.on("pageerror", (error) => errors.push(error.message));
+		page.on("console", (message) => {
+			if (message.type() === "error") errors.push(message.text());
+		});
+		await page.addInitScript(() => {
+			const shifts: number[] = [];
+			Object.assign(window, { homeShifts: shifts });
+			new PerformanceObserver((list) => {
+				for (const entry of list.getEntries()) {
+					const shift = entry as PerformanceEntry & {
+						value: number;
+						hadRecentInput: boolean;
+					};
+					if (!shift.hadRecentInput) shifts.push(shift.value);
+				}
+			}).observe({ type: "layout-shift", buffered: true });
+		});
 		await page.goto("/en");
 		await expect(page.locator(".work-layout")).not.toHaveAttribute(
 			"data-mode",
@@ -75,8 +80,11 @@ test("initial Home stays lightweight and has no hydration layout shift", async (
 		expect(measurement.imageBytes).toBeLessThan(150_000);
 		expect(measurement.layoutShift).toBeLessThan(0.1);
 		expect(measurement.externalResources).toEqual([]);
+		expect(errors).toEqual([]);
+		page.removeAllListeners("pageerror");
+		page.removeAllListeners("console");
+		await page.close();
 	}
-	expect(errors).toEqual([]);
 });
 
 test("Hub supports focus/tap, product reveal and equivalent Selected Work target", async ({
@@ -474,11 +482,8 @@ test("Neon Path crosses interior composition, updates on resize and stays behind
 		expect(Math.max(...samples)).toBeLessThan(0.9);
 		expect(Math.min(...samples)).toBeLessThan(0.4);
 		expect(Math.max(...samples) - Math.min(...samples)).toBeGreaterThan(0.5);
-		await expect(page.locator(".neon-path g")).toHaveAttribute(
-			"mask",
-			"url(#journey-occlusion)",
-		);
-		await expect(page.locator("#journey-occlusion rect")).not.toHaveCount(1);
+		await expect(page.locator(".neon-path mask")).toHaveCount(0);
+		await expect(page.locator(".neon-glow-tile").first()).toBeAttached();
 	}
 });
 

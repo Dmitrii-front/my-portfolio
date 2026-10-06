@@ -1,4 +1,5 @@
 type Point = { x: number; y: number };
+export type NeonCurve = [Point, Point, Point, Point];
 type JourneyAnchors = {
 	width: number;
 	hub: Point;
@@ -75,11 +76,21 @@ export function neonJourney({
 			) * 0.4;
 		return { x: ((next.x - previous.x) / (next.y - previous.y)) * y, y };
 	});
-	const path = points.slice(1).reduce((path, point, index) => {
+	const curves: NeonCurve[] = points.slice(1).map((point, index) => {
 		const previous = points[index],
 			a = tangents[index],
 			b = tangents[index + 1];
-		return `${path} C${previous.x + a.x} ${previous.y + a.y} ${point.x - b.x} ${point.y - b.y} ${point.x} ${point.y}`;
-	}, `M${hub.x} ${hub.y}`);
-	return { path, profile };
+		return [
+			previous,
+			{ x: previous.x + a.x, y: previous.y + a.y },
+			{ x: point.x - b.x, y: point.y - b.y },
+			point,
+		];
+	});
+	const path = curves.reduce(
+		(path, [, a, b, point]) =>
+			`${path} C${a.x} ${a.y} ${b.x} ${b.y} ${point.x} ${point.y}`,
+		`M${hub.x} ${hub.y}`,
+	);
+	return { path, profile, curves };
 }

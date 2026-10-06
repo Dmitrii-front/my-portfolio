@@ -83,6 +83,18 @@ Run engines sequentially on macOS; native keyboard behavior/preferences differ. 
 
 Phase 4 final QA: lint, strict typecheck, 18 unit tests, production build (23 prerendered routes), Chromium 54 pass / 33 profile skips, WebKit desktop 27 pass / 2 skips and Firefox desktop 27 pass / 2 skips. Cross-engine cases include 320–1920/short-height 3D, fallback/error injection, texture swaps, offscreen pause, reduced-motion resume and axe. Original image manifest, SelectedWork state/sticky logic, Neon geometry, Lab and Contact have no diff.
 
+## Phase 4.1 Neon QA
+
+Phase 4.1 Neon policy and measured paint cost: [`NEON_INFRASTRUCTURE.md`](NEON_INFRASTRUCTURE.md). `neon.spec.ts` guards absence of container masks/opaque track backgrounds, localized filter bounds, responsive profiles, overflow, static reduced motion and axe. `neon-glow.test.ts` checks exact connected subdivision and bounded filter surfaces.
+
+```bash
+node scripts/phase4-1-review.mjs
+```
+
+Captures/measurements go to ignored `artifacts/phase4-1/`. The review compares six alternating 90-frame scroll passes with/without halos on identical CSS-fallback pages, separating SVG paint from optional 3D. Run it after other browser processes finish to reduce profiling noise; browser engines must not share an active Playwright output directory.
+
+Final Phase 4.1 checks: 24 unit tests, production build (23 pages), Chromium 56 pass / 37 profile skips, WebKit and Firefox desktop 29 pass / 2 skips each. Full/focused compositions are reviewed separately from isolated filter profiling. Initial-byte tests use fresh pages at every width, keeping error assertions without cache/navigation-abort contamination.
+
 ## Audited image preparation
 
 `npm run assets:prepare` reads only the two audited originals from `~/Desktop/screenshots` (or a directory supplied as its argument), verifies SHA-256 hashes and writes six optimized WebP derivatives to `public/projects`. It reuses Next's installed Sharp offline; no dependency or image hosting provider is added. A changed source must be re-audited before updating the hashes. See `docs/PROJECT_ASSETS.md` for exact mapping, privacy review and missing device variants. Do not commit the full archive, private OCR inventory or contact sheets.

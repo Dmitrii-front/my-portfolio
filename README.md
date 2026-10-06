@@ -2,7 +2,7 @@
 
 Production portfolio platform for Dmitry: a premium public site, structured case studies, CMS, scoped AI-agent workflows, analytics, and selective 3D interactions.
 
-The repository is at **Phase 4: progressive 3D enhancement**. Phase 3.1 is visually accepted and remains the composition/interaction baseline. Lazy Three.js/R3F/Drei enhance only Product Hub and the persistent MacBook showcase; CSS/HTML fallbacks, EN/RU, verified-only screens, SVG Neon, Lab and circular Contact remain intact. Models are project-owned procedural geometry; content pages remain unpublished skeletons. Quality, licensing, measurements and QA: [`docs/THREE_ENHANCEMENT.md`](docs/THREE_ENHANCEMENT.md).
+The repository is at **Phase 4.1: Neon visual infrastructure**; Phase 4 is technically accepted. Approved Home composition, interactions and 3D models remain unchanged. Neon separates scroll/layout geometry from actual foreground occlusion and uses localized layered light. Lazy Three.js/R3F/Drei still enhance only Hub/device with meaningful fallbacks; content pages remain unpublished skeletons. Policies/QA: [`docs/NEON_INFRASTRUCTURE.md`](docs/NEON_INFRASTRUCTURE.md), [`docs/THREE_ENHANCEMENT.md`](docs/THREE_ENHANCEMENT.md).
 
 ## Requirements
 
@@ -38,8 +38,9 @@ Open `http://localhost:3000/en` or `/ru`. `/` resolves the saved language choice
 - Biome
 - Vitest
 - Playwright and axe (development/CI only)
+- Three.js, React Three Fiber and Drei (lazy progressive enhancement)
 
-Motion, Three.js, React Three Fiber, Drei, Supabase, Drizzle, and PostHog are baseline technologies but intentionally deferred until a phase uses them.
+Motion, Supabase, Drizzle and PostHog remain deferred until a phase uses them.
 
 ## Project memory
 

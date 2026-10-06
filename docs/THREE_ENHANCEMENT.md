@@ -2,6 +2,8 @@
 
 The owner accepted Phase 3.1 composition and interactions. D-010 limits enhancement to Product Hub and DeviceShowcase; no Home redesign, backend or provider integration.
 
+Phase 4 is technically accepted. Phase 4.1 changes SVG/DOM Neon light/occlusion only, not these models, rendering boundaries or texture policy. Current journey audit/paint measurements: [`NEON_INFRASTRUCTURE.md`](NEON_INFRASTRUCTURE.md). The measurements below remain the Phase 4 comparison baseline.
+
 ## Boundaries and failures
 
 `components/three/enhancement.tsx` is the shared DOM-side boundary. It probes capability once per visit, observes proximity/visibility, waits 1.5 seconds near the scene after hydration and then requests a React lazy module. Leaving before that delay cancels the request. Hub loads when visible; device proximity adds 200px. Neither scene module is included in essential route scripts.
@@ -43,7 +45,7 @@ Same audited manifest/derivatives as Phase 3.1; originals untouched. TextureLoad
 
 Phase 3.1 essential baseline: 148,656–148,843 B JS, 7,364 B CSS, 0–36,674 B initial images; measured initial CLS 0. Local encoded bytes are not field Core Web Vitals or physical-device certification.
 
-Final Chrome sample, 2026-10-06 (DPR 2, unmodified capability signals):
+Phase 4 final Chrome sample, 2026-10-06 (DPR 2, unmodified capability signals):
 
 | Viewport | Essential JS | Deferred 3D JS | CSS | Hub request→draw | Device request→draw | CLS |
 | --- | --- | --- | --- | --- | --- | --- |

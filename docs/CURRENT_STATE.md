@@ -2,11 +2,14 @@
 
 **Updated:** 2026-10-06
 
-**Phase:** 4 — Progressive 3D enhancement
+**Phase:** 4.1 — Neon visual infrastructure
 
-**Status:** Phase 3.1 visually accepted. Phase 4 implemented and verified, awaiting owner visual acceptance. STOP: no later phase started.
+**Status:** Phase 4 technically accepted. Phase 4.1 implemented and verified, awaiting owner visual acceptance. Approved Home composition/interactions/models preserved. STOP before external deployment or later product phases.
 
 ## Completed
+
+- D-011 separates document/scroll geometry, visible foreground and actual Neon occlusion. Removed wrapper-sized text/narrative/fallback masks; invisible control rows and labels no longer paint opaque rectangles. Real CSS/HTML surfaces and alpha-transparent WebGL provide exact visual occlusion without model readback or duplicated silhouettes. Scroll tracks/heights and scene models are unchanged.
+- Neon uses unchanged mobile/tablet/desktop curves with a thin core, close inner halo and restrained ambient halo. Exact cubic subdivision bounds static filter surfaces to ≤364px per side; travelling scroll-energy glow stays within 96×96px. Reduced motion is static, without a travelling pulse. Details/paint profile: `docs/NEON_INFRASTRUCTURE.md`.
 
 - Lazy Three.js 0.186.1 / R3F 9.8.1 / Drei 10.7.9 enhance only Hub and the persistent DeviceShowcase. DOM controls/content, responsive/sticky selection, SVG Neon geometry, Lab and Contact are untouched. D-010 records the approved scope and conservative quality policy.
 - Shared capability/loading/error boundary retains meaningful CSS/HTML until first successful draw. HIGH DPR ≤1.5, STANDARD DPR 1, FALLBACK for constraints/errors/reduced motion. First-draw/render/context/chunk failures are contained; live reduced-motion fallback/resume is tested. Hub idle is visible-only 15/30Hz; device is demand-driven. Project-owned procedural laptop/modules, no external models/HDRs or branded assets; only verified desktop WebP textures. Full details/provenance/budgets: `docs/THREE_ENHANCEMENT.md`.
@@ -25,16 +28,16 @@
 
 ## Validation
 
-- Clean lint, strict typecheck, 18 unit tests and production Webpack build (23 prerendered pages); focused diff review shows no changes to SelectedWork interactions, Neon geometry, Lab, Contact or screen manifest.
-- Chromium: 54 browser checks pass, 33 intentional profile-specific skips. WebKit and Firefox desktop: 27 pass / 2 profile skips each. Includes prior foundation/axe checks plus capability constraints, semantic controls, persistent verified texture swaps, live reduced-motion resume, initialization/draw/chunk/context failure, offscreen pause and DPR/resize.
+- Clean lint, strict typecheck, 24 unit tests and production Webpack build (23 prerendered pages). Approved journey paths are byte-identical at 375/768/1024/1440/1920; focused diff review shows no changes to SelectedWork interactions/scroll heights, 3D models, Lab, Contact or screen manifest.
+- Chromium: 56 browser checks pass, 37 intentional profile-specific skips. WebKit and Firefox desktop: 29 pass / 2 profile skips each. Prior foundation/axe/3D/fallback/sticky checks plus transparent scroll/control backgrounds, bounded glow surfaces, continuity profiles and static reduced-motion light.
 - Widths 320/375/430/768/1024/1200/1440/1920, plus 767/1199 boundaries; heights 500/900. No document overflow or open-fan viewport clipping detected; sticky release and touch swipe preserved.
 - EN/RU Home and open Contact axe checks, keyboard/focus, reduced motion and no-JS content/menu/language/contact fallback.
-- Fresh artifacts: ignored `artifacts/phase4/`, including Home 375/1024/1440, Hub default/active/expanded, Pnlwise/Healthy, neutral Portfolio, 2D fallbacks and preserved Lab/Contact states. Dedicated browser-prefixed captures distinguish 3D from structural/reduced-motion captures.
-- Phase 3.1 baseline ~149KB essential JS / 7.4KB CSS. Phase 4 essential JS ~150KB, deferred renderer/scenes ~252KB; zero binary model transfer, existing 640/1280 WebP textures. Full final local metrics and limitations: `docs/THREE_ENHANCEMENT.md`; not a field performance guarantee.
+- Fresh artifacts: ignored `artifacts/phase4-1/`, including full Home 375/768/1024/1440/1920, focused Hub/device/Lab/Contact continuity and reduced motion; WebKit/Firefox full/focused 1440 captures. Earlier Phase 4 3D/texture artifacts remain available.
+- Phase 4.1 essential JS ~151KB (+683B to Phase 4), CSS ~8.1KB; optional 3D loading/budgets unchanged. Local filter-paint comparison and limitations: `docs/NEON_INFRASTRUCTURE.md`; Phase 4 comparison baseline: `docs/THREE_ENHANCEMENT.md`. No field performance guarantee.
 
 ## Next action
 
-Owner visual acceptance of Phase 4 at `/en` and `/ru`, plus physical-mobile/Safari performance review. Obtain missing verified screen variants; do not fabricate them. Any later phase requires a separate owner task.
+Owner visual acceptance of Phase 4.1 at `/en` and `/ru`, plus physical-mobile/Safari performance review. Obtain missing verified screen variants; do not fabricate them. External deployment and any later implementation require a separate owner task.
 
 ## Not implemented
 
@@ -46,7 +49,7 @@ Owner visual acceptance of Phase 4 at `/en` and `/ru`, plus physical-mobile/Safa
 
 ## Decisions / blockers
 
-- D-006 locale, D-007 Home scope, D-008 Phase 3 direction, D-009 verified-only devices and D-010 limited progressive 3D are accepted. Contact URLs remain unchanged in `lib/site-config.ts` and D-008.
+- D-006 locale, D-007 Home scope, D-008 Phase 3 direction, D-009 verified-only devices, D-010 limited progressive 3D and D-011 object-only Neon occlusion/local light are accepted. Contact URLs remain unchanged in `lib/site-config.ts` and D-008.
 - No implementation blocker for local review. Missing credible screen variants are not permission to synthesize product UI. Conservative 3D budgets/measurements are documented.
 - Production origin and external hosting account/provider remain owner decisions; no paid provider is selected.
 
@@ -55,10 +58,10 @@ Owner visual acceptance of Phase 4 at `/en` and `/ru`, plus physical-mobile/Safa
 - Lab remains temporary concept content and case routes remain skeletons. Keep noindex/robots policy until publication/SEO review.
 - Playwright Chromium/WebKit/Firefox automation is not actual Safari, physical-mobile or assistive-technology certification. Those remain release checks; conservative capability hints are not a GPU benchmark.
 - Sticky eligibility remains ≥1024×700; canvas bounds and short-height compact degradation are tested. Preserve this boundary with future content/devices.
-- WorkHub had unrelated dirty files and 16 unpublished commits before Phase 4. Synchronize only Portfolio summary in isolation; do not push unrelated history.
+- WorkHub had unrelated dirty files and 17 unpublished commits before Phase 4.1. Synchronize only Portfolio summary in isolation; do not push unrelated history.
 
 ## Memory and preview
 
-- Architecture: `docs/ARCHITECTURE.md`; decisions: `docs/DECISIONS.md`; images: `docs/PROJECT_ASSETS.md`; 3D/metrics: `docs/THREE_ENHANCEMENT.md`; QA/hosting: `docs/DEVELOPMENT.md`. Fresh artifacts: ignored `artifacts/phase4/`.
+- Architecture: `docs/ARCHITECTURE.md`; decisions: `docs/DECISIONS.md`; images: `docs/PROJECT_ASSETS.md`; 3D: `docs/THREE_ENHANCEMENT.md`; Neon/metrics: `docs/NEON_INFRASTRUCTURE.md`; QA/hosting: `docs/DEVELOPMENT.md`. Fresh artifacts: ignored `artifacts/phase4-1/`.
 - WorkHub: `/Users/macos/Documents/WorkHub/Projects/Portfolio/`.
 - Local preview: `http://127.0.0.1:3000/en` and `/ru` after `npm run build && npm run start`.
