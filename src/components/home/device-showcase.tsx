@@ -6,26 +6,26 @@ import type { SiteLocale } from "@/lib/site-config";
 export function DeviceShowcase({
 	project,
 	device,
-	screenLabel,
+	fallbackLabel,
 	locale,
 }: {
 	project: (typeof projects)[number];
-	device: ShowcaseDevice;
-	screenLabel: string;
+	device: ShowcaseDevice | null;
+	fallbackLabel: string;
 	locale: SiteLocale;
 }) {
-	const screen = projectScreen(project.slug, device);
+	const screen = device ? projectScreen(project.slug, device) : undefined;
 	return (
 		<figure
 			className="device-showcase"
-			data-device={device}
+			data-device={screen ? device : "fallback"}
 			data-project={project.slug}
-			aria-label={`${project.title} / ${device}`}
+			aria-label={screen ? `${project.title} / ${device}` : project.title}
 		>
-			<div className="device-body">
-				<div className="device-camera" aria-hidden="true" />
+			<div className={screen ? "device-body" : "project-fallback"}>
+				{screen && <div className="device-camera" aria-hidden="true" />}
 				<div
-					className="device-screen"
+					className={screen ? "device-screen" : "project-fallback-content"}
 					data-real={Boolean(screen)}
 					key={`${project.slug}-${device}`}
 				>
@@ -34,7 +34,7 @@ export function DeviceShowcase({
 						<img
 							src={`${screen.base}-1280.webp`}
 							srcSet={`${screen.base}-640.webp 640w, ${screen.base}-1280.webp 1280w, ${screen.base}-1920.webp 1920w`}
-							sizes="(min-width: 1200px) 624px, (min-width: 1024px) 56vw, (min-width: 768px) 44vw, 90vw"
+							sizes="(min-width: 1200px) 704px, (min-width: 1024px) 56vw, (min-width: 768px) 90vw, 90vw"
 							width={screen.width}
 							height={screen.height}
 							alt={screen.alt[locale]}
@@ -49,11 +49,11 @@ export function DeviceShowcase({
 								<span>.</span>
 							</div>
 							<p className="device-project-name">{project.title}</p>
-							<p className="device-placeholder">{screenLabel}</p>
+							<p className="project-fallback-caption">{fallbackLabel}</p>
 						</>
 					)}
 				</div>
-				<div className="device-base" aria-hidden="true" />
+				{screen && <div className="device-base" aria-hidden="true" />}
 			</div>
 		</figure>
 	);

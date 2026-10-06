@@ -25,7 +25,9 @@ Sample Pnlwise financial figures and Healthy's captured catalog count are screen
 | Healthy | Selected | Missing | Missing |
 | Portfolio / 2026 | Missing | Missing | Missing |
 
-These seven slots retain restrained, localized “no verified screen” placeholders. A desktop image is not reused as a tablet/mobile screen. Narrow/square browser windows do not independently establish a device viewport/DPR; older Clearledger transaction captures also have obsolete branding and unverified financial data. Healthy reference phone frames, FlutterFlow/design-editor exports, investor decks and older dashboard concepts are not current product-screen evidence. Portfolio keyword matches were résumés, GitHub/Upwork/LinkedIn profiles or infrastructure, not Portfolio 2026 UI. Do not substitute a recursive screenshot of this newly built Home for archive evidence.
+These seven asset slots remain missing. Since Phase 3.1 (D-009), unavailable devices are **not public choices**: Pnlwise/Healthy offer only MacBook, including on mobile; their desktop screen is shown as a desktop device, never disguised as tablet/phone UI. Portfolio has no device selector/frame and uses a restrained project fallback. Adding approved manifest records later enables tablet/mobile choices without changing section layout.
+
+Narrow/square browser windows do not independently establish a device viewport/DPR; older Clearledger transaction captures also have obsolete branding and unverified financial data. Healthy reference phone frames, FlutterFlow/design-editor exports, investor decks and older dashboard concepts are not current product-screen evidence. Portfolio keyword matches were résumés, GitHub/Upwork/LinkedIn profiles or infrastructure, not Portfolio 2026 UI. Do not substitute a recursive screenshot of this newly built Home for archive evidence.
 
 Excluded: account/billing/checkout screens, financial transactions/reports with unverified provenance, medical records/profiles, private messages, admin infrastructure, errors/loading/debug states, unrelated references and obsolete UI.
 

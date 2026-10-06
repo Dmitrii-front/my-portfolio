@@ -5,13 +5,16 @@ import type { Dictionary } from "@/lib/dictionaries";
 import {
 	defaultDevice,
 	projectSelectionEvent,
-	devices,
 	interactionCopy,
 	wrapProject,
 	type ShowcaseDevice,
 } from "@/lib/home-content";
 import { localizedPath } from "@/lib/i18n";
 import { projects } from "@/lib/projects";
+import {
+	availableProjectDevices,
+	resolveProjectDevice,
+} from "@/lib/project-screens";
 import type { SiteLocale } from "@/lib/site-config";
 import { Container } from "@/components/ui/container";
 import { Arrow } from "@/components/ui/arrow";
@@ -24,7 +27,10 @@ export function SelectedWork({
 	dictionary: Dictionary;
 }) {
 	const [active, setActive] = useState(0);
-	const [device, setDevice] = useState<ShowcaseDevice>("iPhone");
+	const [preferredDevice, setPreferredDevice] =
+		useState<ShowcaseDevice>("MacBook");
+	const availableDevices = availableProjectDevices(projects[active].slug);
+	const device = resolveProjectDevice(projects[active].slug, preferredDevice);
 	const [mode, setMode] = useState<"static" | "compact" | "sticky">("static");
 	const steps = useRef<(HTMLElement | null)[]>([]);
 	const root = useRef<HTMLDivElement>(null);
@@ -34,7 +40,7 @@ export function SelectedWork({
 	useEffect(() => {
 		const media = matchMedia("(min-width: 1024px) and (min-height: 700px)");
 		const updateMode = () => setMode(media.matches ? "sticky" : "compact");
-		setDevice(defaultDevice(window.innerWidth));
+		setPreferredDevice(defaultDevice(window.innerWidth));
 		updateMode();
 		media.addEventListener("change", updateMode);
 		const selectTarget = (slug: string) => {
@@ -178,26 +184,30 @@ export function SelectedWork({
 							start.current = null;
 						}}
 					>
-						<fieldset
-							className="device-selector"
-							aria-label={interaction.device}
-						>
-							{devices.map((item) => (
-								<button
-									type="button"
-									key={item}
-									aria-pressed={device === item}
-									onClick={() => setDevice(item)}
+						<div className="device-selector-slot">
+							{availableDevices.length > 0 && (
+								<fieldset
+									className="device-selector"
+									aria-label={interaction.device}
 								>
-									{item}
-								</button>
-							))}
-						</fieldset>
+									{availableDevices.map((item) => (
+										<button
+											type="button"
+											key={item}
+											aria-pressed={device === item}
+											onClick={() => setPreferredDevice(item)}
+										>
+											{item}
+										</button>
+									))}
+								</fieldset>
+							)}
+						</div>
 						<DeviceShowcase
 							locale={locale}
 							project={projects[active]}
 							device={device}
-							screenLabel={interaction.screen}
+							fallbackLabel={interaction.projectFallback}
 						/>
 						<fieldset
 							className="project-controls"

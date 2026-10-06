@@ -119,9 +119,9 @@ test("Hub supports focus/tap, product reveal and equivalent Selected Work target
 	);
 });
 
-test("project and device controls share one persistent presentation", async ({
+test("verified device choices share one persistent presentation", async ({
 	page,
-}, info) => {
+}) => {
 	await page.goto("/en");
 	const surface = page.locator(".device-showcase");
 	await expect(page.locator(".work-layout")).not.toHaveAttribute(
@@ -129,27 +129,40 @@ test("project and device controls share one persistent presentation", async ({
 		"static",
 	);
 	await expect(surface).toHaveCount(1);
-	await expect(surface).toHaveAttribute(
-		"data-device",
-		info.project.name === "mobile"
-			? "iPhone"
-			: info.project.name === "tablet"
-				? "iPad"
-				: "MacBook",
+	await expect(surface).toHaveAttribute("data-device", "MacBook");
+	await expect(page.locator(".device-selector button")).toHaveText(["MacBook"]);
+	await expect(
+		page.getByRole("button", { name: "iPad", exact: true }),
+	).toHaveCount(0);
+	await expect(
+		page.getByRole("button", { name: "iPhone", exact: true }),
+	).toHaveCount(0);
+	await surface.evaluate((element) =>
+		element.setAttribute("data-persistent-test", "yes"),
 	);
 	await page
 		.locator(".project-controls")
 		.getByRole("button", { name: "Healthy", exact: true })
 		.click();
 	await expect(surface).toHaveAttribute("data-project", "healthy");
-	await page.getByRole("button", { name: "iPad", exact: true }).click();
-	await expect(surface).toHaveAttribute("data-device", "iPad");
+	await page.getByRole("button", { name: "MacBook", exact: true }).click();
+	await expect(surface).toHaveAttribute("data-device", "MacBook");
 	await expect(surface).toHaveAttribute("data-project", "healthy");
 	await page
 		.locator(".project-controls")
 		.getByRole("button", { name: "Next project" })
 		.click();
 	await expect(surface).toHaveAttribute("data-project", "portfolio");
+	await expect(surface).toHaveAttribute("data-device", "fallback");
+	await expect(page.locator(".device-selector")).toHaveCount(0);
+	await expect(
+		surface.locator(".device-body, .device-camera, img"),
+	).toHaveCount(0);
+	await expect(surface.locator(".project-fallback")).toBeVisible();
+	await page.getByRole("button", { name: "Previous project" }).click();
+	await expect(surface).toHaveAttribute("data-device", "MacBook");
+	await expect(surface).toHaveAttribute("data-project", "healthy");
+	await expect(surface).toHaveAttribute("data-persistent-test", "yes");
 	await expect(surface).toHaveCount(1);
 });
 
@@ -273,6 +286,12 @@ test("Lab has native horizontal browsing and accessible arrows", async ({
 }) => {
 	await page.goto("/en");
 	const track = page.locator(".lab-track");
+	await expect(track.locator(".lab-mark svg")).toHaveCount(4);
+	for (const glyph of await track.locator(".lab-mark svg").all()) {
+		await expect(glyph).toHaveAttribute("viewBox", "0 0 24 24");
+		await expect(glyph).toHaveAttribute("stroke-width", "1.5");
+		await expect(glyph).toHaveAttribute("aria-hidden", "true");
+	}
 	await expect(track.locator("article")).toHaveCount(4);
 	await page.getByRole("button", { name: "Next experiments" }).click();
 	await expect
@@ -295,6 +314,13 @@ test("short/tall viewports degrade cleanly and motion preference disables reveal
 			await expect(page.locator(".work-layout")).toHaveAttribute(
 				"data-mode",
 				width >= 1024 && height >= 700 ? "sticky" : "compact",
+			);
+			await expect(page.locator(".device-selector button")).toHaveText([
+				"MacBook",
+			]);
+			await expect(page.locator(".device-showcase")).toHaveAttribute(
+				"data-device",
+				"MacBook",
 			);
 			expect(
 				await page.evaluate(
@@ -338,7 +364,7 @@ test("short/tall viewports degrade cleanly and motion preference disables reveal
 	}
 });
 
-test("real screens preserve aspect ratio and missing variants remain explicit", async ({
+test("real screens preserve aspect ratio and missing devices are not offered", async ({
 	page,
 }) => {
 	await page.emulateMedia({ reducedMotion: "reduce" });
@@ -357,34 +383,48 @@ test("real screens preserve aspect ratio and missing variants remain explicit", 
 				exact: true,
 			})
 			.click();
-		for (const device of ["MacBook", "iPad", "iPhone"]) {
-			await page.getByRole("button", { name: device, exact: true }).click();
-			await expect(scene).toHaveAttribute("data-project", slug);
-			if (device === "MacBook" && slug !== "portfolio") {
-				const image = scene.getByRole("img");
-				await expect(image).toBeVisible();
-				await expect
-					.poll(() =>
-						image.evaluate(
-							(element: HTMLImageElement) =>
-								element.complete && element.naturalWidth > 0,
-						),
-					)
-					.toBe(true);
-				await expect(image).toHaveCSS("object-fit", "contain");
-				const ratio = await image.evaluate(
-					(element: HTMLImageElement) =>
-						element.naturalWidth / element.naturalHeight,
-				);
-				expect(ratio).toBeCloseTo(3454 / 1990, 2);
-			} else {
-				await expect(scene.getByRole("img")).toHaveCount(0);
-				await expect(scene.locator(".device-placeholder")).toContainText(
-					"No verified screen",
-				);
-			}
-			await expect(scene).toHaveCount(1);
+		await expect(
+			page.getByRole("button", { name: "iPad", exact: true }),
+		).toHaveCount(0);
+		await expect(
+			page.getByRole("button", { name: "iPhone", exact: true }),
+		).toHaveCount(0);
+		await expect(scene).toHaveAttribute("data-project", slug);
+		if (slug !== "portfolio") {
+			await expect(page.locator(".device-selector button")).toHaveText([
+				"MacBook",
+			]);
+			await expect(scene).toHaveAttribute("data-device", "MacBook");
+			const image = scene.getByRole("img");
+			await expect(image).toBeVisible();
+			await expect
+				.poll(() =>
+					image.evaluate(
+						(element: HTMLImageElement) =>
+							element.complete && element.naturalWidth > 0,
+					),
+				)
+				.toBe(true);
+			await expect(image).toHaveCSS("object-fit", "contain");
+			const ratio = await image.evaluate(
+				(element: HTMLImageElement) =>
+					element.naturalWidth / element.naturalHeight,
+			);
+			expect(ratio).toBeCloseTo(3454 / 1990, 2);
+		} else {
+			await expect(scene.getByRole("img")).toHaveCount(0);
+			await expect(page.locator(".device-selector")).toHaveCount(0);
+			await expect(scene.locator(".project-fallback-caption")).toContainText(
+				"Visual overview coming soon",
+			);
+			await expect(scene.locator(".device-body")).toHaveCount(0);
+			const audit = await new AxeBuilder({ page })
+				.include("#selected-work")
+				.withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+				.analyze();
+			expect(audit.violations).toEqual([]);
 		}
+		await expect(scene).toHaveCount(1);
 	}
 });
 
@@ -396,6 +436,10 @@ test("Neon Path crosses interior composition, updates on resize and stays behind
 	await page.goto("/en");
 	for (const width of [375, 1024, 1440]) {
 		await page.setViewportSize({ width, height: 900 });
+		await expect(page.locator(".neon-path")).toHaveAttribute(
+			"data-profile",
+			width < 768 ? "mobile" : width < 1200 ? "tablet" : "desktop",
+		);
 		await expect
 			.poll(() => page.locator(".neon-track").getAttribute("d"))
 			.toContain(" C");
@@ -410,11 +454,35 @@ test("Neon Path crosses interior composition, updates on resize and stays behind
 			});
 		expect(Math.max(...samples)).toBeLessThan(0.9);
 		expect(Math.min(...samples)).toBeLessThan(0.4);
+		expect(Math.max(...samples) - Math.min(...samples)).toBeGreaterThan(0.5);
 		await expect(page.locator(".neon-path g")).toHaveAttribute(
 			"mask",
 			"url(#journey-occlusion)",
 		);
 		await expect(page.locator("#journey-occlusion rect")).not.toHaveCount(1);
+	}
+});
+
+test("desktop spacing remains generous with bounded device growth", async ({
+	page,
+}, info) => {
+	test.skip(info.project.name !== "desktop");
+	await page.emulateMedia({ reducedMotion: "reduce" });
+	await page.goto("/en");
+	for (const width of [1200, 1440, 1920]) {
+		await page.setViewportSize({ width, height: 1000 });
+		await expect(page.locator(".work-layout")).toHaveAttribute(
+			"data-mode",
+			"sticky",
+		);
+		await expect(page.locator(".work-step").first()).toHaveCSS(
+			"min-height",
+			"630px",
+		);
+		await expect(page.locator(".work-layout")).toHaveCSS("gap", "20px");
+		const box = await page.locator(".device-body").boundingBox();
+		expect(box?.width).toBeLessThanOrEqual(720);
+		if (width >= 1440) expect(box?.width).toBeGreaterThanOrEqual(704);
 	}
 });
 
@@ -435,7 +503,7 @@ test("Hub active and expanded states retain accessible contrast", async ({
 	}
 });
 
-test("fresh Phase 3 review artifacts", async ({ page }, info) => {
+test("fresh Phase 3.1 review artifacts", async ({ page }, info) => {
 	test.skip(info.project.name !== "desktop");
 	await page.emulateMedia({ reducedMotion: "reduce" });
 	for (const locale of ["en", "ru"]) {
@@ -446,7 +514,7 @@ test("fresh Phase 3 review artifacts", async ({ page }, info) => {
 			"compact",
 		);
 		await page.screenshot({
-			path: `artifacts/phase3/home-${locale}-375.png`,
+			path: `artifacts/phase3-1/home-${locale}-375.png`,
 			fullPage: true,
 		});
 	}
@@ -458,7 +526,7 @@ test("fresh Phase 3 review artifacts", async ({ page }, info) => {
 			"static",
 		);
 		await page.screenshot({
-			path: `artifacts/phase3/home-en-${width}.png`,
+			path: `artifacts/phase3-1/home-en-${width}.png`,
 			fullPage: true,
 		});
 	}
@@ -481,24 +549,28 @@ test("fresh Phase 3 review artifacts", async ({ page }, info) => {
 						),
 				)
 				.toBe(true);
-		await page.screenshot({ path: `artifacts/phase3/work-${slug}-1440.png` });
+		await page.screenshot({ path: `artifacts/phase3-1/work-${slug}-1440.png` });
 	}
+	await page
+		.locator("#home-lab")
+		.evaluate((element) => element.scrollIntoView({ block: "start" }));
+	await page.screenshot({ path: "artifacts/phase3-1/lab-1440.png" });
 	await page
 		.locator("#home-contact")
 		.evaluate((element) => element.scrollIntoView({ block: "start" }));
 	await expect(page.locator(".contact-trigger")).toBeInViewport();
-	await page.screenshot({ path: "artifacts/phase3/contact-closed-1440.png" });
+	await page.screenshot({ path: "artifacts/phase3-1/contact-closed-1440.png" });
 	await page.locator(".contact-trigger").click();
-	await page.screenshot({ path: "artifacts/phase3/contact-open-1440.png" });
+	await page.screenshot({ path: "artifacts/phase3-1/contact-open-1440.png" });
 	await page.setViewportSize({ width: 375, height: 812 });
 	await page.goto("/ru");
 	await page.locator(".contact-trigger").click();
-	await page.screenshot({ path: "artifacts/phase3/contact-open-375-ru.png" });
+	await page.screenshot({ path: "artifacts/phase3-1/contact-open-375-ru.png" });
 	await page.setViewportSize({ width: 1440, height: 1000 });
 	await page.goto("/en");
-	await page.screenshot({ path: "artifacts/phase3/hub-default-1440.png" });
+	await page.screenshot({ path: "artifacts/phase3-1/hub-default-1440.png" });
 	await page.getByRole("button", { name: "IDEA", exact: true }).focus();
-	await page.screenshot({ path: "artifacts/phase3/hub-active-1440.png" });
+	await page.screenshot({ path: "artifacts/phase3-1/hub-active-1440.png" });
 	await page.locator(".hub-products").click();
-	await page.screenshot({ path: "artifacts/phase3/hub-expanded-1440.png" });
+	await page.screenshot({ path: "artifacts/phase3-1/hub-expanded-1440.png" });
 });

@@ -6,7 +6,6 @@ export const labExperiments = [
 	{
 		id: "payments",
 		title: "Kyrgyzstan Payment Integration",
-		mark: "↔",
 		description: {
 			en: "Exploring payment flows and local integrations.",
 			ru: "Исследование платёжных сценариев и локальных интеграций.",
@@ -15,7 +14,6 @@ export const labExperiments = [
 	{
 		id: "agent",
 		title: "AI Portfolio Agent",
-		mark: "✳",
 		description: {
 			en: "Exploring a scoped assistant for portfolio content.",
 			ru: "Идея помощника с ограниченными правами для контента портфолио.",
@@ -24,7 +22,6 @@ export const labExperiments = [
 	{
 		id: "parser",
 		title: "PDF Parser",
-		mark: "≡",
 		description: {
 			en: "Exploring structured data extraction from documents.",
 			ru: "Исследование извлечения структурированных данных из документов.",
@@ -33,7 +30,6 @@ export const labExperiments = [
 	{
 		id: "bot",
 		title: "Telegram Bot",
-		mark: "↗",
 		description: {
 			en: "Exploring useful conversational workflows.",
 			ru: "Исследование полезных сценариев в диалоговом интерфейсе.",
@@ -55,7 +51,7 @@ export const interactionCopy = {
 		device: "Device",
 		previous: "Previous project",
 		next: "Next project",
-		screen: "No verified screen for this device yet",
+		projectFallback: "Visual overview coming soon",
 		labConcept: "Exploration concept",
 		labPrevious: "Previous experiments",
 		labNext: "Next experiments",
@@ -75,7 +71,7 @@ export const interactionCopy = {
 		device: "Устройство",
 		previous: "Предыдущий проект",
 		next: "Следующий проект",
-		screen: "Проверенного экрана для этого устройства пока нет",
+		projectFallback: "Визуальный обзор скоро появится",
 		labConcept: "Идея эксперимента",
 		labPrevious: "Предыдущие эксперименты",
 		labNext: "Следующие эксперименты",

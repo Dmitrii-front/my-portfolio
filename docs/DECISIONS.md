@@ -64,3 +64,10 @@ Durable decisions are recorded here. Proposed changes that materially affect UX,
 - **Journey:** Neon Path runs through interior composition: Hub → behind device → under Lab → Contact. Text masks and opaque foreground objects/controls occlude it; it is never a viewport-edge border. Native scrolling and reduced-motion fallback remain intact.
 - **Confirmed channels:** Telegram `https://t.me/to4ka_gr`, LinkedIn `https://www.linkedin.com/in/dmitrii-nadtochii`, GitHub `https://github.com/Dmitrii-front`, Email `mailto:d.nadtochii.dev@gmail.com`. No public phone/WhatsApp.
 - **Delivery boundary:** Preoptimized static WebP/srcset, no runtime image provider. No Three.js/R3F, Motion, CMS, analytics or paid hosting commitment in Phase 3. Phase 4 requires a separate owner task and 3D/performance budget.
+
+## D-009 — Limit public device choices to verified assets
+
+- **Date:** 2026-10-06
+- **Status:** Accepted by owner in Phase 3.1; Phase 3 architecture accepted
+- **Decision:** Derive device availability from the audited project screen manifest, equally on mobile and desktop. Pnlwise/Healthy offer only MacBook; Portfolio has a neutral project fallback without a hardware frame or device controls. Keep preferred device selection separate from project selection, resolving to an available variant only; adding verified tablet/mobile records must not require section layout changes.
+- **Polish boundary:** Independently tune mobile/tablet/desktop broad S-like Neon geometry; retain brightness, occlusion, scroll illumination and reduced motion. Desktop device presence +10–15% where space permits, step length −10–15%, slightly smaller gap. Lab uses one restrained inline SVG glyph family. Do not redesign sticky navigation, Contact or temporary Hub/device surfaces; no final 3D in Phase 3.1.

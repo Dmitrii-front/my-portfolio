@@ -1,4 +1,4 @@
-import type { ShowcaseDevice } from "./home-content";
+import { devices, type ShowcaseDevice } from "./home-content";
 import type { projects } from "./projects";
 import type { SiteLocale } from "./site-config";
 
@@ -39,4 +39,16 @@ const screens: Record<ProjectSlug, Partial<Record<ShowcaseDevice, Screen>>> = {
 
 export function projectScreen(slug: ProjectSlug, device: ShowcaseDevice) {
 	return screens[slug][device];
+}
+
+export function availableProjectDevices(slug: ProjectSlug) {
+	return devices.filter((device) => Boolean(screens[slug][device]));
+}
+
+export function resolveProjectDevice(
+	slug: ProjectSlug,
+	preferred: ShowcaseDevice,
+) {
+	const available = availableProjectDevices(slug);
+	return available.includes(preferred) ? preferred : (available[0] ?? null);
 }

@@ -1,11 +1,25 @@
 import { existsSync, statSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { devices } from "./home-content";
-import { projectScreen } from "./project-screens";
+import {
+	availableProjectDevices,
+	projectScreen,
+	resolveProjectDevice,
+} from "./project-screens";
 import { projects } from "./projects";
 import { publicContacts } from "./site-config";
 
 describe("audited public assets and contacts", () => {
+	it("offers only verified variants and resolves preferences without inventing a device", () => {
+		for (const slug of ["pnlwise", "healthy"] as const) {
+			expect(availableProjectDevices(slug)).toEqual(["MacBook"]);
+			for (const preferred of devices)
+				expect(resolveProjectDevice(slug, preferred)).toBe("MacBook");
+		}
+		expect(availableProjectDevices("portfolio")).toEqual([]);
+		for (const preferred of devices)
+			expect(resolveProjectDevice("portfolio", preferred)).toBeNull();
+	});
 	it("contains only the two verified desktop screens and small web derivatives", () => {
 		let count = 0;
 		for (const project of projects)

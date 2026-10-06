@@ -1,11 +1,13 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { neonJourney } from "@/lib/neon-geometry";
 
 export function NeonPath() {
 	const [geometry, setGeometry] = useState({
 		width: 100,
 		height: 100,
 		path: "",
+		profile: "mobile",
 		occlusions: [] as { x: number; y: number; width: number; height: number }[],
 	});
 	const progress = useRef<SVGPathElement>(null);
@@ -65,9 +67,10 @@ export function NeonPath() {
 			const station = sticky
 				? v.top + visual.offsetTop
 				: visual.getBoundingClientRect().top;
-			const dy = station - bounds.top + visual.clientHeight * 0.62;
+			const dy = station - bounds.top + visual.clientHeight * 0.5;
 			const exit = w.bottom - bounds.top - 30;
-			const lx = l.left - bounds.left + l.width * 0.28,
+			const lx =
+					l.left - bounds.left + l.width * (bounds.width < 768 ? 0.3 : 0.22),
 				ly = l.top - bounds.top + l.height * 0.42;
 			const cx = c.left + c.width / 2 - bounds.left,
 				cy =
@@ -76,7 +79,7 @@ export function NeonPath() {
 					parseFloat(getComputedStyle(fan).getPropertyValue("--fan-origin"));
 			const occlusions = Array.from(
 				home.querySelectorAll(
-					".hero-copy, .hub-context, .section-heading, .work-narratives, #contact-title",
+					".hero-copy, .hub-context, .section-heading, .work-narratives, .project-fallback, #contact-title",
 				),
 			).map((element) => {
 				const r = element.getBoundingClientRect();
@@ -90,15 +93,24 @@ export function NeonPath() {
 			setGeometry({
 				width: bounds.width,
 				height: bounds.height,
-				path: `M${x} ${y} C${x} ${y + 90} ${dx + p.width * 0.22} ${dy - 160} ${dx} ${dy} C${dx - p.width * 0.18} ${dy + 140} ${dx + p.width * 0.12} ${exit - 100} ${dx} ${exit} C${dx} ${exit + 80} ${lx} ${ly - 120} ${lx} ${ly} C${lx} ${ly + 160} ${cx} ${cy - 160} ${cx} ${cy}`,
+				...neonJourney({
+					width: bounds.width,
+					hub: { x, y },
+					device: { x: dx, y: dy },
+					workExit: exit,
+					lab: { x: lx, y: ly },
+					contact: { x: cx, y: cy },
+				}),
 				occlusions,
 			});
 			illuminate();
 		};
 		const observer = new ResizeObserver(measure);
-		[home, hub, work, lab, contact, layout, visual, fan].forEach((element) => {
-			observer.observe(element);
-		});
+		[home, hub, work, lab, contact, layout, presentation, visual, fan].forEach(
+			(element) => {
+				observer.observe(element);
+			},
+		);
 		const scroll = () => {
 			if (!frame) frame = requestAnimationFrame(illuminate);
 		};
@@ -115,6 +127,7 @@ export function NeonPath() {
 	return (
 		<svg
 			className="neon-path"
+			data-profile={geometry.profile}
 			viewBox={`0 0 ${geometry.width} ${geometry.height}`}
 			preserveAspectRatio="none"
 			aria-hidden="true"

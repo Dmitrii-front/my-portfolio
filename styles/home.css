@@ -222,6 +222,9 @@
 	min-width: 0;
 	touch-action: pan-y;
 }
+.device-selector-slot {
+	min-height: 44px;
+}
 .device-selector,
 .project-controls {
 	display: flex;
@@ -357,6 +360,20 @@
 }
 .device-project-name {
 	font-size: 0.875rem;
+}
+.project-fallback {
+	width: min(90%, 32rem);
+	padding: 2rem;
+	background: var(--color-canvas);
+	text-align: center;
+}
+.project-fallback-content .eyebrow {
+	font-size: 0.625rem;
+}
+.project-fallback-caption {
+	margin-top: 1rem;
+	font-size: 0.75rem;
+	color: var(--color-muted);
 }
 .device-placeholder {
 	max-width: 20rem;
@@ -699,6 +716,17 @@
 	}
 	.device-showcase {
 		height: 490px;
+	}
+	.work-layout:is([data-mode="sticky"], [data-mode="static"]) {
+		grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+		gap: 1.25rem;
+	}
+	.work-layout:is([data-mode="sticky"], [data-mode="static"]) .work-step {
+		min-height: 63svh;
+	}
+	.device-showcase[data-device="MacBook"] .device-body {
+		width: 100%;
+		max-width: 720px;
 	}
 	.device-showcase[data-device="MacBook"] .device-monogram {
 		font-size: 5rem;

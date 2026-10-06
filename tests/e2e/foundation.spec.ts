@@ -84,11 +84,11 @@ test("Home has no horizontal overflow and passes automated accessibility", async
 			.analyze();
 		expect(audit.violations).toEqual([]);
 		await page.screenshot({
-			path: `artifacts/phase3/home-${locale}-${info.project.name}.png`,
+			path: `artifacts/phase3-1/home-${locale}-${info.project.name}.png`,
 			fullPage: true,
 		});
 		await page.screenshot({
-			path: `artifacts/phase3/home-${locale}-${info.project.name}-viewport.png`,
+			path: `artifacts/phase3-1/home-${locale}-${info.project.name}-viewport.png`,
 		});
 	}
 });

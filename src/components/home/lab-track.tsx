@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import { interactionCopy, labExperiments } from "@/lib/home-content";
 import type { SiteLocale } from "@/lib/site-config";
+import { LabGlyph } from "@/components/ui/lab-glyph";
 export function LabTrack({ locale }: { locale: SiteLocale }) {
 	const track = useRef<HTMLElement>(null);
 	const copy = interactionCopy[locale];
@@ -55,7 +56,7 @@ export function LabTrack({ locale }: { locale: SiteLocale }) {
 				{labExperiments.map((experiment) => (
 					<article className="lab-card" key={experiment.id}>
 						<span className="lab-mark" aria-hidden="true">
-							{experiment.mark}
+							<LabGlyph concept={experiment.id} />
 						</span>
 						<p className="eyebrow">{copy.labConcept}</p>
 						<h3>{experiment.title}</h3>
