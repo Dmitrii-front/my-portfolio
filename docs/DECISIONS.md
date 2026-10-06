@@ -97,3 +97,13 @@ Durable decisions are recorded here. Proposed changes that materially affect UX,
 - **Decision:** Refine the recognizable responsive journey itself, not stroke joins: distribute reversals with larger radii and continuous tangent/curvature. Preserve independent mobile/tablet/desktop composition and document anchors. Supersedes D-011's frozen curve geometry only.
 - **Light:** Increase perceived thickness primarily through blended inner/ambient diffusion, not a thicker sharp core. Replace the travelling point/short stroke with a long feathered gain in the existing path's illumination; no separate head, dot or capsule. Reduced motion remains static.
 - **Boundary:** Preserve foreground-alpha occlusion, bounded local filters, section geometry, models and interactions. No deployment or later phase.
+
+## D-013 — One pinned Work scene and verified Portfolio capture
+
+- **Date:** 2026-10-06
+- **Status:** Owner-authorized Phase 4.2
+- **Decision:** Pin the entire Selected Work presentation with CSS sticky and a native scroll track; progress selects one visible narrative in the persistent device scene. Direct controls and Hub destinations synchronize with that progress. Compact/short windows retain native flow and swipe/controls; no wheel interception or smooth-scroll engine.
+- **Assets:** All three projects retain the same unbranded MacBook. Add a real, provenance-recorded desktop capture of the current local Portfolio 2026 Hero, not an invented responsive screen. This explicitly supersedes D-009/D-010's neutral Portfolio fallback for this newly verified desktop asset. Missing tablet/mobile assets stay unavailable; originals remain unchanged.
+- **Neon:** A single logical curve uses independently composed responsive stations. Its Work portion shares the pinned scene's coordinate space rather than stretching through invisible scroll distance; before/after portions remain in document flow. Only actual foreground alpha occludes. Separate the global Hero arc from local Hub connectors, soften/thicken diffusion and strengthen the headless energy envelope. This supersedes earlier frozen document-anchor/section rules only within the authorized scope.
+- **Contact:** Reduce only the open Close surface by 20–25%, retaining its hit area, fan geometry and dismissal/focus behavior.
+- **Boundary:** No model redesign, new dependencies, later phase or deployment/provider integration. Await visual acceptance after QA, memory sync and coherent GitHub commit/CI.

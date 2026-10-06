@@ -6,7 +6,7 @@
 
 Inventoried 961 raster images (~2.3 GB), including 685 September captures. Native ImageIO decoded all images; OCR was a search aid, not publication approval. Visually reviewed project-matched contact sheets (including false-positive infrastructure/profile screens), all 78 non-reference portrait candidates, named Pnlwise/Healthy bundles and selected images at full size. Private OCR/index/contact sheets remain outside the repository; they must not become public artifacts.
 
-No source was edited, renamed or deleted. Only the six selected WebP derivatives enter `public/projects/`.
+No archive source was edited, renamed or deleted. Six Pnlwise/Healthy WebPs remain unchanged; Phase 4.2 adds three Portfolio WebPs and an unchanged project-owned source PNG outside `public/`.
 
 | Project / device | Selected source relative to archive | Source dimensions | Rationale |
 | --- | --- | --- | --- |
@@ -23,11 +23,11 @@ Sample Pnlwise financial figures and Healthy's captured catalog count are screen
 | --- | --- | --- | --- |
 | Pnlwise | Selected | Missing | Missing |
 | Healthy | Selected | Missing | Missing |
-| Portfolio / 2026 | Missing | Missing | Missing |
+| Portfolio / 2026 | Current-site capture (D-013) | Missing | Missing |
 
-These seven asset slots remain missing. Since Phase 3.1 (D-009), unavailable devices are **not public choices**: Pnlwise/Healthy offer only MacBook, including on mobile; their desktop screen is shown as a desktop device, never disguised as tablet/phone UI. Portfolio has no device selector/frame and uses a restrained project fallback. Adding approved manifest records later enables tablet/mobile choices without changing section layout.
+Six tablet/mobile asset slots remain missing. Since Phase 3.1 (D-009), unavailable devices are **not public choices**. With the D-013 current-site capture, all three projects offer only MacBook, including on mobile; desktop UI is never disguised as a tablet/phone capture. Adding approved manifest records later enables tablet/mobile choices without changing section layout.
 
-Narrow/square browser windows do not independently establish a device viewport/DPR; older Clearledger transaction captures also have obsolete branding and unverified financial data. Healthy reference phone frames, FlutterFlow/design-editor exports, investor decks and older dashboard concepts are not current product-screen evidence. Portfolio keyword matches were résumés, GitHub/Upwork/LinkedIn profiles or infrastructure, not Portfolio 2026 UI. Do not substitute a recursive screenshot of this newly built Home for archive evidence.
+Narrow/square browser windows do not independently establish a device viewport/DPR; older Clearledger transaction captures also have obsolete branding and unverified financial data. Healthy reference phone frames, FlutterFlow/design-editor exports, investor decks and older dashboard concepts are not current product-screen evidence. Portfolio keyword matches in the archive were résumés, profiles or infrastructure, not Portfolio 2026 UI. The explicitly authorized current-site capture below is a new source, not substitute historical archive evidence; no recursive Portfolio device appears in its viewport.
 
 Excluded: account/billing/checkout screens, financial transactions/reports with unverified provenance, medical records/profiles, private messages, admin infrastructure, errors/loading/debug states, unrelated references and obsolete UI.
 
@@ -46,7 +46,14 @@ WebP quality 88, effort 6; widths 640/1280/1920, aspect ratio unchanged (~1.736)
 | --- | --- | --- | --- |
 | Pnlwise | 12,854 B | 36,674 B | 62,326 B |
 | Healthy | 11,006 B | 29,180 B | 50,502 B |
+| Portfolio | 10,818 B | 25,734 B | 39,896 B |
 
-Total: 202,542 B. Browser-native `srcset`/`sizes`, lazy loading and async decoding; explicit dimensions and reserved device geometry. `object-fit: contain` prevents distortion or lost UI. WebP alone is sufficient for supported modern browsers; another full AVIF set is not needed for these small files.
+Total: 278,990 B (nine WebPs). Browser-native `srcset`/`sizes`, lazy loading and async decoding; explicit dimensions and reserved device geometry. `object-fit: contain` prevents distortion or lost UI. WebP alone is sufficient for supported modern browsers; another full AVIF set is not needed for these small files.
 
-The manifest lives in `src/lib/project-screens.ts`, independently of project/device state. Future R3F should consume the same approved mapping and replace only `DeviceShowcase`; missing variants still need an honest fallback.
+## Phase 4.2 Portfolio source
+
+Owner explicitly authorized a real capture of this project. `assets/sources/portfolio-desktop.png`: local production `/en`, accepted GitHub commit `520c9618e91147ce3954ede51c13b86d77042ffa`, 2026-10-06, Chrome, 1920×1106 CSS px / DPR 1, supported reduced-motion setting. Real public Home, no editor/browser chrome/private data/debug overlay or invented UI. Source retained unchanged and visually reviewed; project-owned capture, not third-party art.
+
+SHA-256: `5ae2a4764b0f1750f7ebe7412fc2a98fe9118ed151153f38441aaa6e0086e764`. The manifest records its actual dimensions and EN/RU alternatives. Full provenance/re-capture safeguards: `assets/sources/README.md` and `scripts/portfolio-capture.mjs`. `npm run assets:prepare -- --portfolio` recreates the three derivatives without the external archive; full preparation now also includes this hash-verified source. Do not automatically overwrite it when running browser QA.
+
+The manifest lives in `src/lib/project-screens.ts`, independently of project/device state. R3F consumes the same approved mapping and enhances only `DeviceShowcase`; missing variants still need an honest fallback.

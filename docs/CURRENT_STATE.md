@@ -1,67 +1,47 @@
 # Current State
 
 **Updated:** 2026-10-06
-
-**Phase:** 4.1 — Neon curvature / internal-energy refinement
-
-**Status:** Phase 4 technically accepted. Owner-requested Neon reference correction implemented; awaiting visual acceptance. Approved Home composition/interactions/models preserved. STOP before external deployment or later product phases.
+**Phase:** 4.2 — Selected Work pinning + Neon / Contact polish
+**Status:** Implemented; awaiting owner visual acceptance. STOP before external deployment or later phases.
 
 ## Completed
 
-- D-011 separates document/scroll geometry, visible foreground and actual Neon occlusion. Removed wrapper-sized text/narrative/fallback masks; invisible control rows and labels no longer paint opaque rectangles. Real CSS/HTML surfaces and alpha-transparent WebGL provide exact visual occlusion without model readback or duplicated silhouettes. Scroll tracks/heights and scene models are unchanged.
-- D-012 refines independently composed mobile/tablet/desktop control polygons into broad C2 cubic curves. Paired turning stations distribute curvature instead of pinching around interpolated points. Compact Work/short-height desktop have one broad departure to Lab; expanded Work keeps its recognizable waves. Sharp core stays 1/1.2px; blended inner/ambient diffusion adds visual weight. Energy is a long feathered, color-matched gain without dot/head/sharp stroke. Static filter bounds ≤376px; energy ≤256px. Reduced motion remains static. Details/metrics: `docs/NEON_INFRASTRUCTURE.md`.
-
-- Lazy Three.js 0.186.1 / R3F 9.8.1 / Drei 10.7.9 enhance only Hub and the persistent DeviceShowcase. DOM controls/content, responsive/sticky selection, Lab and Contact remain untouched by the Neon correction. D-010 records the approved scope and conservative quality policy.
-- Shared capability/loading/error boundary retains meaningful CSS/HTML until first successful draw. HIGH DPR ≤1.5, STANDARD DPR 1, FALLBACK for constraints/errors/reduced motion. First-draw/render/context/chunk failures are contained; live reduced-motion fallback/resume is tested. Hub idle is visible-only 15/30Hz; device is demand-driven. Project-owned procedural laptop/modules, no external models/HDRs or branded assets; only verified desktop WebP textures. Full details/provenance/budgets: `docs/THREE_ENHANCEMENT.md`.
-
-- Accepted EN/RU foundation and Phase 2 Home architecture are preserved: one persistent device scene, independent project/device selection, sticky narrative and touch-first compact layouts.
-- D-008 records local lighting/depth, rectangular Hub, interior Neon Path, quieter Lab and circular 180° Contact fan. No broad decorative backgrounds; these approved 2D presentations remain the fallback.
-- D-009 records verified-only public devices and this narrow polish scope. Pnlwise/Healthy offer only MacBook on every viewport; Portfolio uses a neutral project fallback without device controls or hardware frame. Preferred device state remains separate; future verified variants activate from the manifest without section layout changes. The selector slot reserves presentation geometry.
-- Read-only screenshot audit: 961 raster files, 685 September candidates; visually reviewed relevant project contact sheets and all 78 non-reference portrait candidates. Two clean desktop screens selected: Pnlwise public landing and Healthy public doctor-search Home. Exact sources, hashes, privacy rationale and missing variants: `docs/PROJECT_ASSETS.md`.
-- Six WebP derivatives (640/1280/1920px) total 202,542 bytes, largest 62,326 bytes. Explicit dimensions, responsive srcsets, lazy loading and contain-fit; originals stay outside the repository. Offline preparation is reproducible with source-hash guards.
-- Desktop device max-width increased 640→720px (+12.5%); steps 72→63svh (−12.5%); gap 24→20px. Sticky architecture/eligibility/release, compact navigation and local illumination preserved; no photorealistic CSS work. `DeviceShowcase` remains the replaceable R3F boundary.
-- Neon Path uses independently authored mobile/tablet/desktop broad lateral S-like curves: Hub → under device → leave in a different direction → Lab → Contact. Smooth cubic joins, foreground occlusion, restrained brightness, scroll illumination and reduced motion; sticky measurement does not chase the moving device.
-- Hub retains rounded rectangular nodes and approved selection behavior, adding inner highlights, fine-pointer hover depth and a visible-only active connection pulse.
-- Lab keeps horizontal interaction and quiet columns; four coherent 24px technical inline SVG glyphs replace arbitrary Unicode marks.
-- Contact exposes confirmed Telegram, LinkedIn, GitHub and Email links, shared by Home and Contact page. Circular trigger/icons, adaptive upward fan, sequential/reverse reveal, keyboard/Escape/outside/focus handling and no-JS links. No public phone/WhatsApp.
-- Portfolio 2023 remains at published tag `portfolio-2023` (`0ff4ec1`); accepted Phase 1 (`391fe68`) and Phase 2 (`4455c4f`) history is preserved.
+- D-013 authorizes one pinned presentation, the real Portfolio desktop source and targeted Neon/Close polish. Supersedes the previous neutral Portfolio/no-hardware rule and device-only sticky narrative.
+- Selected Work pins its entire heading/narrative/device/control scene at ≥1024×900. CSS sticky, top 88px, visual frame ≥viewport−104px, native 120svh travel divided into three equal project dwell intervals. One visible narrative; one persistent MacBook. Native forward/reverse scroll updates content, case link, screen and pagination. Controls/Hub links land at the matching interval; release leads normally into Lab. No wheel interception or custom scroll engine.
+- Compact widths and shorter windows keep native flow, touch swipe and project controls. No-JS keeps all narratives/case links and the first meaningful device visual.
+- All three projects offer only verified MacBook screens. Pnlwise/Healthy originals are untouched. Portfolio uses a real project-owned local Home capture from accepted commit `520c961`, retained unchanged with SHA-256/provenance in `assets/sources/`. Nine WebP derivatives total 278,990B; missing tablet/mobile variants remain unavailable.
+- Same project-authored procedural unbranded laptop and Hub models, lazy quality/failure boundaries and dependency stack. Device textures crossfade in the persistent canvas; CSS screenshots retain the previous image through decoding and fade only screen content.
+- Neon uses one C2 logical trajectory in visual coordinates, with independently composed mobile/tablet/desktop stations. Invisible pin travel is removed from its geometry; the Work segment shares CSS-sticky space through an SVG portal, with adjoining document-flow portions. Exact same path/gradient/filter definitions are reused, not three separate journeys.
+- Global Hero arc starts above the Hub; local network connections remain untouched. Intentional Work-heading, device, Lab-surface and Contact-glyph crossings rely only on real foreground alpha, never section/container rectangles or canvas masks.
+- Sharp core remains 1/1.2px. Inner/ambient diffusion is wider/stronger. Scroll energy has a longer, more blurred envelope with ~31% peak gain in gradient opacity, no dot/head/sharp fragment; 320px local energy surface, static filters ≤376px. Reduced motion stays static.
+- Open Close surface is 24% smaller; original 92/104px hit box, channel circles, fan/dismissal/focus behavior remain unchanged.
+- EN/RU, persisted locale selection, metadata/noindex, navigation, typography, Lab and public route architecture are unchanged. Portfolio 2023 remains at published tag `portfolio-2023`.
 
 ## Validation
 
-- Clean lint, strict typecheck, 26 unit tests and production Webpack build (23 prerendered pages). Geometry tests cover C2 derivatives, monotonic progression, convex-hull bounds and compact turning radii. Focused diff review shows no changes to SelectedWork interactions/scroll heights, 3D models, Lab, Contact or screen manifest.
-- Chromium: 56 browser checks pass, 37 intentional profile-specific skips. WebKit and Firefox desktop: 29 pass / 2 profile skips each. Prior foundation/axe/3D/fallback/sticky checks plus transparent scroll/control backgrounds, bounded glow surfaces, continuity profiles and static reduced-motion light.
-- Widths 320/375/430/768/1024/1200/1440/1920, plus 767/1199 boundaries; heights 500/900. No document overflow or open-fan viewport clipping detected; sticky release and touch swipe preserved.
-- EN/RU Home and open Contact axe checks, keyboard/focus, reduced motion and no-JS content/menu/language/contact fallback.
-- Fresh artifacts: ignored `artifacts/neon-refinement/`, full Home 375/768/1024/1440/1920, focused Hub/device/Lab/open Contact, bloom details and reduced motion. Original Phase 4.1 reference remains in `artifacts/phase4-1/`. Analytical radius comparison uses identical measured anchors: Selected Work → Lab minimum radius at 1440 ~58→124px, 375 ~33→92px, 768 ~12→99px. These are geometry measurements, not perceptual acceptance.
-- Essential JS remains ~151KB, CSS ~8.0KB; optional 3D loading/budgets unchanged. Local filter-paint comparison and limitations: `docs/NEON_INFRASTRUCTURE.md`; Phase 4 comparison baseline: `docs/THREE_ENHANCEMENT.md`. No field performance guarantee.
+- Lint, strict typecheck, 27 unit tests, production Webpack build (23 prerendered routes), `npm audit` (0 vulnerabilities), focused diff review.
+- Final browser results and local paint measurements are recorded in `docs/DEVELOPMENT.md` and `docs/NEON_INFRASTRUCTURE.md`.
+- Chromium 56 pass / 37 intentional profile skips; WebKit and Firefox desktop 29 pass / 2 skips each. Final review has no page errors/overflow and both optional scenes reach ready with ordinary capability signals.
+- 320/375/430/768/1024/1200/1440/1920 plus existing 767/1199 boundary checks; short 500/650px and tall windows. Native forward/reverse pin/release, direct selection, stable device/Neon coordinates, actual Portfolio texture, no missing device choices, no horizontal overflow.
+- EN/RU axe, keyboard/focus-visible, Escape/outside/focus departure, no-JS and live reduced-motion fallback/resume. 3D init/chunk/draw/context failure and offscreen pause retained.
+- Chromium initial resources: 151,688B JS at 375 / 151,875B larger widths (+697B, ~0.46% versus D-012), 8,156B CSS (+122B), unchanged 12,854–36,674B initial images; measured initial CLS 0, no external requests. Deferred 3D remains separately guarded <300KB.
+- Fresh review index: ignored `artifacts/phase4-2/README.md`; full Home 375/768/1024/1440/1920, three device states, Hero/device occlusion/Lab→Contact/closed+open Contact, reduced motion and cross-engine captures. Full-page images include technical pin distance; viewport state images and live scroll are the authoritative presentation review.
 
-## Next action
+## Next action / STOP
 
-Owner visual acceptance of the Neon correction at `/en` and `/ru`, plus physical-mobile/Safari performance review. Obtain missing verified screen variants; do not fabricate them. External deployment and any later implementation require a separate owner task.
+Owner visual acceptance at local `http://127.0.0.1:3000/en` and `/ru`. No later implementation or deployment without a new task. Physical-mobile, actual Safari, cold/high-DPR and assistive-technology validation remain release checks.
 
-## Not implemented
+## Not implemented / risks
 
-- iPad/iPhone 3D geometry (shared device boundary and existing CSS fallbacks are ready for future verified variants).
-- Seven missing screen slots: Pnlwise/Healthy tablet + mobile; Portfolio desktop + tablet + mobile. Missing device choices are not exposed publicly; Portfolio has a neutral project fallback.
-- Full case studies, professional timeline and published Lab experiments.
-- Supabase/Drizzle, Admin CMS, product AI-agent API, Audit Log or analytics.
-- External hosting and production cutover.
+- Six missing tablet/mobile screen slots; no iPad/iPhone 3D geometry. Future verified manifest records can activate choices without section layout changes.
+- Lab concepts and case routes remain placeholders/skeletons; noindex remains until publication/SEO review.
+- No Supabase/Drizzle, CMS, product agent API, Audit Log, analytics or external hosting.
+- Capability hints are not GPU benchmarks; local automated timing is not field performance certification.
+- External preview account/provider and production origin remain owner decisions; no paid provider selected.
+- WorkHub has unrelated dirty files and 19 pre-existing unpublished commits. Sync only Portfolio PROJECT/STATUS in a scoped local commit; do not push unrelated history.
 
-## Decisions / blockers
+## Memory / preview
 
-- D-006 locale, D-007 Home scope, D-008 Phase 3 direction, D-009 verified-only devices, D-010 limited progressive 3D, D-011 object-only occlusion and D-012 owner-requested curvature/internal energy govern this state. Contact URLs remain unchanged in `lib/site-config.ts` and D-008.
-- No implementation blocker for local review. Missing credible screen variants are not permission to synthesize product UI. Conservative 3D budgets/measurements are documented.
-- Production origin and external hosting account/provider remain owner decisions; no paid provider is selected.
+Repository `docs/ARCHITECTURE.md`, `DECISIONS.md` (D-006 through D-013), `PROJECT_ASSETS.md`, `THREE_ENHANCEMENT.md`, `NEON_INFRASTRUCTURE.md`, `DEVELOPMENT.md` and baseline specification remain the technical source. WorkHub `/Users/macos/Documents/WorkHub/Projects/Portfolio/` holds only a concise control-plane summary.
 
-## Risks / handoff
-
-- Lab remains temporary concept content and case routes remain skeletons. Keep noindex/robots policy until publication/SEO review.
-- Playwright Chromium/WebKit/Firefox automation is not actual Safari, physical-mobile or assistive-technology certification. Those remain release checks; conservative capability hints are not a GPU benchmark.
-- Sticky eligibility remains ≥1024×700; canvas bounds and short-height compact degradation are tested. Preserve this boundary with future content/devices.
-- WorkHub has unrelated dirty files and 18 unpublished commits before this correction. Synchronize only Portfolio summary in isolation; do not push unrelated history.
-
-## Memory and preview
-
-- Architecture: `docs/ARCHITECTURE.md`; decisions: `docs/DECISIONS.md`; images: `docs/PROJECT_ASSETS.md`; 3D: `docs/THREE_ENHANCEMENT.md`; Neon/metrics: `docs/NEON_INFRASTRUCTURE.md`; QA/hosting: `docs/DEVELOPMENT.md`. Fresh artifacts: ignored `artifacts/neon-refinement/`.
-- WorkHub: `/Users/macos/Documents/WorkHub/Projects/Portfolio/`.
-- Local preview: `http://127.0.0.1:3000/en` and `/ru` after `npm run build && npm run start`.
+Local preview uses the same production build: `npm run build`, then `npm run start`. Source/commit truth is GitHub main and Git history; CI verifies each main push.

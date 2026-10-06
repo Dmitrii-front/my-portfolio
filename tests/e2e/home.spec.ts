@@ -173,12 +173,14 @@ test("verified device choices share one persistent presentation", async ({
 		.getByRole("button", { name: "Next project" })
 		.click();
 	await expect(surface).toHaveAttribute("data-project", "portfolio");
-	await expect(surface).toHaveAttribute("data-device", "fallback");
-	await expect(page.locator(".device-selector")).toHaveCount(0);
-	await expect(
-		surface.locator(".device-body, .device-camera, img"),
-	).toHaveCount(0);
-	await expect(surface.locator(".project-fallback")).toBeVisible();
+	await expect(surface).toHaveAttribute("data-device", "MacBook");
+	await expect(page.locator(".device-selector button")).toHaveText(["MacBook"]);
+	await expect(surface.locator(".device-body")).toHaveCount(1);
+	await expect(surface.getByRole("img")).toHaveAttribute(
+		"src",
+		/portfolio-desktop/,
+	);
+	await expect(surface.locator(".project-fallback")).toHaveCount(0);
 	await page.getByRole("button", { name: "Previous project" }).click();
 	await expect(surface).toHaveAttribute("data-device", "MacBook");
 	await expect(surface).toHaveAttribute("data-project", "healthy");
@@ -247,15 +249,44 @@ test("desktop native scroll changes project and releases sticky presentation", a
 		"data-mode",
 		"sticky",
 	);
-	for (const slug of ["pnlwise", "healthy", "portfolio"]) {
-		await page
-			.locator(`#work-${slug}`)
-			.evaluate((element) => element.scrollIntoView({ block: "center" }));
+	const track = await page.locator(".work-layout").evaluate((element) => {
+		const scene = element.querySelector<HTMLElement>(".work-scene");
+		return {
+			start: element.getBoundingClientRect().top + scrollY - 88,
+			travel: element.clientHeight - (scene?.clientHeight ?? 0),
+		};
+	});
+	const positions = [];
+	const neonPositions = [];
+	const curve = await page.locator(".neon-track").getAttribute("d");
+	for (const index of [0, 1, 2, 1, 0, 2]) {
+		const slug = ["pnlwise", "healthy", "portfolio"][index];
+		await page.evaluate(
+			({ start, travel, index }) =>
+				scrollTo(0, start + (travel * (index + 0.5)) / 3),
+			{ ...track, index },
+		);
 		await expect(page.locator(".device-showcase")).toHaveAttribute(
 			"data-project",
 			slug,
 		);
+		await expect(page.locator(".work-step:visible")).toHaveCount(1);
+		await expect(
+			page.locator(
+				`.project-controls button[aria-label="${["Pnlwise", "Healthy", "Portfolio"][index]}"]`,
+			),
+		).toHaveAttribute("aria-pressed", "true");
+		positions.push(await page.locator(".device-showcase").boundingBox());
+		neonPositions.push(await page.locator(".neon-pinned").boundingBox());
+		await expect(page.locator(".neon-track")).toHaveAttribute("d", curve ?? "");
 	}
+	for (const box of positions) {
+		expect(box?.y).toBeCloseTo(positions[0]?.y ?? 0, 0);
+		expect(box?.width).toBe(positions[0]?.width);
+		expect(box?.height).toBe(positions[0]?.height);
+	}
+	for (const box of neonPositions)
+		expect(box?.y).toBeCloseTo(neonPositions[0]?.y ?? 0, 0);
 	const pinned = await page.locator(".work-presentation").boundingBox();
 	await page
 		.locator("#home-lab")
@@ -270,9 +301,16 @@ test("Contact fan supports sequential disclosure, keyboard, Escape and outside t
 }) => {
 	await page.goto("/en");
 	const trigger = page.locator(".contact-trigger");
+	const closedSize = await trigger.boundingBox();
 	await trigger.focus();
 	await page.keyboard.press("Enter");
 	await expect(trigger).toHaveAttribute("aria-expanded", "true");
+	const closeSurface = await trigger.evaluate((element) => {
+		const style = getComputedStyle(element, "::before");
+		return { width: parseFloat(style.width), height: parseFloat(style.height) };
+	});
+	expect(closeSurface.width / (closedSize?.width ?? 1)).toBeCloseTo(0.76, 2);
+	expect((await trigger.boundingBox())?.width).toBeGreaterThanOrEqual(44);
 	await page.keyboard.press(
 		browserName === "webkit" && process.platform === "darwin"
 			? "Alt+Tab"
@@ -333,12 +371,12 @@ test("short/tall viewports degrade cleanly and motion preference disables reveal
 	test.skip(info.project.name !== "desktop");
 	await page.emulateMedia({ reducedMotion: "reduce" });
 	for (const width of [320, 375, 430, 768, 1024, 1200, 1440, 1920]) {
-		for (const height of [500, 900]) {
+		for (const height of [500, 650, 900]) {
 			await page.setViewportSize({ width, height });
 			await page.goto("/ru");
 			await expect(page.locator(".work-layout")).toHaveAttribute(
 				"data-mode",
-				width >= 1024 && height >= 700 ? "sticky" : "compact",
+				width >= 1024 && height >= 900 ? "sticky" : "compact",
 			);
 			await expect(page.locator(".device-selector button")).toHaveText([
 				"MacBook",
@@ -417,7 +455,7 @@ test("real screens preserve aspect ratio and missing devices are not offered", a
 			page.getByRole("button", { name: "iPhone", exact: true }),
 		).toHaveCount(0);
 		await expect(scene).toHaveAttribute("data-project", slug);
-		if (slug !== "portfolio") {
+		{
 			await expect(page.locator(".device-selector button")).toHaveText([
 				"MacBook",
 			]);
@@ -438,13 +476,12 @@ test("real screens preserve aspect ratio and missing devices are not offered", a
 					element.naturalWidth / element.naturalHeight,
 			);
 			expect(ratio).toBeCloseTo(3454 / 1990, 2);
-		} else {
-			await expect(scene.getByRole("img")).toHaveCount(0);
-			await expect(page.locator(".device-selector")).toHaveCount(0);
-			await expect(scene.locator(".project-fallback-caption")).toContainText(
-				"Visual overview coming soon",
+		}
+		if (slug === "portfolio") {
+			await expect(scene.getByRole("img")).toHaveAttribute(
+				"src",
+				/portfolio-desktop/,
 			);
-			await expect(scene.locator(".device-body")).toHaveCount(0);
 			const audit = await new AxeBuilder({ page })
 				.include("#selected-work")
 				.withTags(["wcag2a", "wcag2aa", "wcag21aa"])
@@ -499,11 +536,11 @@ test("desktop spacing remains generous with bounded device growth", async ({
 			"data-mode",
 			"sticky",
 		);
-		await expect(page.locator(".work-step").first()).toHaveCSS(
-			"min-height",
-			"630px",
-		);
-		await expect(page.locator(".work-layout")).toHaveCSS("gap", "20px");
+		await expect(page.locator(".work-step:visible")).toHaveCount(1);
+		await expect(page.locator(".work-scene")).toHaveCSS("position", "sticky");
+		await expect(page.locator(".work-columns")).toHaveCSS("gap", "20px");
+		const scene = await page.locator(".work-scene").boundingBox();
+		expect(scene?.height).toBeLessThanOrEqual(912);
 		const box = await page.locator(".device-body").boundingBox();
 		expect(box?.width).toBeLessThanOrEqual(720);
 		if (width >= 1440) expect(box?.width).toBeGreaterThanOrEqual(704);
@@ -556,23 +593,31 @@ test("fresh Phase 4 review artifacts", async ({ page }, info) => {
 	}
 	for (const slug of ["pnlwise", "healthy", "portfolio"]) {
 		await page
-			.locator(`#work-${slug}`)
-			.evaluate((element) => element.scrollIntoView({ block: "center" }));
+			.locator(".project-controls")
+			.getByRole("button", {
+				name:
+					slug === "pnlwise"
+						? "Pnlwise"
+						: slug === "healthy"
+							? "Healthy"
+							: "Portfolio",
+				exact: true,
+			})
+			.click();
 		await expect(page.locator(".device-showcase")).toHaveAttribute(
 			"data-project",
 			slug,
 		);
-		if (slug !== "portfolio")
-			await expect
-				.poll(() =>
-					page
-						.locator(".device-screen img")
-						.evaluate(
-							(element: HTMLImageElement) =>
-								element.complete && element.naturalWidth > 0,
-						),
-				)
-				.toBe(true);
+		await expect
+			.poll(() =>
+				page
+					.locator(".device-screen img[data-loaded]")
+					.evaluate(
+						(element: HTMLImageElement) =>
+							element.complete && element.naturalWidth > 0,
+					),
+			)
+			.toBe(true);
 		await page.screenshot({ path: `artifacts/phase4/work-${slug}-1440.png` });
 	}
 	await page

@@ -21,7 +21,8 @@ export function neonJourney({
 	expandedWork = width >= 1024,
 }: JourneyAnchors) {
 	const before = device.y - hub.y;
-	const work = workExit - device.y;
+	// The caller removes invisible pinned travel from these visual coordinates.
+	const departure = Math.min(workExit, device.y + (lab.y - device.y) * 0.35);
 	const after = contact.y - lab.y;
 	const profile = width < 768 ? "mobile" : width < 1200 ? "tablet" : "desktop";
 	let points: Point[];
@@ -40,17 +41,13 @@ export function neonJourney({
 	} else if (profile === "tablet") {
 		points = [
 			hub,
-			{ x: width * 0.4, y: hub.y + before * 0.32 },
-			{ x: width * 0.87, y: hub.y + before * 0.66 },
+			{ x: width * 0.87, y: hub.y + before * 0.25 },
+			{ x: width * 0.25, y: hub.y + before * 0.58 },
 			device,
-			// Compact Work has one narrative, not the desktop three-step scroll track.
-			...(!expandedWork
-				? [{ x: width * 0.85, y: device.y + (lab.y - device.y) * 0.32 }]
-				: [
-						{ x: width * 0.87, y: device.y + work * 0.2 },
-						{ x: width * 0.4, y: device.y + work * 0.59 },
-						{ x: width * 0.74, y: device.y + work * 0.92 },
-					]),
+			{
+				x: width * 0.85,
+				y: expandedWork ? departure : device.y + (lab.y - device.y) * 0.32,
+			},
 			lab,
 			{ x: width * 0.73, y: lab.y + after * 0.4 },
 			{ x: width * 0.29, y: lab.y + after * 0.74 },
@@ -59,15 +56,13 @@ export function neonJourney({
 	} else {
 		points = [
 			hub,
-			{ x: width * 0.38, y: hub.y + before * 0.38 },
+			{ x: width * 0.87, y: hub.y + before * 0.25 },
+			{ x: width * 0.25, y: hub.y + before * 0.58 },
 			device,
-			...(expandedWork
-				? [
-						{ x: width * 0.88, y: device.y + work * 0.22 },
-						{ x: width * 0.46, y: device.y + work * 0.59 },
-						{ x: width * 0.78, y: device.y + work * 0.93 },
-					]
-				: [{ x: width * 0.85, y: device.y + (lab.y - device.y) * 0.32 }]),
+			{
+				x: width * 0.85,
+				y: expandedWork ? departure : device.y + (lab.y - device.y) * 0.32,
+			},
 			lab,
 			{ x: width * 0.7, y: lab.y + after * 0.4 },
 			{ x: width * 0.36, y: lab.y + after * 0.8 },
@@ -80,12 +75,9 @@ export function neonJourney({
 	const controls: Point[] = [hub, hub, hub];
 	points.slice(1, -1).forEach((point, i) => {
 		const index = i + 1;
-		const reach =
-			Math.min(point.y - points[index - 1].y, points[index + 1].y - point.y) *
-			0.48;
 		controls.push(
-			{ x: point.x, y: point.y - reach },
-			{ x: point.x, y: point.y + reach },
+			{ x: point.x, y: point.y - (point.y - points[index - 1].y) * 0.49 },
+			{ x: point.x, y: point.y + (points[index + 1].y - point.y) * 0.49 },
 		);
 	});
 	controls.push(contact, contact, contact);

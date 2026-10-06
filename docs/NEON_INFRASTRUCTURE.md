@@ -1,6 +1,6 @@
-# Neon infrastructure — Phase 4.1
+# Neon infrastructure — Phase 4.1 baseline / Phase 4.2
 
-Phase 4 is technically accepted. D-011 separates foreground occlusion from layout; D-012 authorizes the subsequent curve/thickness/internal-energy correction. No redesign or dependencies. Models, Hub/SelectedWork state, track heights, Lab, Contact and locale routes remain unchanged. The initial Phase 4.1 reference remains in `artifacts/phase4-1/`; refinement artifacts are separate.
+Phase 4 is technically accepted. D-011/D-012 describe the historical correction below. Current Phase 4.2 (D-013) explicitly changes Work pinning/visual coordinates, global Hero origin, diffusion and Close surface; models, local Hub connections, Lab interactions, typography and locale routes remain unchanged. No redesign/dependencies. Earlier references remain in `artifacts/phase4-1/` and `artifacts/neon-refinement/`; current review is separate in `artifacts/phase4-2/`.
 
 ## Curve refinement
 
@@ -93,3 +93,36 @@ Same isolated six-pass Chrome method as above, after browser suites finished:
 Added Paint CPU ~0.06–0.09ms per scroll frame; RAF median ~16.7ms, maximum p95 17.6ms, no gaps ≥50ms. Warm raster work is much lower than first-on work; raw samples are in `measurements.json`. Whole-page Script CPU totals are ~475–855ms per 90-frame pass; hiding halos does **not** disable energy sampling/other scroll callbacks, so this comparison isolates visual paint, not incremental JavaScript cost. Physical mobile, cold/high-DPR and Safari release QA remain necessary.
 
 Essential compressed JS: 150,991B mobile / 151,178B larger, +330B (~0.22%) versus initial Phase 4.1. CSS 8,034B. Optional 3D policy/budgets remain unchanged. No external requests or measured initial hydration layout shift. No external deployment or later phase.
+
+## Phase 4.2 — visual coordinates and pinning
+
+One complete Work scene is CSS sticky at ≥1024×900 (88px top / 16px bottom breathing space). Its technical 120svh native travel is not visible line geometry. ResizeObserver subtracts this travel from subsequent Lab/Contact stations and total visual height. One C2 path/light definition is reused by adjoining before/after SVG viewports and a portal inside the pinned scene. This partitions coordinate transforms, **not foreground occlusion**; no masks, wrapper backgrounds, copied meshes or WebGL readback. The pin viewport includes the breathing space so the line continues to viewport edges during the dwell instead of terminating at section padding.
+
+Native scroll has a compressed visual-progress mapping through the pin interval, retaining calm scroll illumination/internal energy. Only passive scroll + one requested RAF, no continuous loop or per-scroll React geometry update. Shape/path and light/device relative position remain constant across project states and reverse scroll. Real opaque CSS/WebGL silhouettes, text glyphs and Lab surfaces are the only occluders. Contact headline remains the expressive crossing; Work heading is a controlled glyph crossing, never a rectangular blank patch.
+
+Hero origin is above the Hub (60px before its bounds), not at PRODUCTS or a local connector. Independent responsive control stations form the global broad arc, device crossing/departure, Lab and Contact turns. Separate incoming/outgoing handle reach uses 49% of each neighboring interval, distributing asymmetric turns without changing C2 continuity or monotonic Y. The old expanded-track waves are removed rather than compressed into short space.
+
+## Phase 4.2 — light deltas
+
+Sharp 1/1.2px core unchanged. Inner stroke 2.7→3.2px, opacity .42→.47, blur σ1.9→2.2; ambient 6→7px, opacity .20→.23, blur σ8→9. This raises blended stroke-weight × opacity ~32–34%, a tuning proxy rather than a claimed perceptual measurement. Static exact glow tiles still use ≤376px bounded filters; no document-sized blur.
+
+Energy gradient peak .65→.85 (+31%), shoulder .50→.65 and tail .18→.24, feathered to zero. Radius 88→104px mobile / 112→140px larger screens; sampled support 320→400px (41 points, 10px apart). Ambient stroke 9→10px, σ10→12; inner 4→4.4px, σ2.4→3. The larger **320×320px bounded surface** lets the wider softer envelope end invisibly. Only blurred gain layers: no circle, separate object, short bright core or identifiable head. Reduced motion hides energy, preserving complete static light. Exact perceived brightness/softness awaits owner review.
+
+## Phase 4.2 — validation / performance
+
+27 unit tests including C2/bounds/turning-radius and native-progress intervals. Browser guards cover real Portfolio texture/persistent device, forward/reverse pin/release, stable path/portal coordinates, global origin above Hub, no broad masks/backgrounds, bounded filters, zero-end gain, no head and static reduced motion. Initial Chromium JS 151,688 / 151,875B (+697B, ~0.46%); CSS 8,156B (+122B), initial images unchanged, measured CLS 0. Deferred device/Hub scene policy unchanged.
+
+`scripts/phase4-2-review.mjs` retains the prior six alternating 90-frame CSS-fallback / DPR-1 scroll paint protocol. After/before scene geometries differ because invisible pin distance is deliberately removed, so this is an end-to-end regression sample, not an isolated causal GPU benchmark. Final raw measurements and reviewed captures live in `artifacts/phase4-2/`; physical mobile, cold/high-DPR and actual Safari remain release checks.
+
+Final Chromium samples (after browser suites completed):
+
+| Width | Tiles | Prior D-012 median glow-on Paint CPU / 90 frames | Current off → on Paint CPU | First-on Raster CPU |
+| --- | --- | --- | --- | --- |
+| 375 | 18 | 10.52ms | 4.88 → 9.96ms | 30.35ms |
+| 1024 | 19 | 20.03ms | 8.98 → 22.91ms | 32.08ms |
+| 1440 | 24 | 17.82ms | 9.33 → 25.79ms | 32.83ms |
+| 1920 | 28 | 18.95ms | 9.17 → 28.48ms | 36.13ms |
+
+Current added Paint CPU is ~0.06–0.21ms/frame. Desktop glow-on paint increases ~8–10ms total per 90 frames versus D-012; no observed frame gaps ≥50ms, median RAF ~16.7ms, maximum p95 17.7ms. First raster costs more than warmed ~11–14ms/90-frame passes. Whole-page Script CPU ~502–734ms/90 frames; hiding halos does not disable callbacks, so this measures visual paint, not incremental energy JavaScript. No premature sampling/quality reduction was needed for this local frame result; cold/high-DPR/physical-mobile remains a risk, not a performance guarantee.
+
+Chromium 56 pass / 37 intentional skips; WebKit and Firefox desktop 29 pass / 2 skips each. Reviewed normal-capability captures reach ready for both optional scenes without errors/overflow; static reduced-motion captures and separate engine directories supplement the five responsive widths.

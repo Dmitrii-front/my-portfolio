@@ -13,6 +13,19 @@ test("Neon separates scroll tracks, foreground alpha and localized glow", async 
 			width < 768 ? "mobile" : width < 1200 ? "tablet" : "desktop",
 		);
 		await expect(page.locator(".neon-glow-tile").first()).toBeAttached();
+		const heroStart = await page.evaluate(() => {
+			const start = (
+				document.querySelector(".neon-track") as SVGPathElement
+			).getPointAtLength(0);
+			const home = document
+				.querySelector("#home-composition")
+				?.getBoundingClientRect();
+			const hub = document
+				.querySelector(".product-hub")
+				?.getBoundingClientRect();
+			return { start: start.y, hubTop: (hub?.top ?? 0) - (home?.top ?? 0) };
+		});
+		expect(heroStart.start).toBeLessThan(heroStart.hubTop);
 		const geometry = await page.evaluate(() => ({
 			masks: document.querySelectorAll(".neon-path mask").length,
 			filters: [
@@ -62,10 +75,10 @@ test("Neon separates scroll tracks, foreground alpha and localized glow", async 
 			.evaluateAll((stops) =>
 				stops.map((stop) => Number(stop.getAttribute("stop-opacity"))),
 			);
-		expect(envelope).toEqual([0.65, 0.5, 0.18, 0]);
+		expect(envelope).toEqual([0.85, 0.65, 0.24, 0]);
 		await expect(page.locator("#journey-energy-gain")).toHaveAttribute(
 			"r",
-			width < 768 ? "88" : "112",
+			width < 768 ? "104" : "140",
 		);
 		expect(
 			await page
@@ -78,8 +91,8 @@ test("Neon separates scroll tracks, foreground alpha and localized glow", async 
 		const bloomLength = await page
 			.locator("#journey-energy-line")
 			.evaluate((e: SVGPathElement) => e.getTotalLength());
-		expect(bloomLength).toBeGreaterThan(310);
-		expect(bloomLength).toBeLessThan(321);
+		expect(bloomLength).toBeGreaterThan(390);
+		expect(bloomLength).toBeLessThan(401);
 		await expect(page.locator(".neon-progress")).toHaveCSS(
 			"stroke-width",
 			"1.2px",

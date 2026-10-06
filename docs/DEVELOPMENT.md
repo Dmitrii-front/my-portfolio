@@ -54,7 +54,7 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-Playwright starts the production server and saves fresh screenshots under `artifacts/phase4/` (ignored by Git and uploaded by CI). `foundation.spec.ts` retains locale preference precedence, route metadata, 404s, no-JS navigation, keyboard/skip-link and EN/RU axe checks. `home.spec.ts` covers Hub selection (including repeated hashes), active/expanded Hub contrast, verified-only devices and neutral project fallback, image aspect ratios, real Chromium touch swipe, sticky release, independently composed Neon profiles, desktop spacing, SVG Lab glyphs/browsing and Contact keyboard/Escape/outside dismissal/axe. Unit tests also check cubic continuity and asset-driven device resolution.
+Playwright starts the production server and saves fresh screenshots under `artifacts/phase4/` (ignored by Git and uploaded by CI). `foundation.spec.ts` retains locale preference precedence, route metadata, 404s, no-JS navigation, keyboard/skip-link and EN/RU axe checks. `home.spec.ts` covers Hub selection (including repeated hashes), active/expanded Hub contrast, verified-only device availability across all three projects, image aspect ratios, real Chromium touch swipe, whole-scene pin/reverse/release, independently composed Neon profiles, desktop spacing, SVG Lab glyphs/browsing and Contact keyboard/Escape/outside dismissal/axe. Unit tests check cubic continuity, native progress intervals and asset-driven device resolution.
 
 QA includes 320, 375, 430, 768, 1024, 1200, 1440 and 1920px, plus Phase 1 boundary checks at 767/1199px. Both 500px and 900px heights exercise sticky eligibility/degradation, verified availability, fan clipping and reduced motion. Captures include Home 375/1024/1440, Pnlwise/Healthy/Portfolio states, Lab and Contact open. Phase 3.1 passes 41 browser checks with 19 intentional profile-specific skips. Automated checks supplement, not replace, visual, cross-browser and assistive-technology review.
 
@@ -109,7 +109,23 @@ This preserves the initial `artifacts/phase4-1/` reference. New captures add Hea
 
 ## Audited image preparation
 
-`npm run assets:prepare` reads only the two audited originals from `~/Desktop/screenshots` (or a directory supplied as its argument), verifies SHA-256 hashes and writes six optimized WebP derivatives to `public/projects`. It reuses Next's installed Sharp offline; no dependency or image hosting provider is added. A changed source must be re-audited before updating the hashes. See `docs/PROJECT_ASSETS.md` for exact mapping, privacy review and missing device variants. Do not commit the full archive, private OCR inventory or contact sheets.
+`npm run assets:prepare` reads the two audited originals from `~/Desktop/screenshots` (or a supplied archive directory) and the retained project-owned Portfolio PNG in `assets/sources/`, verifies SHA-256 hashes and writes nine optimized WebPs to `public/projects`. `npm run assets:prepare -- --portfolio` reproduces only Portfolio without the external archive. Next's installed Sharp is reused offline; no package/hosting provider is added. Re-audit changed sources before updating hashes. See `docs/PROJECT_ASSETS.md`; never commit the private archive/OCR/contact sheets. `scripts/portfolio-capture.mjs NEW_PATH.png` explicitly captures a new candidate; it refuses to overwrite an existing source.
+
+## Phase 4.2 QA / review
+
+One whole-scene CSS pin replaces the prior stacked visual narrative at ≥1024×900; 120svh native dwell travel, safe compact behavior below this threshold. Tests cover forward/reverse native progress, stable MacBook and pinned Neon coordinates, one visible narrative, matching pagination/case targets, direct controls/Hub hashes and release. The same persistent canvas now verifies all three actual textures; CSS content crossfade waits for image decoding. Close surface is 24% smaller with its original accessible hit box. D-013 records these explicitly authorized changes.
+
+```bash
+node scripts/phase4-2-review.mjs
+REVIEW_ENGINE=webkit REVIEW_SMOKE=1 node scripts/phase4-2-review.mjs
+REVIEW_ENGINE=firefox REVIEW_SMOKE=1 node scripts/phase4-2-review.mjs
+```
+
+Review files go to ignored `artifacts/phase4-2/`, preserving previous references. Full Home 375/768/1024/1440/1920 plus Hero, three project/device states, device occlusion, Work→Lab, Lab→Contact, closed/open Contact and reduced motion; engine subdirectories are independent of Playwright's shared output. Full-page screenshots necessarily expose technical native-pin track distance; focused state screenshots/live native scroll represent what a visitor sees. Run engines/profiling sequentially, not concurrently.
+
+Phase 4.2: clean lint, strict typecheck, 27 unit tests, 23-route production build and `npm audit` (0 vulnerabilities). Chromium 56 pass / 37 intentional profile skips; WebKit and Firefox desktop 29 pass / 2 skips each, run sequentially. Responsive 320–1920, 500/650/900 heights, axe EN/RU, keyboard/focus/no-JS/reduced motion and existing 3D failures retained. Source PNG and required derivative assets are intentional checked-in assets; review captures remain ignored.
+
+Initial Chromium compressed JS 151,688–151,875B (+697B, ~0.46% vs D-012), CSS 8,156B (+122B); unchanged initial image transfer and measured CLS 0, no external requests. Separate <300KB deferred-3D guard unchanged. Local SVG paint protocol and before/after limitations: `NEON_INFRASTRUCTURE.md`; not field/physical-mobile certification. Review the focused/staged diff before commit, push only coherent Portfolio files and verify GitHub Actions for the delivered main commit. Do not push WorkHub's unrelated unpublished history.
 
 ## Preview and hosting
 

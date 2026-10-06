@@ -11,16 +11,13 @@ import { publicContacts } from "./site-config";
 
 describe("audited public assets and contacts", () => {
 	it("offers only verified variants and resolves preferences without inventing a device", () => {
-		for (const slug of ["pnlwise", "healthy"] as const) {
+		for (const slug of ["pnlwise", "healthy", "portfolio"] as const) {
 			expect(availableProjectDevices(slug)).toEqual(["MacBook"]);
 			for (const preferred of devices)
 				expect(resolveProjectDevice(slug, preferred)).toBe("MacBook");
 		}
-		expect(availableProjectDevices("portfolio")).toEqual([]);
-		for (const preferred of devices)
-			expect(resolveProjectDevice("portfolio", preferred)).toBeNull();
 	});
-	it("contains only the two verified desktop screens and small web derivatives", () => {
+	it("contains three verified desktop screens and small web derivatives", () => {
 		let count = 0;
 		for (const project of projects)
 			for (const device of devices) {
@@ -37,7 +34,7 @@ describe("audited public assets and contacts", () => {
 					expect(statSync(path).size).toBeLessThan(150_000);
 				}
 			}
-		expect(count).toBe(2);
+		expect(count).toBe(3);
 	});
 	it("keeps confirmed destinations in fan order, without telephone or WhatsApp", () => {
 		expect(publicContacts.map((channel) => channel.href)).toEqual([

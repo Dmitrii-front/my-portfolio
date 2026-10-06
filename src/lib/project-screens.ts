@@ -34,7 +34,17 @@ const screens: Record<ProjectSlug, Partial<Record<ShowcaseDevice, Screen>>> = {
 			},
 		},
 	},
-	portfolio: {},
+	portfolio: {
+		MacBook: {
+			base: "/projects/portfolio-desktop",
+			width: 1920,
+			height: 1106,
+			alt: {
+				en: "Portfolio 2026 real desktop Home: product headline and Product Hub",
+				ru: "Настоящая главная Portfolio 2026 на desktop: заголовок и Product Hub",
+			},
+		},
+	},
 };
 
 export function projectScreen(slug: ProjectSlug, device: ShowcaseDevice) {

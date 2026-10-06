@@ -2,7 +2,7 @@
 
 The owner accepted Phase 3.1 composition and interactions. D-010 limits enhancement to Product Hub and DeviceShowcase; no Home redesign, backend or provider integration.
 
-Phase 4 is technically accepted. Phase 4.1 changes SVG/DOM Neon light/occlusion only, not these models, rendering boundaries or texture policy. Current journey audit/paint measurements: [`NEON_INFRASTRUCTURE.md`](NEON_INFRASTRUCTURE.md). The measurements below remain the Phase 4 comparison baseline.
+Phase 4 is technically accepted. Phase 4.2 (D-013) pins the entire DOM presentation and adds a verified current-Portfolio screen; the procedural models, deferred rendering boundary and quality policy remain unchanged. Current journey audit/paint measurements: [`NEON_INFRASTRUCTURE.md`](NEON_INFRASTRUCTURE.md). The measurements below remain the historical Phase 4 comparison baseline.
 
 ## Boundaries and failures
 
@@ -20,7 +20,7 @@ React errors/chunk rejection are caught per enhancement. `useRendererGuard` inst
 | STANDARD | Other WebGL2-capable visits; unknown hardware is allowed | DPR 1, no antialiasing/parallax, Hub 15Hz while visible |
 | FALLBACK | Reduced motion, Save-Data, reported ≤2 cores/≤2GB RAM, absent WebGL2, scene failure | Approved CSS/HTML; constrained capability never requests 3D chunks |
 
-Browser hints are not a GPU benchmark or device guarantee. Both canvases may remain mounted, but only Hub owns a timed idle; the persistent device renders on demand for selection, resize and short settling/crossfade. Hub timers stop outside the viewport and in hidden tabs. Device pauses away from its presentation; Portfolio hides/pauses the same canvas without remounting. No permanent 60fps device loop, shadows, postprocessing, environment download or future device prefetch.
+Browser hints are not a GPU benchmark or device guarantee. Both canvases may remain mounted, but only Hub owns a timed idle; the persistent device renders on demand for selection, resize and short settling/crossfade. Hub timers stop outside the viewport and in hidden tabs. Device pauses away from its presentation; all three verified desktop screens retain the same visible canvas. No permanent 60fps device loop, shadows, postprocessing, environment download or future device prefetch.
 
 Antialiasing is selected when a WebGL context initializes. Resizing updates DPR/motion tier without remounting the persistent canvas; it does not recreate a context merely to change antialiasing. Live reduced-motion toggles discard scenes and keep CSS visible until a fresh successful draw on resume.
 
@@ -31,15 +31,16 @@ Antialiasing is selected when a WebGL context initializes. Resizing updates DPR/
 - Laptop: thin lid/bezel, hinge, rounded aluminium base, camera, trackpad and 70 instanced keys (one keyboard draw). Unbranded MacBook-like model, no invisible internals.
 - Local profile: Hub ~10,040 triangles / 10 draws; laptop ~5,924 triangles / 10 draws. Zero binary model transfer; procedural scene-specific chunks are a few compressed KB, sharing renderer/geometry code.
 
-`SceneProps` carries device + verified screen independently of selection/scroll. Only MacBook geometry exists. Adding approved iPad/iPhone manifest records exposes existing CSS fallback; their 3D renderer can be added inside this boundary without changing Selected Work. Portfolio remains neutral DOM, never a fabricated hardware screenshot.
+`SceneProps` carries device + verified screen independently of selection/scroll. Only MacBook geometry exists. Adding approved iPad/iPhone manifest records exposes existing CSS fallback; their 3D renderer can be added inside this boundary without changing Selected Work. Portfolio now uses the real provenance-recorded desktop capture authorized by D-013, not fabricated UI. CSS fallback crossfades image content after decode while retaining hardware and the previous screen.
 
 ## Screens
 
-Same audited manifest/derivatives as Phase 3.1; originals untouched. TextureLoader requests only the selected approved screen, caches it for the scene lifetime and disposes on unmount. No speculative preload of missing screens/models. HTML image srcsets remain semantic/failure fallback.
+Audited Pnlwise/Healthy manifest/derivatives remain unchanged; Phase 4.2 adds three Portfolio WebPs from an unchanged project-owned source PNG. TextureLoader requests only the selected approved screen, caches it for the scene lifetime and disposes on unmount. No speculative preload of missing screens/models. HTML image srcsets remain semantic/failure fallback.
 
 - Texture width: 640 below a 500px presentation; otherwise 1280. These cover current display sizes with DPR caps. sRGB, mipmaps, anisotropy capped at 4; screen materials bypass scene tone mapping.
 - Plane fits display bounds at original aspect, no stretch/crop. Retain previous texture while loading, then crossfade in 180ms; no white loading frame.
 - Pnlwise: 12,854 / 36,674 B; Healthy: 11,006 / 29,180 B. Native fallback may choose an additional 1280/1920 source on a DPR-2 browser; profiling reports those bytes too.
+- Portfolio: 10,818 / 25,734 B at 640/1280, 39,896 B at 1920. Exact source/provenance: `assets/sources/README.md`, `docs/PROJECT_ASSETS.md`. Texture aspect is source-driven; no crop or stretch. Phase 4.2 tests assert the same persistent canvas/actual texture across all three projects and reverse selection.
 
 ## Measurement and review
 

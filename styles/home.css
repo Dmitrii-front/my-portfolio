@@ -51,6 +51,15 @@
 	z-index: 0;
 	fill: none;
 }
+.neon-pinned {
+	position: absolute;
+	top: -88px;
+	height: calc(100% + 104px);
+	pointer-events: none;
+	fill: none;
+	overflow: hidden;
+	z-index: 0;
+}
 .neon-track {
 	stroke: url(#journey-light);
 	stroke-width: 1;
@@ -69,12 +78,12 @@
 	stroke: url(#journey-light);
 }
 .neon-ambient {
-	stroke-width: 6;
-	opacity: 0.2;
+	stroke-width: 7;
+	opacity: 0.23;
 }
 .neon-inner {
-	stroke-width: 2.7;
-	opacity: 0.42;
+	stroke-width: 3.2;
+	opacity: 0.47;
 }
 .neon-energy {
 	opacity: 0;
@@ -82,12 +91,12 @@
 }
 .neon-energy-ambient {
 	stroke: url(#journey-energy-gain);
-	stroke-width: 9;
+	stroke-width: 10;
 	opacity: 0.55;
 }
 .neon-energy-inner {
 	stroke: url(#journey-energy-gain);
-	stroke-width: 4;
+	stroke-width: 4.4;
 	opacity: 0.65;
 }
 .hub-composition {
@@ -238,7 +247,10 @@
 	}
 }
 
-.work-layout {
+.work-scene {
+	position: relative;
+}
+.work-columns {
 	display: grid;
 	gap: 1.5rem;
 }
@@ -368,6 +380,18 @@
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
+}
+.device-screen .screen-previous {
+	position: absolute;
+	inset: 0;
+}
+.device-screen img[data-loaded] {
+	position: relative;
+	opacity: 0;
+	transition: opacity var(--duration-normal) var(--ease-out);
+}
+.device-screen img[data-loaded="true"] {
+	opacity: 1;
 }
 .device-screen {
 	position: relative;
@@ -600,6 +624,17 @@
 	line-height: 1;
 }
 .contact-fan[data-open="true"] .contact-trigger {
+	/* Surface only: retain the original button hit box and fan origin. */
+	background: none;
+	box-shadow: none;
+}
+.contact-fan[data-open="true"] .contact-trigger::before {
+	content: "";
+	position: absolute;
+	inset: 12%;
+	border-radius: 50%;
+	background: radial-gradient(circle at 32% 20%, #342741, #19141f 75%);
+	z-index: -1;
 	box-shadow:
 		inset 0 1px #c4abfa33,
 		0 0 44px #9071dd2b;
@@ -687,7 +722,7 @@
 	.hub-context {
 		font-size: 0.75rem;
 	}
-	.work-layout:is([data-mode="compact"], [data-mode="static"]) {
+	.work-columns {
 		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 		align-items: center;
 		gap: 2rem;
@@ -721,26 +756,41 @@
 		width: min(96%, 450px);
 	}
 }
-@media (min-width: 1024px) and (min-height: 700px) {
-	.work-layout[data-mode="static"] .work-step[data-active="false"] {
-		display: flex;
+@media (min-width: 1024px) and (min-height: 900px) {
+	.work-layout[data-mode="sticky"] {
+		min-height: calc(220svh - 104px);
 	}
-	.work-layout:is([data-mode="sticky"], [data-mode="static"]) {
+	.work-layout[data-mode="sticky"] .work-scene {
+		position: sticky;
+		top: 88px;
+		min-height: calc(100svh - 104px);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	.work-layout[data-mode="sticky"] .section-heading {
+		margin-bottom: 1.5rem;
+	}
+	.work-layout[data-mode="sticky"] .work-columns {
 		grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-		align-items: start;
+		align-items: center;
 		gap: 1.5rem;
 	}
-	.work-layout:is([data-mode="sticky"], [data-mode="static"]) .work-step {
-		min-height: 72svh;
+	.work-layout[data-mode="sticky"] .work-step:not([hidden]) {
+		min-height: 300px;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: flex-start;
 	}
-	.work-layout:is([data-mode="sticky"], [data-mode="static"])
-		.work-presentation {
-		position: sticky;
-		top: max(2rem, calc((100svh - 610px) / 2));
+	.work-layout[data-mode="sticky"] .device-showcase {
+		height: clamp(300px, 44svh, 490px);
+	}
+	.work-layout[data-mode="sticky"] .work-narratives,
+	.work-layout[data-mode="sticky"] .work-presentation,
+	.work-layout[data-mode="sticky"] .section-heading {
+		position: relative;
+		z-index: 1;
 	}
 	.work-layout[data-mode="sticky"] .work-step[data-active="true"] .work-index {
 		color: var(--color-ink);
@@ -770,12 +820,9 @@
 	.device-showcase {
 		height: 490px;
 	}
-	.work-layout:is([data-mode="sticky"], [data-mode="static"]) {
+	.work-layout[data-mode="sticky"] .work-columns {
 		grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
 		gap: 1.25rem;
-	}
-	.work-layout:is([data-mode="sticky"], [data-mode="static"]) .work-step {
-		min-height: 63svh;
 	}
 	.device-showcase[data-device="MacBook"] .device-body {
 		width: 100%;

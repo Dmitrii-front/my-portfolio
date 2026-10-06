@@ -59,9 +59,14 @@ test("optional scenes preserve semantics, one canvas and verified texture switch
 		.locator(".project-controls")
 		.getByRole("button", { name: "Portfolio", exact: true })
 		.click();
-	await expect(page.locator(".project-fallback")).toBeVisible();
-	await expect(page.locator(".device-selector")).toHaveCount(0);
-	await expect(device).toBeHidden();
+	await expect(page.locator(".project-fallback")).toHaveCount(0);
+	await expect(page.locator(".device-selector button")).toHaveText(["MacBook"]);
+	await expect(device).toBeVisible();
+	await expect(canvas).toHaveAttribute(
+		"data-texture",
+		/portfolio-desktop-(640|1280)\.webp/,
+	);
+	await expect(canvas).toHaveAttribute("data-persistent", "yes");
 	await page
 		.locator(".project-controls")
 		.getByRole("button", { name: "Pnlwise", exact: true })
