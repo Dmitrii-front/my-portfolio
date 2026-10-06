@@ -12,8 +12,9 @@
 - Preserved Portfolio 2023 at the published tag `portfolio-2023` (`0ff4ec1`).
 - Added the Portfolio 2026 baseline specification and project-memory documents.
 - Replaced the legacy Gulp working tree on `main` with a minimal Next.js/TypeScript/Tailwind application shell.
-- Added ESLint, strict type checking, Vitest, production build scripts, and GitHub Actions CI.
+- Added Biome linting, strict type checking, Vitest, production build scripts, and GitHub Actions CI.
 - Registered Portfolio as an active WorkHub project with a concise control-plane status.
+- Verified GitHub Actions CI run `37442348008` succeeds for foundation commit `252d6fd`.
 
 ## Not implemented
 
@@ -43,3 +44,7 @@ None for local Phase 1 work.
 - The visual system and 3D asset budget are not defined yet; performance limits must be set before Phase 4.
 - CMS schema and row-level security policies must be designed together before Admin implementation.
 - The WorkHub repository had pre-existing dirty files and unpublished commits during bootstrap; the Portfolio project changes must remain isolated from them.
+
+## WorkHub sync
+
+Portfolio registration is committed locally in WorkHub as `60af0c2`. It was not pushed because WorkHub `main` already had 11 unrelated unpublished commits; pushing would publish them together without separate approval.

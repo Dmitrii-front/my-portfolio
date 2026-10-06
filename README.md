@@ -21,7 +21,7 @@ Open `http://localhost:3000`.
 ## Scripts
 
 - `npm run dev` — local Next.js development server.
-- `npm run lint` — ESLint.
+- `npm run lint` — Biome linting.
 - `npm run typecheck` — strict TypeScript check.
 - `npm test` — unit tests with Vitest.
 - `npm run build` — production build.
@@ -33,6 +33,7 @@ Open `http://localhost:3000`.
 - React 19
 - TypeScript
 - Tailwind CSS 4
+- Biome
 - Vitest
 
 Motion, Three.js, React Three Fiber, Drei, Supabase, Drizzle, and PostHog are baseline technologies but intentionally deferred until a phase uses them.
