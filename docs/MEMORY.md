@@ -8,7 +8,7 @@ Audited: 2026-10-12. D-014 records the owner-authorized documentation repair.
 | --- | --- | --- |
 | Repository | `/Users/macos/Documents/ChatGPT/My_Portfolio` | Code, canonical spec, AGENTS, CURRENT_STATE, ARCHITECTURE, DECISIONS, DEVELOPMENT, asset/3D/Neon docs, audit |
 | Obsidian registered vault | `/Users/macos/Library/Mobile Documents/iCloud~md~obsidian/Documents` | Long-term product reasoning, ideas and future planning |
-| Portfolio product folder | Vault-relative `Projects/Portfolio/` | `README.md`, `Roadmap.md`, `Future/Telegram Portfolio Bot.md` |
+| Portfolio product folder | Vault-relative `Projects/Portfolio/` | `README.md`, `Roadmap.md`, `Portfolio Content Architecture.md`, `Future/Telegram Portfolio Bot.md` |
 | WorkHub | `/Users/macos/Documents/WorkHub/Projects/Portfolio/` | PROJECT registration, `Core/STATUS.md`, cross-project phase/next action/blockers/risks |
 
 Obsidian vault is confirmed by the application's `obsidian.json` vault path and its `.obsidian/` directory. The repository and WorkHub have no `.obsidian/` directory and are not vault symlinks or technical-memory mirrors. Repository docs stay separate. External notes are not protected by Portfolio Git; cloud synchronization/backups are not certified by a successful local write.
@@ -38,3 +38,5 @@ Future consideration: Portfolio content should support Website / Admin-CMS / Tel
 ## Audit / drift controls
 
 Full verified baseline: `AUDIT_2026-10-12.md`. Canonical spec remains unchanged; later D-006–D-013 explain intentional departures. README's stale Phase 4.1 label was repaired. Historical QA sections remain explicitly historical; local URLs require a running server, and historical success is not a claim of fresh physical-device validation.
+
+Current strategy: D-015 freezes the existing visual baseline and prioritizes structure/IA/real content. The prior full audit is a dated snapshot, not the current next-action gate. Detailed proposals and the single questionnaire live in repository `PHASE_5_CONTENT_ARCHITECTURE_AUDIT.md`; Obsidian `Roadmap.md` and `Portfolio Content Architecture.md` hold only strategy/references, not duplicated schemas or project facts. Implementation still needs a new task.

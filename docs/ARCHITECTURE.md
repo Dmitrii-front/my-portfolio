@@ -4,6 +4,8 @@
 
 Phase 4 is technically accepted. Phase 4.2 (D-013) replaces device-only sticky narrative with one pinned presentation, adds a verified Portfolio screen and polishes Neon/Close. The accepted models, Hub/Lab interactions, typography, routes and locale architecture remain unchanged. Lazy Hub/device enhancement follows D-010. CMS, analytics, external deployment and backend remain deferred.
 
+D-015 freezes that implementation as the working visual baseline and prioritizes information architecture/verified content before further visual polish. `PHASE_5_CONTENT_ARCHITECTURE_AUDIT.md` proposes route ownership and lightweight reusable content aggregates; they are not runtime modules, database schema or an approved implementation. Phase 5 is not implemented by this preparation.
+
 ## Runtime foundation
 
 - Next.js App Router with React Server Components by default.

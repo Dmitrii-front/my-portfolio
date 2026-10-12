@@ -116,3 +116,12 @@ Durable decisions are recorded here. Proposed changes that materially affect UX,
 - **Finding:** No dedicated Portfolio vault notes/mirror existed at audit entry. Earlier repository/WorkHub updates do not establish prior Obsidian use. The audit creates only an index, roadmap and dedicated future idea; writes are verified from filesystem, not assumed from app presence.
 - **Future idea:** Telegram Portfolio Bot stays BACKLOG / NOT STARTED, with shared controlled content across Website / Admin-CMS / Bot / AI Agent as a future consideration. No transport/schema/provider choice, code, credentials, API calls or active implementation task is authorized.
 - **Boundary:** Phase 4.2 visual acceptance remains the next owner action. No Home changes, dependencies or later development phase.
+
+## D-015 — Freeze the working visual baseline and prioritize content
+
+- **Date:** 2026-10-12
+- **Status:** Accepted strategy from owner; Phase 5 architecture/content proposals still await approval
+- **Decision:** Pause visual polishing after Phase 4.2. Preserve/reuse Hero, Hub, Selected Work, MacBook, Lab, Contact, Neon and responsive/3D foundations as a frozen working visual baseline, not necessarily the final design. This is not rejection or final visual acceptance.
+- **Reason:** Presentation details consumed time before the Portfolio had complete information architecture, real content and credible case studies. Complete the information product first; eventual layout/design should adapt to its verified content.
+- **Priority:** Structure → information architecture → real content → useful assets → complete working public site → distribution/layout review → final visual polish. Supersedes D-013/D-014's visual-acceptance-first next-action gate; does not erase their implementation/quality rules or historical pending acceptance.
+- **Boundary:** This request authorizes analysis/planning/documentation only. No Phase 5 implementation, application changes, Neon work, dependency installation, CMS/Supabase/Admin/analytics/bot or production indexing. `PHASE_5_CONTENT_ARCHITECTURE_AUDIT.md` contains the proposals and consolidated questionnaire; a later explicit task is required to implement them.

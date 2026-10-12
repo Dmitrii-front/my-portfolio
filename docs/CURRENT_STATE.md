@@ -1,8 +1,9 @@
 # Current State
 
-**Updated:** 2026-10-12 (documentation audit; application unchanged)
-**Phase:** 4.2 — Selected Work pinning + Neon / Contact polish
-**Status:** Implemented; awaiting owner visual acceptance. STOP before external deployment or later phases.
+**Updated:** 2026-10-12 (Phase 5 preparation; application unchanged)
+**Application:** Implemented through Phase 4.2; frozen working visual baseline.
+**Current work:** Phase 5 content / information-architecture preparation — planning/documentation only.
+**Status:** Preparation complete; awaiting architecture/content approval and prioritized owner facts. Phase 5 implementation NOT STARTED. No further visual polish authorized.
 
 ## Completed
 
@@ -29,7 +30,7 @@
 
 ## Next action / STOP
 
-Owner visual acceptance at local `http://127.0.0.1:3000/en` and `/ru`. No later implementation or deployment without a new task. Physical-mobile, actual Safari, cold/high-DPR and assistive-technology validation remain release checks.
+Review `docs/PHASE_5_CONTENT_ARCHITECTURE_AUDIT.md` and answer its consolidated P0 questionnaire. Approve content ownership/minimum case-study facts, then authorize a separate implementation task. D-015 freezes Phase 4.2 rather than rejects or finally accepts it; its earlier visual-acceptance-first gate is deferred, not a blocker to content preparation. Preserve/reuse existing Home and stop Neon/presentation polishing. No application implementation or deployment in this task. Physical-mobile, actual Safari, cold/high-DPR and assistive-technology validation remain release checks.
 
 ## Not implemented / risks
 
@@ -38,14 +39,14 @@ Owner visual acceptance at local `http://127.0.0.1:3000/en` and `/ru`. No later 
 - No Supabase/Drizzle, CMS, product agent API, Audit Log, analytics or external hosting.
 - Capability hints are not GPU benchmarks; local automated timing is not field performance certification.
 - External preview account/provider and production origin remain owner decisions; no paid provider selected.
-- WorkHub has unrelated dirty files and 20 unpublished commits at audit entry (including the Phase 4.2 summary). Audit sync stays a separate Portfolio-only local commit; do not push unrelated history.
+- WorkHub has unrelated dirty files and 21 unpublished commits at preparation entry (including the prior audit summary). Preparation sync stays a separate Portfolio-only local commit; do not push unrelated history.
 
 ## Memory / preview
 
-Repository `docs/ARCHITECTURE.md`, `DECISIONS.md` (through D-014), `PROJECT_ASSETS.md`, `THREE_ENHANCEMENT.md`, `NEON_INFRASTRUCTURE.md`, `DEVELOPMENT.md` and the unchanged baseline specification remain the technical source. WorkHub `/Users/macos/Documents/WorkHub/Projects/Portfolio/` holds only a concise control-plane summary.
+Repository `docs/ARCHITECTURE.md`, `DECISIONS.md` (through D-015), `PROJECT_ASSETS.md`, `THREE_ENHANCEMENT.md`, `NEON_INFRASTRUCTURE.md`, `DEVELOPMENT.md` and the unchanged baseline specification remain the technical source. The versioned Phase 5 preparation holds route/Home responsibility maps, project gaps, a storage-neutral content proposal, localization/assets/SEO requirements, master matrix and one P0/P1/P2 questionnaire. These are not approved facts or implemented CMS models. WorkHub `/Users/macos/Documents/WorkHub/Projects/Portfolio/` holds only a concise control-plane summary.
 
 Audit: `docs/AUDIT_2026-10-12.md`. The registered Obsidian vault was verified, but no dedicated Portfolio notes/mirror existed before this audit; previous repository/WorkHub updates were **not Obsidian integration**. Three small product-memory notes were created and read back on 2026-10-12. Exact paths/ownership/read workflow: `docs/MEMORY.md`. Telegram Portfolio Bot is Future/Backlog, DEVELOPMENT STATUS: NOT STARTED; no application code, API, token, dependency or infrastructure was added. It is not the automatic next task. Full iCloud text search stalled; unrelated generic mentions and cloud replication/UI visibility are not certified.
 
-Fresh audit QA (2026-10-12): check passes (27 units / 23-route build), audit 0 vulnerabilities; installed Chrome 56 pass / 37 skips, WebKit and Firefox desktop 29 pass / 2 skips each. Bundled Chromium is absent locally; no browser/dependency download. Source tree is unchanged. Chrome initial JS/CLS remain at the application baseline; historical paint/GPU profiles were not rerun. Owner visual acceptance remains pending.
+Fresh full-audit QA (2026-10-12, prior to this preparation): check passes (27 units / 23-route build), audit 0 vulnerabilities; installed Chrome 56 pass / 37 skips, WebKit and Firefox desktop 29 pass / 2 skips each. Bundled Chromium is absent locally; no browser/dependency download. Source tree is unchanged. Chrome initial JS/CLS remain at the application baseline; historical paint/GPU profiles were not rerun. Final visual acceptance remains pending but is no longer the immediate priority under D-015.
 
 Local preview uses the same production build: `npm run build`, then `npm run start`. Source/commit truth is GitHub main and Git history; CI verifies each main push.

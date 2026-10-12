@@ -2,7 +2,7 @@
 
 Production portfolio platform for Dmitry: a premium public site, structured case studies, CMS, scoped AI-agent workflows, analytics, and selective 3D interactions.
 
-The repository is at **Phase 4.2: Selected Work pinning + Neon / Contact polish**, awaiting visual acceptance. One native-scroll presentation retains the same MacBook across Pnlwise, Healthy and the verified Portfolio capture. Neon uses broad C2 curves, actual foreground occlusion and diffuse internal energy; Close is visually smaller. Lazy Three.js/R3F/Drei enhance only Hub/device with meaningful fallbacks; other content pages remain unpublished skeletons. No later phase or external deployment has started. Policies/QA: [`docs/NEON_INFRASTRUCTURE.md`](docs/NEON_INFRASTRUCTURE.md), [`docs/THREE_ENHANCEMENT.md`](docs/THREE_ENHANCEMENT.md).
+Application code remains at **Phase 4.2**, now a frozen working visual baseline under D-015, not the final design. Preserve the existing Home/persistent MacBook, Neon and lazy Hub/device enhancement; do not continue visual polish. Current work is **Phase 5 preparation: information architecture and real content**, planning only; implementation and external deployment have not started. Other public pages still largely contain skeletons. [Preparation and questionnaire](docs/PHASE_5_CONTENT_ARCHITECTURE_AUDIT.md); technical policies/QA: [`docs/NEON_INFRASTRUCTURE.md`](docs/NEON_INFRASTRUCTURE.md), [`docs/THREE_ENHANCEMENT.md`](docs/THREE_ENHANCEMENT.md).
 
 ## Requirements
 
@@ -53,6 +53,7 @@ Motion, Supabase, Drizzle and PostHog remain deferred until a phase uses them.
 - [Codex instructions](AGENTS.md)
 - [Verified memory architecture and Obsidian paths](docs/MEMORY.md)
 - [Full project/spec/memory audit — 2026-10-12](docs/AUDIT_2026-10-12.md)
+- [Phase 5 content / information-architecture preparation](docs/PHASE_5_CONTENT_ARCHITECTURE_AUDIT.md)
 
 WorkHub contains the cross-project Portfolio status. Detailed technical memory stays in this repository; the verified Obsidian Portfolio folder contains long-term product ideas and roadmap. See `docs/MEMORY.md`; these layers are separate, not automatic mirrors.
 
