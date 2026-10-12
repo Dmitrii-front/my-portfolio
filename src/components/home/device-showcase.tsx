@@ -2,8 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Enhancement } from "@/components/three/enhancement";
 import type { ShowcaseDevice } from "@/lib/home-content";
-import type { projects } from "@/lib/projects";
 import { projectScreen } from "@/lib/project-screens";
+import type { projects } from "@/lib/projects";
 import type { SiteLocale } from "@/lib/site-config";
 
 function VerifiedScreen({
@@ -99,7 +99,7 @@ export function DeviceShowcase({
 						<VerifiedScreen screen={screen} locale={locale} />
 					) : (
 						<>
-							<span className="eyebrow">{project.category}</span>
+							<span className="eyebrow">{project.category[locale]}</span>
 							<div className="device-monogram" aria-hidden="true">
 								{project.title === "Healthy" ? "H" : "P"}
 								<span>.</span>

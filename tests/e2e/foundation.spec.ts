@@ -25,7 +25,7 @@ test("root resolves browser language and respects persisted explicit preference"
 	await expect(page.locator("html")).toHaveAttribute("lang", "ru");
 });
 
-test("all public skeletons have correct language, landmarks and locale metadata", async ({
+test("all public pages have correct language, landmarks and locale metadata", async ({
 	page,
 }) => {
 	for (const locale of ["en", "ru"]) {

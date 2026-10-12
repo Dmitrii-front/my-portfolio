@@ -1,3 +1,4 @@
+import { profile } from "./profile";
 import type { SiteLocale } from "./site-config";
 
 export const dictionaries = {
@@ -21,19 +22,18 @@ export const dictionaries = {
 			notFoundBody: "This page doesn’t exist. Explore the work or return home.",
 		},
 		hero: {
-			eyebrow: "From idea to impact",
-			title: "I build digital products from idea to production.",
-			description:
-				"Product thinking. Thoughtful interfaces. Engineering that brings it all together.",
+			eyebrow: profile.position.en,
+			title: profile.heroTitle.en,
+			description: profile.heroSummary.en,
 			work: "Explore my work",
 			about: "About me",
 			focus: "Current focus",
-			hub: "From an idea to products used by real people",
+			hub: "Product thinking: idea, development, AI and user needs",
 			idea: "IDEA",
 			development: "DEVELOPMENT",
 			products: "PRODUCTS",
 			ai: "AI",
-			users: "REAL USERS",
+			users: "USER NEEDS",
 		},
 		home: {
 			workLabel: "01 / SELECTED WORK",
@@ -68,8 +68,7 @@ export const dictionaries = {
 			about: {
 				eyebrow: "ABOUT",
 				title: "From the first question to the final detail.",
-				description:
-					"I’m Dmitry. I bring product thinking and engineering together to build digital products.",
+				description: profile.intro.en,
 			},
 			experience: {
 				eyebrow: "EXPERIENCE",
@@ -86,28 +85,10 @@ export const dictionaries = {
 		},
 		content: {
 			approach: "Approach",
-			approachBody:
-				"Understand the problem. Make the important decisions visible. Build, test, and refine.",
-			experiencePending: "A detailed professional timeline is in preparation.",
 			contactPending: "Choose the channel that works best for you.",
 			github: "Find me on GitHub",
-			experimentsPending: "Experiments in preparation",
-			casePending: "Full case study in preparation",
-			problem: "Problem",
-			role: "Role & approach",
-			solution: "Solution",
-			architecture: "Architecture & decisions",
-			results: "Results & reflection",
-			caseBody:
-				"The detailed story and supporting evidence will be added with the case study.",
 			footer: "From idea to production.",
 			rights: "Dmitry",
-		},
-		projects: {
-			pnlwise: "Financial reporting and AI-assisted P&L from bank statements.",
-			healthy:
-				"A healthcare product connecting patients, doctors, and clinics.",
-			portfolio: "A platform for products, ideas, and experiments.",
 		},
 		experiments: {
 			payments: "Payment integrations",
@@ -137,19 +118,18 @@ export const dictionaries = {
 				"Такой страницы нет. Посмотрите проекты или вернитесь на главную.",
 		},
 		hero: {
-			eyebrow: "От идеи к результату",
-			title: "Создаю цифровые продукты — от идеи до запуска.",
-			description:
-				"Продуктовое мышление. Продуманные интерфейсы. Инженерия, которая объединяет всё в работающий продукт.",
+			eyebrow: profile.position.ru,
+			title: profile.heroTitle.ru,
+			description: profile.heroSummary.ru,
 			work: "Смотреть проекты",
 			about: "Обо мне",
 			focus: "Сейчас в фокусе",
-			hub: "От идеи к продуктам для реальных людей",
+			hub: "Продуктовый подход: идея, разработка, AI и задачи людей",
 			idea: "ИДЕЯ",
 			development: "РАЗРАБОТКА",
 			products: "ПРОДУКТЫ",
 			ai: "AI",
-			users: "ПОЛЬЗОВАТЕЛИ",
+			users: "ЗАДАЧИ ЛЮДЕЙ",
 		},
 		home: {
 			workLabel: "01 / ПРОЕКТЫ",
@@ -184,8 +164,7 @@ export const dictionaries = {
 			about: {
 				eyebrow: "ОБО МНЕ",
 				title: "От первого вопроса до последней детали.",
-				description:
-					"Я Дмитрий. Объединяю продуктовое мышление и инженерию, чтобы создавать цифровые продукты.",
+				description: profile.intro.ru,
 			},
 			experience: {
 				eyebrow: "ОПЫТ",
@@ -202,29 +181,10 @@ export const dictionaries = {
 		},
 		content: {
 			approach: "Подход",
-			approachBody:
-				"Понять задачу. Сделать важные решения прозрачными. Создать, проверить и улучшить.",
-			experiencePending: "Подробная профессиональная история готовится.",
 			contactPending: "Выберите удобный канал связи.",
 			github: "Мой GitHub",
-			experimentsPending: "Эксперименты готовятся",
-			casePending: "Полный кейс готовится",
-			problem: "Задача",
-			role: "Роль и подход",
-			solution: "Решение",
-			architecture: "Архитектура и решения",
-			results: "Результаты и выводы",
-			caseBody:
-				"Подробная история и подтверждающие материалы появятся вместе с кейсом.",
 			footer: "От идеи до запуска.",
 			rights: "Дмитрий",
-		},
-		projects: {
-			pnlwise:
-				"Финансовая отчётность и P&L с помощью AI на основе банковских выписок.",
-			healthy:
-				"Продукт в сфере здравоохранения, объединяющий пациентов, врачей и клиники.",
-			portfolio: "Платформа для продуктов, идей и экспериментов.",
 		},
 		experiments: {
 			payments: "Платёжные интеграции",

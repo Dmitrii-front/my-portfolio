@@ -1,17 +1,15 @@
 import Link from "next/link";
-import type { Dictionary } from "@/lib/dictionaries";
+import { Arrow } from "@/components/ui/arrow";
+import { formatPeriod } from "@/lib/content";
 import { localizedPath } from "@/lib/i18n";
 import { projects } from "@/lib/projects";
 import type { SiteLocale } from "@/lib/site-config";
-import { Arrow } from "@/components/ui/arrow";
 
 export function ProjectList({
 	locale,
-	dictionary,
 	headingLevel = 3,
 }: {
 	locale: SiteLocale;
-	dictionary: Dictionary;
 	headingLevel?: 2 | 3;
 }) {
 	const Title = headingLevel === 2 ? "h2" : "h3";
@@ -27,9 +25,17 @@ export function ProjectList({
 							0{index + 1}
 						</span>
 						<div className="project-info">
-							<p className="eyebrow">{project.category}</p>
+							<p className="eyebrow">{project.category[locale]}</p>
 							<Title className="project-title">{project.title}</Title>
-							<p>{dictionary.projects[project.slug]}</p>
+							<p>
+								{project.role[locale]}
+								{project.period && (
+									<> · {formatPeriod(project.period, locale)}</>
+								)}
+							</p>
+							<p>
+								{project.summary[locale]} {project.status[locale]}
+							</p>
 						</div>
 						<Arrow diagonal />
 					</Link>

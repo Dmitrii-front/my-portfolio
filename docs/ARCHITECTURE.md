@@ -4,7 +4,11 @@
 
 Phase 4 is technically accepted. Phase 4.2 (D-013) replaces device-only sticky narrative with one pinned presentation, adds a verified Portfolio screen and polishes Neon/Close. The accepted models, Hub/Lab interactions, typography, routes and locale architecture remain unchanged. Lazy Hub/device enhancement follows D-010. CMS, analytics, external deployment and backend remain deferred.
 
-D-015 freezes that implementation as the working visual baseline and prioritizes information architecture/verified content before further visual polish. `PHASE_5_CONTENT_ARCHITECTURE_AUDIT.md` proposes route ownership and lightweight reusable content aggregates; they are not runtime modules, database schema or an approved implementation. Phase 5 is not implemented by this preparation.
+D-015 freezes that implementation as the working visual baseline. D-016 authorizes the first Phase 5 canonical content block; typed static Project/Profile/Experience/case narratives now feed public pages. CANONICAL_CONTENT.md owns current sources/claims/gaps; the preparation is a dated proposal, not a CMS/database schema or multi-channel API implementation.
+
+## Canonical content
+
+`projects.ts` owns shared identities, bilingual summaries/category/role/status/ownership/responsibilities, periods and confirmed team sizes. `project-case-studies.ts` is keyed by those same slugs and consumed only by server case routes: optional narrative groups, technology names, review readiness, manifest reference/caption and approved links. This keeps long bodies outside Home's client graph, not a parallel Project system. `profile.ts` owns positioning/About/education and evidence-linked capabilities; `experience.ts` projects own-product roles/dates and adds two independent records. `home-content.ts` keeps localized concept Lab records. Existing contacts and screen manifest retain their ownership. Small `content.ts` labels/date formatting complement UI dictionaries; unknown fields are omitted rather than empty headings. No database/service adapters or content framework.
 
 ## Runtime foundation
 
@@ -19,15 +23,15 @@ D-015 freezes that implementation as the working visual baseline and prioritizes
 
 - `app/[locale]/layout.tsx` is the public root layout and renders the correct HTML `lang` on the server.
 - Supported locales come from `lib/site-config.ts`; EN is primary. Dictionaries are typed against the shared UI shape.
-- `generateStaticParams` prerenders the EN/RU pages and three baseline project skeletons. Invalid locales and unknown project slugs return 404.
+- `generateStaticParams` prerenders EN/RU pages and three content-backed cases. Invalid locales and unknown project slugs return 404.
 - `app/route.ts` implements a non-cacheable 307 root redirect: persisted selection → weighted `Accept-Language` → EN.
 - `app/language/route.ts` validates locale/path, sets an HttpOnly first-party preference cookie, and redirects to the equivalent localized path. Ordinary anchors intentionally avoid prefetching this cookie-setting endpoint and work without JavaScript.
 - Relative redirects preserve the visitor’s host behind reverse proxies. Locale detection does not require middleware, geolocation, or a provider SDK.
-- Add a future locale by extending `siteConfig.locales`, `localeDetails`, and dictionaries. Routing files do not change.
+- Add a future locale by extending `siteConfig.locales`, `localeDetails`, dictionaries and required narrative/readiness fields. Routing files do not change.
 
 ## SEO
 
-`lib/metadata.ts` builds absolute self-canonical URLs, reciprocal locale alternatives, EN `x-default`, Open Graph, and Twitter metadata from `SITE_URL`. Set the origin before a deployment build. All current content skeletons emit noindex/nofollow; `robots.txt` disallows crawling. Review indexing, sitemap, and published content together before a public launch.
+`lib/metadata.ts` builds absolute self-canonical URLs, reciprocal locale alternatives, EN `x-default`, Open Graph, and Twitter metadata from `SITE_URL`. Set the origin before a deployment build. All pages/previews emit noindex/nofollow; `robots.txt` disallows crawling. Review indexing, sitemap and publication together before launch; substantive content alone does not enable indexing.
 
 ## Design system
 

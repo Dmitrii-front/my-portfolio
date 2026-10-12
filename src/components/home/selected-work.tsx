@@ -1,24 +1,24 @@
 "use client";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Arrow } from "@/components/ui/arrow";
+import { Container } from "@/components/ui/container";
 import type { Dictionary } from "@/lib/dictionaries";
 import {
 	defaultDevice,
-	projectSelectionEvent,
 	interactionCopy,
-	wrapProject,
+	projectSelectionEvent,
 	type ShowcaseDevice,
+	wrapProject,
 } from "@/lib/home-content";
 import { localizedPath } from "@/lib/i18n";
-import { projects } from "@/lib/projects";
 import {
 	availableProjectDevices,
 	resolveProjectDevice,
 } from "@/lib/project-screens";
+import { projects } from "@/lib/projects";
 import type { SiteLocale } from "@/lib/site-config";
 import { workProject, workStation } from "@/lib/work-progress";
-import { Container } from "@/components/ui/container";
-import { Arrow } from "@/components/ui/arrow";
 import { DeviceShowcase } from "./device-showcase";
 export function SelectedWork({
 	locale,
@@ -164,11 +164,11 @@ export function SelectedWork({
 									>
 										<p className="eyebrow">
 											<span className="work-index">0{index + 1}</span> /{" "}
-											{project.category}
+											{project.category[locale]}
 										</p>
 										<h3 id={`title-${project.slug}`}>{project.title}</h3>
 										<p className="work-description">
-											{dictionary.projects[project.slug]}
+											{project.summary[locale]}
 										</p>
 										<Link
 											href={localizedPath(locale, `/projects/${project.slug}`)}

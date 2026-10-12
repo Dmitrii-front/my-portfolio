@@ -130,6 +130,22 @@ Initial Chromium compressed JS 151,688–151,875B (+697B, ~0.46% vs D-012), CSS 
 
 ## Preview and hosting
 
+### Phase 5.0 / 5.1 content verification
+
+`content.test.ts` checks bilingual records, unique IDs, refs, chronology/roles/team boundaries, concept maturity and a small claim guard. `content.spec.ts` checks all9 EN/RU reading routes with axe/internal href resolution, four Experience entries/case images and overflow at375/768/1024/1440. Regex complements manual review; sources/gaps: CANONICAL_CONTENT.md.
+
+Content-only desktop WebKit and Firefox also pass 2 tests each: EN/RU routes/axe/internal links and four widths. Full-engine 3D suites were not repeated on these engines.
+
+Fresh: check passes lint/strict types/33 units/23-route build; installed Chrome full E2E 58 pass / 41 profile skips. Initial Home JS 152,774–153,377B, CSS 8,260B, images 12,854–36,674B, CLS 0, no external requests. No dependencies added or fresh 3D paint profiling; historical QA above is not field certification.
+
+```bash
+npm run start -- --hostname 127.0.0.1 --port 3001
+PLAYWRIGHT_CHANNEL=chrome PLAYWRIGHT_DISABLE_WEBSERVER=1 PLAYWRIGHT_BASE_URL=http://127.0.0.1:3001 npm run test:e2e -- --workers=2
+node scripts/phase5-content-review.mjs
+```
+
+Review: ignored `artifacts/phase5-content/README.md`; Home/index/three cases/About/Experience EN/RU at1440 plus Home375/768/1024 and focused Hero. Reduced-motion captures are stable reading review, not new approved project assets. Keep noindex and hosting undecided; owner review precedes a separately scoped next task.
+
 Documentation audit 2026-10-12: `AUDIT_2026-10-12.md` verifies actual app/Git/spec/memory state without changing application code. Fresh check/audit pass (27 units, 23-route build, 0 vulnerabilities). Installed Chrome: 56 pass / 37 skips; WebKit and Firefox desktop: 29 pass / 2 skips each, sequential. The bundled Chromium executable is absent locally; `PLAYWRIGHT_CHANNEL=chrome` uses installed Chrome without a download. Historical paint profiles remain historical, not remeasured by this audit. Exact memory ownership/resumption paths: `MEMORY.md`.
 
 **Investigated:** 2026-10-06. There is no checked-in provider configuration or GitHub deployment record. Local `npm run build && npm run start` previews the same repository code. An external preview must deploy a GitHub commit and set `SITE_URL` to its real origin; placeholders stay noindex.

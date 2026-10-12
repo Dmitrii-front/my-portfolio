@@ -125,3 +125,12 @@ Durable decisions are recorded here. Proposed changes that materially affect UX,
 - **Reason:** Presentation details consumed time before the Portfolio had complete information architecture, real content and credible case studies. Complete the information product first; eventual layout/design should adapt to its verified content.
 - **Priority:** Structure → information architecture → real content → useful assets → complete working public site → distribution/layout review → final visual polish. Supersedes D-013/D-014's visual-acceptance-first next-action gate; does not erase their implementation/quality rules or historical pending acceptance.
 - **Boundary:** This request authorizes analysis/planning/documentation only. No Phase 5 implementation, application changes, Neon work, dependency installation, CMS/Supabase/Admin/analytics/bot or production indexing. `PHASE_5_CONTENT_ARCHITECTURE_AUDIT.md` contains the proposals and consolidated questionnaire; a later explicit task is required to implement them.
+
+## D-016 — Canonical public content from approved facts
+
+- **Date:** 2026-10-12
+- **Status:** Owner-authorized Phase 5.0 / 5.1 implementation, not approval of later stages.
+- **Decision:** Extend typed static Project records and add focused Profile/Experience/case narratives, not a CMS/content framework. Shared roles/dates/IDs/assets/contacts have one owner; EN/RU narrative fields have no silent English fallback. Home uses concise projections; long case bodies stay in server routes.
+- **Facts:** Owner-confirmed positioning/background/education, four technology Experience entries, product roles/dates/team boundaries and honest AI-assisted Portfolio attribution. Dentistry belongs About/Education; KGanimation/KOL is one record; freelance stays minimal. Evidence/omissions: CANONICAL_CONTENT.md.
+- **Claims:** Healthy is an almost-complete unlaunched MVP with test participants, not traction. Pnlwise technical implementation is source-backed, not revenue/customers/Live payment readiness. Screenshot counts/sample P&L and targets never become metrics. Lab stays concepts. Private/unknown/future facts are not public payloads.
+- **Boundary:** Preserve D-015 visual baseline; copy-only USER NEEDS avoids implied adoption. No Neon/Hub/Work/3D/Contact design/behavior changes, dependencies, CMS/database/auth/analytics/agent/bot/provider or indexing activation. Cases ready for owner editorial review, not launch-certified. STOP after QA/memory/Git delivery.

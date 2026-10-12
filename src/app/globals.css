@@ -525,7 +525,7 @@ svg {
 	margin-top: var(--space-8);
 }
 
-/* Inner route skeletons */
+/* Inner content routes */
 .inner-page {
 	min-height: 70vh;
 	padding-top: var(--space-12);
@@ -572,6 +572,17 @@ svg {
 .case-sections p {
 	color: var(--color-muted);
 	margin-top: var(--space-4);
+}
+.case-media img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+.case-media figcaption {
+	margin-top: var(--space-4);
+	color: var(--color-muted);
+	font-size: 0.875rem;
+	line-height: 1.65;
 }
 
 @media (min-width: 768px) {

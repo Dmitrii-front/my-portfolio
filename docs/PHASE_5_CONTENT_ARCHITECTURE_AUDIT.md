@@ -2,6 +2,8 @@
 
 Date: 2026-10-12. Inspected baseline: `0ac6327672ff4953c6aa7b8143a46aa6978aac9a`; application unchanged since `0c6fca8`. D-015 accepts the **strategy**, not every proposal below. Analysis/planning/documentation only; Phase 5 implementation NOT STARTED.
 
+**Subsequent implementation:** Owner authorized Phase 5.0 / 5.1 and supplied P0 facts in a later task on2026-10-12 (D-016). Canonical content now renders Home/index/cases/About/Experience. Current facts/answers/claim limits/gaps: CANONICAL_CONTENT.md; handoff: CURRENT_STATE.md. Matrices below remain the preparation snapshot, not a claim that implementation is still absent. Later stages/CMS/backend/publication require separate authorization.
+
 ## A. Executive summary / evidence rules
 
 Freeze/reuse the existing Hero, Hub, Work, MacBook, Lab, Contact, Neon and responsive/3D foundation. This is neither rejection nor final visual acceptance. No more presentation polishing now. Priority: structure → IA → real content → useful assets → complete working public site → distribution/layout review → final visual polish.

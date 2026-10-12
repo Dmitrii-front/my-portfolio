@@ -5,7 +5,11 @@ export const projectSelectionEvent = "portfolio:select-project";
 export const labExperiments = [
 	{
 		id: "payments",
-		title: "Kyrgyzstan Payment Integration",
+		title: {
+			en: "Kyrgyzstan Payment Integration",
+			ru: "Платёжная интеграция в Кыргызстане",
+		},
+		maturity: "concept",
 		description: {
 			en: "Exploring payment flows and local integrations.",
 			ru: "Исследование платёжных сценариев и локальных интеграций.",
@@ -13,7 +17,8 @@ export const labExperiments = [
 	},
 	{
 		id: "agent",
-		title: "AI Portfolio Agent",
+		title: { en: "AI Portfolio Agent", ru: "AI-агент портфолио" },
+		maturity: "concept",
 		description: {
 			en: "Exploring a scoped assistant for portfolio content.",
 			ru: "Идея помощника с ограниченными правами для контента портфолио.",
@@ -21,7 +26,8 @@ export const labExperiments = [
 	},
 	{
 		id: "parser",
-		title: "PDF Parser",
+		title: { en: "PDF Parser", ru: "Парсер PDF" },
+		maturity: "concept",
 		description: {
 			en: "Exploring structured data extraction from documents.",
 			ru: "Исследование извлечения структурированных данных из документов.",
@@ -29,7 +35,8 @@ export const labExperiments = [
 	},
 	{
 		id: "bot",
-		title: "Telegram Bot",
+		title: { en: "Telegram Bot", ru: "Telegram-бот" },
+		maturity: "concept",
 		description: {
 			en: "Exploring useful conversational workflows.",
 			ru: "Исследование полезных сценариев в диалоговом интерфейсе.",

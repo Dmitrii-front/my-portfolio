@@ -2,7 +2,7 @@
 
 Production portfolio platform for Dmitry: a premium public site, structured case studies, CMS, scoped AI-agent workflows, analytics, and selective 3D interactions.
 
-Application code remains at **Phase 4.2**, now a frozen working visual baseline under D-015, not the final design. Preserve the existing Home/persistent MacBook, Neon and lazy Hub/device enhancement; do not continue visual polish. Current work is **Phase 5 preparation: information architecture and real content**, planning only; implementation and external deployment have not started. Other public pages still largely contain skeletons. [Preparation and questionnaire](docs/PHASE_5_CONTENT_ARCHITECTURE_AUDIT.md); technical policies/QA: [`docs/NEON_INFRASTRUCTURE.md`](docs/NEON_INFRASTRUCTURE.md), [`docs/THREE_ENHANCEMENT.md`](docs/THREE_ENHANCEMENT.md).
+**Phase 5.0 / 5.1 canonical content is implemented** on the frozen Phase 4.2 working visual baseline, not the final design. EN/RU Home, Projects/cases, About and four-entry Experience use approved shared facts; Lab stays concepts. No Home/Neon/3D redesign, new dependencies, CMS/backend or external deployment. Content awaits owner editorial review; noindex stays enabled. [Content sources, claims and gaps](docs/CANONICAL_CONTENT.md); [dated preparation](docs/PHASE_5_CONTENT_ARCHITECTURE_AUDIT.md). STOP after this block; no later phase auto-started.
 
 ## Requirements
 
@@ -54,6 +54,7 @@ Motion, Supabase, Drizzle and PostHog remain deferred until a phase uses them.
 - [Verified memory architecture and Obsidian paths](docs/MEMORY.md)
 - [Full project/spec/memory audit — 2026-10-12](docs/AUDIT_2026-10-12.md)
 - [Phase 5 content / information-architecture preparation](docs/PHASE_5_CONTENT_ARCHITECTURE_AUDIT.md)
+- [Implemented canonical content / evidence / publication boundaries](docs/CANONICAL_CONTENT.md)
 
 WorkHub contains the cross-project Portfolio status. Detailed technical memory stays in this repository; the verified Obsidian Portfolio folder contains long-term product ideas and roadmap. See `docs/MEMORY.md`; these layers are separate, not automatic mirrors.
 
@@ -63,7 +64,7 @@ WorkHub contains the cross-project Portfolio status. Detailed technical memory s
 
 ## Deployment
 
-CI runs all checks and Chromium smoke tests on pushes to `main` and pull requests. Screenshots and failure traces are uploaded as the `browser-qa` artifact. Local production preview: `npm run build && npm run start`. No external hosting is configured; see [preview options](docs/DEVELOPMENT.md#preview-and-hosting). Skeletons and previews remain noindex.
+CI runs all checks and Chromium tests on main pushes/PRs. Screenshots/failure traces are uploaded as `browser-qa`. Local production preview: build, then `npm run start -- --port 3001`; open `/en` or `/ru`. Content captures: `node scripts/phase5-content-review.mjs` → ignored `artifacts/phase5-content/README.md`. No external hosting configured; [preview options](docs/DEVELOPMENT.md#preview-and-hosting) remain undecided. Pages/previews stay noindex.
 
 ## Historical Portfolio 2023
 

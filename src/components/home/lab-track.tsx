@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useRef } from "react";
+import { LabGlyph } from "@/components/ui/lab-glyph";
 import { interactionCopy, labExperiments } from "@/lib/home-content";
 import type { SiteLocale } from "@/lib/site-config";
-import { LabGlyph } from "@/components/ui/lab-glyph";
 export function LabTrack({ locale }: { locale: SiteLocale }) {
 	const track = useRef<HTMLElement>(null);
 	const copy = interactionCopy[locale];
@@ -59,7 +59,7 @@ export function LabTrack({ locale }: { locale: SiteLocale }) {
 							<LabGlyph concept={experiment.id} />
 						</span>
 						<p className="eyebrow">{copy.labConcept}</p>
-						<h3>{experiment.title}</h3>
+						<h3>{experiment.title[locale]}</h3>
 						<p>{experiment.description[locale]}</p>
 					</article>
 				))}

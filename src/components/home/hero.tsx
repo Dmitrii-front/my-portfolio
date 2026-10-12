@@ -1,9 +1,11 @@
 import Link from "next/link";
-import type { Dictionary } from "@/lib/dictionaries";
-import { localizedPath } from "@/lib/i18n";
-import type { SiteLocale } from "@/lib/site-config";
+import { Fragment } from "react";
 import { Arrow } from "@/components/ui/arrow";
 import { Container } from "@/components/ui/container";
+import type { Dictionary } from "@/lib/dictionaries";
+import { localizedPath } from "@/lib/i18n";
+import { profile } from "@/lib/profile";
+import type { SiteLocale } from "@/lib/site-config";
 import { ProductHub } from "./product-hub";
 
 export function Hero({
@@ -34,7 +36,12 @@ export function Hero({
 					<div className="current-focus">
 						<p className="eyebrow">{copy.focus}</p>
 						<p>
-							SaaS<span>/</span>AI<span>/</span>Healthcare<span>/</span>FinTech
+							{profile.focus.map((item, index) => (
+								<Fragment key={item.en}>
+									{index > 0 && <span aria-hidden="true">/</span>}
+									{item[locale]}
+								</Fragment>
+							))}
 						</p>
 					</div>
 				</div>
