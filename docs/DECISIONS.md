@@ -107,3 +107,12 @@ Durable decisions are recorded here. Proposed changes that materially affect UX,
 - **Neon:** A single logical curve uses independently composed responsive stations. Its Work portion shares the pinned scene's coordinate space rather than stretching through invisible scroll distance; before/after portions remain in document flow. Only actual foreground alpha occludes. Separate the global Hero arc from local Hub connectors, soften/thicken diffusion and strengthen the headless energy envelope. This supersedes earlier frozen document-anchor/section rules only within the authorized scope.
 - **Contact:** Reduce only the open Close surface by 20–25%, retaining its hit area, fan geometry and dismissal/focus behavior.
 - **Boundary:** No model redesign, new dependencies, later phase or deployment/provider integration. Await visual acceptance after QA, memory sync and coherent GitHub commit/CI.
+
+## D-014 — Repair the verified three-layer memory references
+
+- **Date:** 2026-10-12
+- **Status:** Owner-authorized audit/documentation scope
+- **Decision:** Repository owns code-adjacent technical truth; the registered iCloud Obsidian vault owns Portfolio product reasoning/ideas/roadmap; separate WorkHub owns cross-project operational summaries. Exact verified paths and resumption rules: `MEMORY.md`. No technical-document mirroring or large migration.
+- **Finding:** No dedicated Portfolio vault notes/mirror existed at audit entry. Earlier repository/WorkHub updates do not establish prior Obsidian use. The audit creates only an index, roadmap and dedicated future idea; writes are verified from filesystem, not assumed from app presence.
+- **Future idea:** Telegram Portfolio Bot stays BACKLOG / NOT STARTED, with shared controlled content across Website / Admin-CMS / Bot / AI Agent as a future consideration. No transport/schema/provider choice, code, credentials, API calls or active implementation task is authorized.
+- **Boundary:** Phase 4.2 visual acceptance remains the next owner action. No Home changes, dependencies or later development phase.

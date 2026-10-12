@@ -9,6 +9,7 @@ These rules apply to the entire repository. Keep changes focused, maintainable, 
 - [`docs/CURRENT_STATE.md`](docs/CURRENT_STATE.md) is the current technical handoff.
 - [`docs/DECISIONS.md`](docs/DECISIONS.md) records durable product and architecture decisions.
 - WorkHub project `Projects/Portfolio/` is the cross-project control-plane summary. Do not duplicate repository details there.
+- Verified Obsidian product-memory paths and layer ownership are in [`docs/MEMORY.md`](docs/MEMORY.md). Product ideas/roadmap live there, not in duplicated technical documents.
 
 ## Before work
 
@@ -18,6 +19,7 @@ These rules apply to the entire repository. Keep changes focused, maintainable, 
 4. Read the WorkHub Portfolio summary when status, blockers, risks, or cross-project context matters.
 5. Restore task context before changing code.
 6. Check `docs/DECISIONS.md` for an existing decision that the task could violate.
+7. Read the Obsidian Portfolio index, roadmap and task-relevant notes identified in `docs/MEMORY.md`. Report missing/unreadable notes; never claim an external memory update without verifying the file.
 
 ## During work
 
@@ -39,6 +41,7 @@ These rules apply to the entire repository. Keep changes focused, maintainable, 
 6. Commit a completed block with a short imperative English message.
 7. Push when it is safe and authentication is available; verify that GitHub contains the completed commit.
 8. Report what changed, checks, commit, push/deployment status, next action, and any decision needed from the owner.
+9. Update Obsidian only when product reasoning, ideas or roadmap changed; keep technical truth in this repository and operational summaries in WorkHub. Do not promote backlog ideas into active tasks without authorization.
 
 ## Scope safeguards
 

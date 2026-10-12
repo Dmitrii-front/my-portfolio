@@ -82,7 +82,7 @@ Directories are created only when real implementation requires them.
 
 ## Data and external services
 
-Supabase PostgreSQL/Auth/Storage, Drizzle, and PostHog are approved baseline choices but are not installed in Phase 0. Their schemas, policies, adapters, and environment variables will be added with the implementing phases.
+Supabase PostgreSQL/Auth/Storage, Drizzle, and PostHog are baseline intentions, still not installed or configured through Phase 4.2. Their schemas, policies, adapters, and environment variables belong to later authorized phases. The future Telegram Portfolio Bot is backlog only; multi-channel content reuse is a future consideration, not an existing CMS/API. See `MEMORY.md` for the owning Obsidian note.
 
 ## Public routes
 

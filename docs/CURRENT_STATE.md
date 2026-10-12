@@ -1,6 +1,6 @@
 # Current State
 
-**Updated:** 2026-10-06
+**Updated:** 2026-10-12 (documentation audit; application unchanged)
 **Phase:** 4.2 — Selected Work pinning + Neon / Contact polish
 **Status:** Implemented; awaiting owner visual acceptance. STOP before external deployment or later phases.
 
@@ -17,7 +17,7 @@
 - Open Close surface is 24% smaller; original 92/104px hit box, channel circles, fan/dismissal/focus behavior remain unchanged.
 - EN/RU, persisted locale selection, metadata/noindex, navigation, typography, Lab and public route architecture are unchanged. Portfolio 2023 remains at published tag `portfolio-2023`.
 
-## Validation
+## Phase 4.2 validation (2026-10-06)
 
 - Lint, strict typecheck, 27 unit tests, production Webpack build (23 prerendered routes), `npm audit` (0 vulnerabilities), focused diff review.
 - Final browser results and local paint measurements are recorded in `docs/DEVELOPMENT.md` and `docs/NEON_INFRASTRUCTURE.md`.
@@ -38,10 +38,14 @@ Owner visual acceptance at local `http://127.0.0.1:3000/en` and `/ru`. No later 
 - No Supabase/Drizzle, CMS, product agent API, Audit Log, analytics or external hosting.
 - Capability hints are not GPU benchmarks; local automated timing is not field performance certification.
 - External preview account/provider and production origin remain owner decisions; no paid provider selected.
-- WorkHub has unrelated dirty files and 19 pre-existing unpublished commits. Sync only Portfolio PROJECT/STATUS in a scoped local commit; do not push unrelated history.
+- WorkHub has unrelated dirty files and 20 unpublished commits at audit entry (including the Phase 4.2 summary). Audit sync stays a separate Portfolio-only local commit; do not push unrelated history.
 
 ## Memory / preview
 
-Repository `docs/ARCHITECTURE.md`, `DECISIONS.md` (D-006 through D-013), `PROJECT_ASSETS.md`, `THREE_ENHANCEMENT.md`, `NEON_INFRASTRUCTURE.md`, `DEVELOPMENT.md` and baseline specification remain the technical source. WorkHub `/Users/macos/Documents/WorkHub/Projects/Portfolio/` holds only a concise control-plane summary.
+Repository `docs/ARCHITECTURE.md`, `DECISIONS.md` (through D-014), `PROJECT_ASSETS.md`, `THREE_ENHANCEMENT.md`, `NEON_INFRASTRUCTURE.md`, `DEVELOPMENT.md` and the unchanged baseline specification remain the technical source. WorkHub `/Users/macos/Documents/WorkHub/Projects/Portfolio/` holds only a concise control-plane summary.
+
+Audit: `docs/AUDIT_2026-10-12.md`. The registered Obsidian vault was verified, but no dedicated Portfolio notes/mirror existed before this audit; previous repository/WorkHub updates were **not Obsidian integration**. Three small product-memory notes were created and read back on 2026-10-12. Exact paths/ownership/read workflow: `docs/MEMORY.md`. Telegram Portfolio Bot is Future/Backlog, DEVELOPMENT STATUS: NOT STARTED; no application code, API, token, dependency or infrastructure was added. It is not the automatic next task. Full iCloud text search stalled; unrelated generic mentions and cloud replication/UI visibility are not certified.
+
+Fresh audit QA (2026-10-12): check passes (27 units / 23-route build), audit 0 vulnerabilities; installed Chrome 56 pass / 37 skips, WebKit and Firefox desktop 29 pass / 2 skips each. Bundled Chromium is absent locally; no browser/dependency download. Source tree is unchanged. Chrome initial JS/CLS remain at the application baseline; historical paint/GPU profiles were not rerun. Owner visual acceptance remains pending.
 
 Local preview uses the same production build: `npm run build`, then `npm run start`. Source/commit truth is GitHub main and Git history; CI verifies each main push.

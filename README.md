@@ -2,11 +2,11 @@
 
 Production portfolio platform for Dmitry: a premium public site, structured case studies, CMS, scoped AI-agent workflows, analytics, and selective 3D interactions.
 
-The repository is at **Phase 4.1: Neon visual refinement**; Phase 4 is technically accepted. Approved Home composition, interactions and 3D models remain unchanged. Neon separates scroll/layout from foreground occlusion, with broad C2 curves, blended layered light and feathered internal energy without a travelling object. Lazy Three.js/R3F/Drei still enhance only Hub/device with meaningful fallbacks; content pages remain unpublished skeletons. Policies/QA: [`docs/NEON_INFRASTRUCTURE.md`](docs/NEON_INFRASTRUCTURE.md), [`docs/THREE_ENHANCEMENT.md`](docs/THREE_ENHANCEMENT.md).
+The repository is at **Phase 4.2: Selected Work pinning + Neon / Contact polish**, awaiting visual acceptance. One native-scroll presentation retains the same MacBook across Pnlwise, Healthy and the verified Portfolio capture. Neon uses broad C2 curves, actual foreground occlusion and diffuse internal energy; Close is visually smaller. Lazy Three.js/R3F/Drei enhance only Hub/device with meaningful fallbacks; other content pages remain unpublished skeletons. No later phase or external deployment has started. Policies/QA: [`docs/NEON_INFRASTRUCTURE.md`](docs/NEON_INFRASTRUCTURE.md), [`docs/THREE_ENHANCEMENT.md`](docs/THREE_ENHANCEMENT.md).
 
 ## Requirements
 
-- Node.js 22.14 or newer
+- Node.js 22.12 or newer (package engine); local/CI baseline is 22.14.
 - npm (bundled with Node.js)
 
 ## Setup
@@ -27,7 +27,7 @@ Open `http://localhost:3000/en` or `/ru`. `/` resolves the saved language choice
 - `npm run build` — production build using Webpack.
 - `npm run check` — lint, typecheck, unit tests, and production build.
 - `npm run test:e2e` — browser smoke checks against the production build.
-- `npm run assets:prepare` — reproduce selected WebP derivatives from the external screenshot archive after verifying source hashes.
+- `npm run assets:prepare` — reproduce WebPs from hash-verified archive originals and the retained Portfolio source. `-- --portfolio` needs no external archive.
 
 ## Current stack
 
@@ -51,8 +51,10 @@ Motion, Supabase, Drizzle and PostHog remain deferred until a phase uses them.
 - [Development workflow](docs/DEVELOPMENT.md)
 - [Audited project asset sources and missing variants](docs/PROJECT_ASSETS.md)
 - [Codex instructions](AGENTS.md)
+- [Verified memory architecture and Obsidian paths](docs/MEMORY.md)
+- [Full project/spec/memory audit — 2026-10-12](docs/AUDIT_2026-10-12.md)
 
-WorkHub contains the cross-project Portfolio status. Detailed technical memory stays in this repository.
+WorkHub contains the cross-project Portfolio status. Detailed technical memory stays in this repository; the verified Obsidian Portfolio folder contains long-term product ideas and roadmap. See `docs/MEMORY.md`; these layers are separate, not automatic mirrors.
 
 ## Environment
 

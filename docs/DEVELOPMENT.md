@@ -9,6 +9,7 @@ Before changing code:
 3. Read `docs/CURRENT_STATE.md`, `docs/DECISIONS.md`, and task-relevant documentation.
 4. Consult the WorkHub Portfolio summary when cross-project status matters.
 5. Confirm that the task does not conflict with an accepted decision.
+6. Read the verified Obsidian product index/roadmap and relevant notes using `MEMORY.md`; distinguish these from repository technical truth.
 
 After a completed block:
 
@@ -128,6 +129,8 @@ Phase 4.2: clean lint, strict typecheck, 27 unit tests, 23-route production buil
 Initial Chromium compressed JS 151,688–151,875B (+697B, ~0.46% vs D-012), CSS 8,156B (+122B); unchanged initial image transfer and measured CLS 0, no external requests. Separate <300KB deferred-3D guard unchanged. Local SVG paint protocol and before/after limitations: `NEON_INFRASTRUCTURE.md`; not field/physical-mobile certification. Review the focused/staged diff before commit, push only coherent Portfolio files and verify GitHub Actions for the delivered main commit. Do not push WorkHub's unrelated unpublished history.
 
 ## Preview and hosting
+
+Documentation audit 2026-10-12: `AUDIT_2026-10-12.md` verifies actual app/Git/spec/memory state without changing application code. Fresh check/audit pass (27 units, 23-route build, 0 vulnerabilities). Installed Chrome: 56 pass / 37 skips; WebKit and Firefox desktop: 29 pass / 2 skips each, sequential. The bundled Chromium executable is absent locally; `PLAYWRIGHT_CHANNEL=chrome` uses installed Chrome without a download. Historical paint profiles remain historical, not remeasured by this audit. Exact memory ownership/resumption paths: `MEMORY.md`.
 
 **Investigated:** 2026-10-06. There is no checked-in provider configuration or GitHub deployment record. Local `npm run build && npm run start` previews the same repository code. An external preview must deploy a GitHub commit and set `SITE_URL` to its real origin; placeholders stay noindex.
 
